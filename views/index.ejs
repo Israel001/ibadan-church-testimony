@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Parish Church html Template</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Calling Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- Calling Favicon -->
+    <!-- ********************* -->
+    <!-- CSS files -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/meanmenu.css" media="all">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" class="color-changing" href="/css/color6.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- End CSS files -->
+
+    <style>
+  /* Set fixed width and height for the testimony images */
+  .album-gl img {
+    width: 200px; /* Adjust this to the size you want */
+    height: 200px; /* Adjust this to the size you want */
+    object-fit: cover; /* Ensures the image keeps its aspect ratio and fills the container */
+  }
+
+  /* Ellipsis for long messages */
+  .testimony-message {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit the message to 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Ensure pagination stays on the next line and is centered */
+  .pagination-wrapper {
+    display: flex;
+    justify-content: center; /* Centers the pagination horizontally */
+    width: 100%;
+    margin-top: 30px; /* Add space between content and pagination */
+  }
+</style>
+</head>
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+             
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h2 class="f-700 mb-12">create an account to get notified when a testimoney is posted </h2>
+                <!-- <p>Quisque enim ipsum, commodo et venenatis rutrum, luctus in enim venenatis.</p> -->
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                    <div class="form-group relative mb-25 mb-sm-20">
+                        <input type="text" class="form-control input-lg input-white shadow-5" id="name" placeholder="Name">
+                        <i class="far fa-user transform-v-center"></i>
+                    </div>
+                    <div class="form-group relative mb-25 mb-sm-20">
+                        <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
+                        <i class="far fa-envelope transform-v-center"></i>
+                    </div>
+                    <div class="form-group relative mb-20 mb-sm-20">
+                        <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
+                        <i class="fas fa-lock transform-v-center"></i>
+                    </div>
+                    <div class="form-group relative mb-20 mb-sm-20">
+                        <input type="password" class="form-control input-lg input-white shadow-5" id="pwd-confirm" placeholder="Confirm Password">
+                        <i class="fas fa-lock transform-v-center"></i>
+                    </div>
+                    <div class="form-group form-check pl-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+                                <label class="custom-control-label fs-13" for="customCheck1"><span class="label-check">Remember me</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">SIGNUP</button>
+                    
+                </form>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+
+
+<body>
+    <!-- Preloader start -->
+    <div class="loader-out flex-center">
+        <div class="loader"></div>
+    </div>
+    <!-- Preloader end -->
+    <!-- Header start -->
+    
+    <header class="type4 transition-5 relative mg-header mg-header-dark">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-4">
+                    <div class="logo2">
+                        <a href="index.html">
+                            <img src="/images/logo/mg-logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8 col-4 text-right ">
+                    <span class="toggle-category">
+                        <i class="fas fa-chevron-down"></i>
+                      </span>
+                    <ul class="nav nav-links1 list-type2 justify-content-center">
+                        <li class="mg-nav-item mg-nav-item-has-children nav-link">
+                            <a href="#">HOME</a>
+                            <ul class="sub-menu">
+                                <li class="mg-nav-item nav-link"> <a href="index.html">Homepage 1</a></li>
+                                <li class="mg-nav-item nav-link"> <a href="index-2.html">Homepage 2</a></li>
+                                <li class="mg-nav-item nav-link"> <a href="index-3.html">Homepage 3</a></li>
+                                <li class="mg-nav-item nav-link"> <a href="index-4.html">Homepage 4</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-link"><a href="ministries.html">MINISTRIES</a></li>
+                        <li class="nav-link"><a href="sermons.html">SERMONS</a></li>
+                        <li class="nav-link"><a href="events.html">EVENTS</a></li>
+                        <li class="nav-link"><a href="blog.html">BLOG</a></li>
+                        <li class="nav-link"><a href="services.html">SERVICES</a></li>
+
+                        <li class="mg-nav-item mg-nav-item-has-children nav-link">
+                            <a href="#">SHOP</a>
+                            <ul class="sub-menu">
+                                <li class="mg-nav-item nav-link"> <a href="shop-listing.html">Shoping-list-1</a></li>
+                                <li class="mg-nav-item nav-link"> <a href="shop-listing-2.html">Shoping-list 2</a></li>
+                                <li class="mg-nav-item nav-link"> <a href="product-details.html">product-details</a></li>
+                                <li class="mg-nav-item nav-link"> <a href="cart.html">cart</a></li>
+                                <li class="mg-nav-item nav-link"> <a href="index-rental.html">rental</a></li>
+                            </ul>
+                        </li> 
+
+                        <!-- mega menu page-->
+                        <li class="mg-nav-item mg-nav-item-has-children has-mega-menu mg-mega-menu--4-col-2 nav-link">
+                            <a href="#">PAGES</a>
+                            <ul class="sub-menu">
+                                <li class="mg-mega-menu-wrapper clearfix">
+                                    <ul class="mg-mega-menu">
+                                        <li class="mg-nav-item mg-mega-menu-title pl-0"> Inner Pages
+                                            <li class="mg-nav-item nav-link"> <a href="blog-detail.html">Blog Detail</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="blog-detail-sidebar-left.html">Blog Detail Left</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="blog-detail-sidebar-right.html">Blog Detail Right</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="events-detail.html">Events Detail</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="events-detail-sidebar-left.html">Events Detail Left</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="events-detail-sidebar-right.html">Events Detail Right</a> </li>
+
+                                    </ul>
+                                    <ul class="mg-mega-menu">
+                                        <li class="mg-nav-item mg-mega-menu-title v-hidden"> Inner Pages
+                                            <li class="mg-nav-item nav-link"> <a href="sermons-detail.html">Sermons Detail</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="sermons-detail-2.html">Sermons Detail 2</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="sermons-detail-sidebar-left.html">Sermons Detail Left</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="sermons-detail-sidebar-left-2.html">Sermons Detail Left 2</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="sermons-detail-sidebar-right.html">Sermons Detail Right</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="sermons-detail-sidebar-right-2.html">Sermons Detail Right 2</a> </li>
+
+
+                                    </ul>
+                                    <ul class="mg-mega-menu">
+                                        <li class="mg-nav-item mg-mega-menu-title v-hidden"> Inner Pages
+                                            <li class="mg-nav-item nav-link"> <a href="ministries-detail.html">Ministries Detail</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="services-detail.html">Services Detail</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="donation-detail.html">Donation Detail</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="testimonials.html">Testimonial</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="coming-soon.html">Coming Soon</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="error.html">404 Error</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="login.html">Login</a></li>
+                                    </ul>
+                                    <ul class="mg-mega-menu">
+                                        <li class="mg-nav-item mg-mega-menu-title pl-0">Other Pages
+                                            <li class="mg-nav-item nav-link"> <a href="about-us.html">About Us</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="about-pastor.html">About Pastor</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="about-previous-pastor.html">About Previous Pastor</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="our-partner.html">Our Partner</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="our-member.html">Our Member</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="contact-1.html">Contact Us 1</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="contact-2.html">Contact Us 2</a> </li>
+                                            <li class="mg-nav-item nav-link"> <a href="signup.html">signup</a></li>
+                                    </ul>
+                                    </li>
+                            </ul>
+                            </li>
+
+                            <!-- mega menu page-->
+                    </ul>
+                </div>
+                <div class="col-md-2 col-4 text-center">
+                    <a href="#" class="search-icon mr-150 mr-md-75 mr-xs-55" data-toggle="modal" data-target="#searchModal"> <i class="fas fa-search fs-18 white mt-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a href="donate.html" class="db-block ml-35 ml-xs-25">
+            <div class="transform-center">DONATE</div>
+        </a>
+        <a href="#" class="menu-bars db-none right-menu ml-35 ml-xs-25">
+            <div class="bars transform-center">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </a>
+        <!--RIGHT MENU-->
+        <div class="col-md-2 col-2 text-right">
+            <div class="icon-links d-flex align-items-center justify-content-end">
+                <div class="bg-menu-overlay transition-5 opacity-8"></div>
+                <div class="fx-menu-wrapper bg-yellow-op-9 transition-5 d-flex justify-content-between flex-column">
+                    <div class="fx-menu-header d-flex justify-content-between">
+                        <p class="rbt-slab fs-13 f-700">Parish Church</p>
+                        <div class="close-menu">
+                            <a href="#" class=""> <span></span>
+                                <span></span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="donate.html" class="btn btn-black mt-30 mb-35 mb-xs-20">DONATE</a>
+                    <div class="fx-menu-content mb-15">
+                        <ul class="fx-menu-links rbt-slab">
+                            <li> <a href="#" class="has-sub">Home</a>
+                                <ul class="submenu">
+                                    <li><a href="index.html">Home Page 1</a>
+                                    </li>
+                                    <li><a href="index-2.html">Home Page 2</a>
+                                    </li>
+                                    <li><a href="index-3.html">Home Page 3</a>
+                                    </li>
+                                    <li><a href="index-4.html">Home Page 4</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="fx-menu-links rbt-slab">
+                            <li> <a href="ministries.html">Ministries</a>
+                            </li>
+                        </ul>
+                        <ul class="fx-menu-links rbt-slab">
+                            <li> <a href="sermons.html">Sermons</a>
+                            </li>
+                        </ul>
+                        <ul class="fx-menu-links rbt-slab">
+                            <li> <a href="events.html">Events</a>
+                            </li>
+                        </ul>
+                        <ul class="fx-menu-links rbt-slab">
+                            <li> <a href="blog.html">Blog</a>
+                            </li>
+                        </ul>
+                        <ul class="fx-menu-links rbt-slab">
+                            <li> <a href="services.html">Services</a>
+
+                            </li>
+                        </ul>
+
+                        <ul class="fx-menu-links rbt-slab">
+                            <li> <a href="#" class="has-sub">SHOP</a>
+                                <ul class="submenu">
+                                    <li class="mg-nav-item nav-link"> <a href="shop-listing.html">Shoping-list 1</a></li>
+                                    <li class="mg-nav-item nav-link"> <a href="shop-listing-2.html">Shoping-list 2</a></li>
+                                    <li class="mg-nav-item nav-link"> <a href="product-details.html">product-details</a></li>
+                                    <li class="mg-nav-item nav-link"> <a href="cart.html">cart</a></li>
+                                    <li class="mg-nav-item nav-link"> <a href="index-rental.html">rental</a></li>
+
+
+
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="fx-menu-links rbt-slab">
+                            <li> <a href="#" class="has-sub">Pages</a>
+                                <ul class="submenu">
+                                    <li><a href="#" class="has-sub">Other Pages</a>
+                                        <ul class="submenu menu-submenu-text">
+                                            <li><a href="about-us.html">About Us</a>
+                                            </li>
+                                            <li><a href="about-pastor.html">About Pastor</a>
+                                            </li>
+                                            <li><a href="about-previous-pastor.html">About Previous Pastor</a>
+                                            </li>
+                                            <li><a href="our-partner.html">Our Partner</a>
+                                            </li>
+                                            <li><a href="our-member.html">Our Member</a>
+                                            </li>
+                                            <li><a href="testimonials.html">Testimonial</a>
+                                            </li>
+                                            <li><a href="contact-1.html">Contact Us 1</a>
+                                            </li>
+                                            <li><a href="contact-2.html">Contact Us 2</a>
+                                            </li>
+                                            <li><a href="coming-soon.html">Coming Soon</a>
+                                            </li>
+                                            <li><a href="error.html">404 Error</a>
+                                            </li>
+                                            <li> <a href="login.html">Login</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="text-bold"><a href="#" class="has-sub">Inner Pages</a>
+                                        <ul class="submenu menu-submenu-text">
+                                            <li><a href="blog-detail.html">Blog Detail</a>
+                                            </li>
+                                            <li><a href="blog-detail-sidebar-left.html">Blog Detail Left</a>
+                                            </li>
+                                            <li><a href="blog-detail-sidebar-right.html">Blog Detail Right</a>
+                                            </li>
+                                            <li><a href="events-detail.html">Events Detail</a>
+                                            </li>
+                                            <li><a href="events-detail-sidebar-left.html">Events Detail Left</a>
+                                            </li>
+                                            <li><a href="events-detail-sidebar-right.html">Events Detail Right</a>
+                                            </li>
+                                            <li><a href="sermons-detail.html">Sermons Detail</a>
+                                            </li>
+                                            <li><a href="sermons-detail-2.html">Sermons Detail 2</a>
+                                            </li>
+                                            <li><a href="sermons-detail-sidebar-left.html">Sermons Detail Left</a>
+                                            </li>
+                                            <li><a href="sermons-detail-sidebar-left-2.html">Sermons Detail Left 2</a>
+                                            </li>
+                                            <li><a href="sermons-detail-sidebar-right.html">Sermons Detail Right</a>
+                                            </li>
+                                            <li><a href="sermons-detail-sidebar-right-2.html">Sermons Detail Right 2</a>
+                                            </li>
+                                            <li><a href="ministries-detail.html">Ministries Detail</a>
+                                            </li>
+                                            <li><a href="services-detail.html">Services Detail</a>
+                                            </li>
+                                            <li><a href="donation-detail.html">Donation Detail</a>
+                                            </li>
+                                            <li><a href="signup.html">signup</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="fx-menu-footer">
+                        <ul class="mg-header social-icons menu-social black">
+                            <li> <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            </li>
+                            <li> <a href="#"><i class="fab fa-twitter"></i></a>
+                            </li>
+                            <li> <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </li>
+                            <li> <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- The search Modal start -->
+    <div class="search-popup modal" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="#">
+                        <div class="form-group relative">
+                            <input type="text" class="form-control input-search" id="search" placeholder="Search here..."> <i class="fas fa-search transform-v-center"></i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> <i class="fas fa-times close-search-modal" data-dismiss="modal"></i>
+    </div>
+    <!-- The search Modal end -->
+    <!-- Header end -->
+    <!-- Inner start -->
+    <section class="inner-banner bg-cover" style="background-image: url('/images/Banner/inner-banner-1.jpg');">
+        <h1 class="transform-center">And so you will bear testimony to me</h1>
+    </section>
+    
+   
+    <!--Inner end -->
+    <!-- Album gallery start -->
+    <section class="albums pt-80 pb-80">
+        <div class="container">
+            <div class="row align-items-center">
+    <% testimonies.forEach((testimony) => { %>
+    <div class="col-lg-4 col-md-6 text-center">
+        <div class="album-gl album-gl2">
+            <img src="<%= testimony.image %>" alt="Testimony Image">
+            <h3 class="fs-25 f-700 mb-20 mt-20"><%= testimony.firstname %> <%= testimony.lastname %></h3>
+            <p class="mb-15 testimony-message"><%= testimony.testimony %></p>
+            <a href="/testimony/<%= testimony.uuid %>" class="f-700 yellow fs-14 uppercase">ReadMore
+                <i class="fas fa-long-arrow-alt-right ml-10"></i>
+            </a>
+        </div>
+    </div>
+    <% }) %>
+    <!-- Pagination section on the next line and centered -->
+<div class="pagination-wrapper">
+  <div class="pagination-sml text-center" style="padding-top: 30px">
+    <ul>
+      <!-- Previous page link -->
+      <% if (pagination.currentPage > 1) { %>
+      <li><a href="?page=<%= pagination.currentPage - 1 %>">
+        <i class="fas fa-angle-double-left"></i></a>
+      </li>
+      <% } %>
+
+      <!-- Pagination numbers -->
+      <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+      <li class="<%= pagination.currentPage === i ? 'active' : '' %>">
+        <a href="?page=<%= i %>"><%= i %></a>
+      </li>
+      <% } %>
+
+      <!-- Next page link -->
+      <% if (pagination.currentPage < pagination.totalPages) { %>
+      <li><a href="?page=<%= pagination.currentPage + 1 %>">
+        <i class="fas fa-angle-double-right"></i></a>
+      </li>
+      <% } %>
+    </ul>
+  </div>
+</div>
+        </div>
+    </section>
+    <!-- Album gallery end -->
+    <!-- cta start -->
+    <section class="cta bg-yellow pt-30 pb-30">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-9 col-md-12 text-center text-lg-left">
+                    <h3 class="f-700 fs-35 mb-md-20">Not A Member? Connect With Us... </h3>
+                </div>
+                <div class="col-lg-3 col-md-12 text-center text-lg-right"> <a href="contact-1.html" class="btn btn-black shadow-1">CONNECT WITH US</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- cta end -->
+    <!-- footer start -->
+    <footer class="bg-light-white relative">
+        <div class="main-footer pt-55 pb-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <h6 class="fs-23 f-700 mb-25">About Us</h6>
+                        <div class="about-footer pr-60 mb-md-40">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipis cing elit. Ut iaculis lectus leo, mollis pharetra mauris laoreet sit amet ectus leo, mollis pharetra.</p>
+                            <p>Sed bibendum tincidunt nulla, non tempor lectus ultrices nec. Cras netempor lectus mollis pharetra mauris laoreet consectetur adipis cing.. <a href="about-us.html" class="underline">Read More</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mb-md-40">
+                        <h6 class="fs-23 f-700 mb-25">Quick Links</h6>
+                        <ul class="footer-links">
+                            <li> <a href="about-us.html">About Us</a>
+                            </li>
+                            <li> <a href="contact-1.html">Contact Us</a>
+                            </li>
+                            <li> <a href="blog.html">Blog</a>
+                            </li>
+                            <li> <a href="testimonials.html">Testimonials</a>
+                            </li>
+                            <li> <a href="#">Privacy Policy</a>
+                            </li>
+                            <li> <a href="#">Terms</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 mb-md-20">
+                        <h6 class="fs-23 f-700 mb-25">Subscribe Newsletter</h6>
+                        <form>
+                            <div class="form-group relative">
+                                <input type="text" class="form-control input-border" id="name" aria-describedby="name" placeholder="Your Name"> <i class="far fa-user transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mt-25">
+                                <input type="email" class="form-control input-border" id="email" aria-describedby="email" placeholder="Your Email"> <i class="far fa-envelope transform-v-center"></i>
+                            </div>
+                            <div class="text-left text-md-right mt-30">
+                                <button type="submit" class="btn btn-small bg-yellow">Subscribe</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-footer pb-35">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <div class="hr-2 mb-35 bg-black opacity-1"></div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 text-center text-lg-left mb-md-10">
+                        <ul class="social-icons footer-social">
+                            <li> <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            </li>
+                            <li> <a href="#"><i class="fab fa-twitter"></i></a>
+                            </li>
+                            <li> <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </li>
+                            <li> <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-md-12 text-center text-lg-right">© Parish Church 2025 Allright Reserved</div>
+                </div>
+            </div>
+            <a href="#" class="btn scroll-btn f-right flex-center z-25 opacity-0"> <i class="fas fa-arrow-up"></i>
+            </a>
+        </div>
+    </footer>
+
+
+
+
+<script src="../../marketing-utilities//buy-button.js" data-template-name="parish"></script>
+
+    <!-- footer end -->
+    <!-- ********************* -->
+    <!-- Theme skins -->
+    <div class="color-theme transition-4">
+        <div class="theme-switch">
+            <span class="switch">
+           <i class="fa fa-eye"></i>
+         </span>
+        </div>
+        <div class="theme-colors transition-4">
+            <h4>Theme Skins:</h4>
+            <ul class="theme-ul">
+                <li>
+                    <span class="each-color co6" data-color="/css/color6.css">
+                   <img src="/images/co-6.png" alt="">
+               </span>
+                </li>
+                <li>
+                    <span class="each-color co3" data-color="/css/color.css">
+                   <img src="/images/co-1.png" alt="">
+               </span>
+                </li>
+                <li>
+                    <span class="each-color co2" data-color="/css/color2.css">
+                   <img src="/images/co-2.png" alt="">
+               </span>
+                </li>
+                <li>
+                    <span class="each-color co1" data-color="/css/color3.css">
+                     <img src="/images/co-3.png" alt="">
+                 </span>
+                </li>
+                <li>
+                    <span class="each-color co4" data-color="/css/color4.css">
+                     <img src="/images/co-4.png" alt="">
+                 </span>
+                </li>
+                <li>
+                    <span class="each-color co5" data-color="/css/color5.css">
+                     <img src="/images/co-5.png" alt="">
+                 </span>
+                </li>
+                <li>
+                    <span class="each-color co7" data-color="/css/color7.css">
+                     <img src="/images/co-7.png" alt="">
+                 </span>
+                </li>
+                <li>
+                    <span class="each-color co8" data-color="/css/color8.css">
+                     <img src="/images/co-8.png" alt="">
+                 </span>
+                </li>
+                <li>
+                    <span class="each-color co9" data-color="/css/color9.css">
+                     <img src="/images/co-9.png" alt="">
+                 </span>
+                </li>
+            </ul>
+            <p class="fs-13 "><b>Note: </b>This will not change any image colors.</p>
+        </div>
+    </div>
+    <!-- Theme skins -->
+    <!-- JS Files -->
+    <script src="/js/modernizr-3.5.0.min.js"></script>
+    <script src="/js/jquery-1.12.4.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/jquery.counterup.min.js"></script>
+    <script src="/js/jquery.countdown.min.js"></script>
+    <script src="/js/lightslider.min.js"></script>
+    <script src="/js/wow.min.js"></script>
+    <script src="/js/isotope.pkgd.min.js"></script>
+    <script src="/js/jquery.meanmenu.min.js"></script>
+    <script src="/js/tilt.jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/audio-file.js"></script>
+    <!-- <script src="/js/modal.js"></script> -->
+    <!-- JS Files end -->
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Modal element
+    const modal = document.getElementById('myModal');
+
+    // Check if user is logged in by checking a variable set by the backend
+    const isLoggedIn = <%= loggedIn ? 'true' : 'false' %>; // Comes from backend, defined later
+    if (isLoggedIn) {
+      // If the user is logged in, don't show the modal
+      $(modal).modal('hide');
+    } else {
+      // If the user is not logged in, show the modal
+      $(modal).modal('show');
+    }
+
+    // Form submission handler
+    document.querySelector('form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      // Validate the form fields
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('pwd').value;
+      const confirmPassword = document.getElementById('pwd-confirm').value;
+
+      if (!name || !email || !password || !confirmPassword) {
+        alert('All fields are required!');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      // Prepare data to be sent
+      const data = {
+        fullname: name,
+        email,
+        password
+      };
+
+      try {
+        // Make the POST request to "/users"
+        const response = await fetch('/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          // Assume the server logs the user in automatically after signup
+          window.location.reload(); // Reload page to check if logged in
+        } else {
+          const error = await response.json();
+          alert('Error: ' + error.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      }
+    });
+  });
+</script>
+
+</body>
+
+</html>
