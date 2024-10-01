@@ -588,10 +588,10 @@
                   <div class="col-lg-6">
                     <div class="form-group relative mb-30 mb-sm-20">
                       <input
-                        type="text"
+                        type="number"
                         class="form-control input-lg input-white shadow-5"
                         id="makePublic"
-                        placeholder="Would You Like To Make This Testimony Public?"
+                        placeholder="Phone Number"
                       />
                       <i class="fas fa-mobile-alt transform-v-center"></i>
                       <span id="makePublicError" class="text-danger"></span>
@@ -1001,11 +1001,11 @@
               isValid = false;
             }
 
-            // Validate file size (example: max 2MB)
-            const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+            // Validate file size (example: max 3MB)
+            const maxSizeInBytes = 3 * 1024 * 1024; // 3MB
             if (file.size > maxSizeInBytes) {
               document.getElementById('fileError').innerText =
-                'File size must be less than 2MB.';
+                'File size must be less than 3MB.';
               isValid = false;
             }
           }
@@ -1046,7 +1046,7 @@
             email: document.querySelector(`input[id="email"]`).value,
             address: document.querySelector(`input[id="address"]`).value,
             country: document.querySelector(`input[id="country"]`).value,
-            categoryUuid: '1',
+            categoryUuid: '666',
             anonymous: false,
             image: imageUrl,
             testimony: document.querySelector(`textarea[name="message"]`).value,
