@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateTestimonyDto {
   @IsString()
@@ -15,6 +15,9 @@ export class CreateTestimonyDto {
 
   @IsString()
   country: string;
+
+  @IsNumber()
+  phoneNumber: number;
 
   @IsString()
   categoryUuid: string;

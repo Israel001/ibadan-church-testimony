@@ -61,7 +61,7 @@
             <div class="modal-header">
              
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <h2 class="f-700 mb-12">create an account to get notified when a testimoney is posted </h2>
+                <h2 class="f-700 mb-12">Create an account to get notified when a testimony is posted </h2>
                 <!-- <p>Quisque enim ipsum, commodo et venenatis rutrum, luctus in enim venenatis.</p> -->
               </button>
             </div>
@@ -279,9 +279,6 @@
                                     <li class="mg-nav-item nav-link"> <a href="product-details.html">product-details</a></li>
                                     <li class="mg-nav-item nav-link"> <a href="cart.html">cart</a></li>
                                     <li class="mg-nav-item nav-link"> <a href="index-rental.html">rental</a></li>
-
-
-
                                 </ul>
                             </li>
                         </ul>
@@ -395,47 +392,63 @@
     <section class="albums pt-80 pb-80">
         <div class="container">
             <div class="row align-items-center">
-    <% testimonies.forEach((testimony) => { %>
-    <div class="col-lg-4 col-md-6 text-center">
-        <div class="album-gl album-gl2">
-            <img src="<%= testimony.image %>" alt="Testimony Image">
-            <h3 class="fs-25 f-700 mb-20 mt-20"><%= testimony.firstname %> <%= testimony.lastname %></h3>
-            <p class="mb-15 testimony-message"><%= testimony.testimony %></p>
-            <a href="/testimony/<%= testimony.uuid %>" class="f-700 yellow fs-14 uppercase">ReadMore
-                <i class="fas fa-long-arrow-alt-right ml-10"></i>
-            </a>
-        </div>
-    </div>
-    <% }) %>
-    <!-- Pagination section on the next line and centered -->
-<div class="pagination-wrapper">
-  <div class="pagination-sml text-center" style="padding-top: 30px">
-    <ul>
-      <!-- Previous page link -->
-      <% if (pagination.currentPage > 1) { %>
-      <li><a href="?page=<%= pagination.currentPage - 1 %>">
-        <i class="fas fa-angle-double-left"></i></a>
-      </li>
-      <% } %>
+                <% if (testimonies.length > 0) { %>
+                    <% testimonies.forEach((testimony) => { %>
+                        <div class="col-lg-4 col-md-6 text-center">
+                            <div class="album-gl album-gl2">
+                                <img src="<%= testimony.image %>" alt="Testimony Image">
+                                <h3 class="fs-25 f-700 mb-20 mt-20">
+                                    <%= testimony.firstname %> <%= testimony.lastname %>
+                                </h3>
+                                <p class="mb-15 testimony-message"><%= testimony.testimony %></p>
+                                <a href="/testimony/<%= testimony.uuid %>" class="f-700 yellow fs-14 uppercase">
+                                    Read More
+                                    <i class="fas fa-long-arrow-alt-right ml-10"></i>
+                                </a>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="col-12 text-center">
+                        <h1 class="fs-35 f-800">No testimonies at the moment</h1>
+                    </div>
+                <% } %>
+            </div>
 
-      <!-- Pagination numbers -->
-      <% for (let i = 1; i <= pagination.totalPages; i++) { %>
-      <li class="<%= pagination.currentPage === i ? 'active' : '' %>">
-        <a href="?page=<%= i %>"><%= i %></a>
-      </li>
-      <% } %>
+            <!-- Pagination section -->
+            <div class="pagination-wrapper">
+                <div class="pagination-sml text-center" style="padding-top: 30px">
+                    <ul>
+                        <!-- Previous page link -->
+                        <% if (pagination.currentPage > 1) { %>
+                            <li>
+                                <a href="?page=<%= pagination.currentPage - 1 %>">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                        <% } %>
 
-      <!-- Next page link -->
-      <% if (pagination.currentPage < pagination.totalPages) { %>
-      <li><a href="?page=<%= pagination.currentPage + 1 %>">
-        <i class="fas fa-angle-double-right"></i></a>
-      </li>
-      <% } %>
-    </ul>
-  </div>
-</div>
+                        <!-- Pagination numbers -->
+                        <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                            <li class="<%= pagination.currentPage === i ? 'active' : '' %>">
+                                <a href="?page=<%= i %>"><%= i %></a>
+                            </li>
+                        <% } %>
+
+                        <!-- Next page link -->
+                        <% if (pagination.currentPage < pagination.totalPages) { %>
+                            <li>
+                                <a href="?page=<%= pagination.currentPage + 1 %>">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
+
     <!-- Album gallery end -->
     <!-- cta start -->
     <section class="cta bg-yellow pt-30 pb-30">

@@ -5,9 +5,12 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Testimony } from './testimony.entity';
 import { Users } from '../users/users.entity';
 import { Category } from '../category/category.entity';
+import { Comment } from '../comment/comment.entity';
+import { UsersModule } from '../users/users.module';
+import { CommentModule } from '../comment/comment.module';
 
 @Module({
-  imports: [MikroOrmModule.forFeature({ entities: [Testimony, Users, Category] })],
+  imports: [MikroOrmModule.forFeature({ entities: [Testimony, Users, Category, Comment] }), UsersModule, CommentModule],
   controllers: [TestimonyController],
   providers: [TestimonyService],
   exports: [TestimonyService],

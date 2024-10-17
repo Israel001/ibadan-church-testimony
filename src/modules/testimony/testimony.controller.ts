@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Query,
+  Render,
   Session,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -25,11 +26,22 @@ export class TestimonyController {
 
   @Get()
   fetchTestimonies(@Query() query: PaginationQuery) {
+    console.log('query', query);
     return this.testimonyService.fetchTestimonies(query.pagination);
   }
 
   @Get(':uuid')
   fetchTestimony(@Param('uuid') uuid: string) {
     return this.testimonyService.fetchTestimony(uuid);
+  }
+
+  @Get('surround/:uuid')
+  fetchSurroundingTestimonies(@Param('uuid') uuid: string) {
+    return this.testimonyService.fetchTestimonyWithSurrounding(uuid);
+  }
+
+  @Get('category/get')
+  fetchTestimoniesByCategory() {
+    return this.testimonyService.getTestimoniesGroupedByCategory();
   }
 }

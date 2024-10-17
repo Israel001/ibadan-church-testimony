@@ -38,6 +38,6 @@ export class AppController {
   @Get('testimony/:uuid')
   @Render('view-testimony')
   viewTestimony(@Param('uuid') uuid: string) {
-    return { uuid };
+    return this.testimonyService.fetchTestimonyWithSurrounding(uuid);
   }
 }

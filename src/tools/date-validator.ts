@@ -5,14 +5,14 @@ import {
   ValidatorConstraintInterface,
   registerDecorator,
 } from 'class-validator';
-import * as DateFNS from 'date-fns';
+import * as DateFNS from "date-fns"
 
 // Accepts: YYYY-MM-DD
 @ValidatorConstraint()
 class IsValidDateConstraint implements ValidatorConstraintInterface {
   validate(value: any) {
     if (typeof value !== 'string') return false;
-    return DateFNS.isValid(DateFNS.parseISO(value));
+    return DateFNS.isValid(DateFNS.parse(value));
   }
 
   defaultMessage(args?: ValidationArguments): string {

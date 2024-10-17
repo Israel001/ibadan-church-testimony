@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post, Render } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CategoryService } from './category.service';
 
@@ -9,7 +9,23 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Get()
-  fetchCategories() {
-    return this.categoryService.fetchCategories();
+  async fetchCategories() {
+    try {
+      const categories = await this.categoryService.fetchCategories();
+      console.log(categories, 'categories');
+      return { categories };
+    } catch (err) {
+      console.log('Error fetching categories:', err);
+    }
+  }
+
+  @Post()
+  createCategory(@Body() body: any) {
+    try {
+      const category = this.categoryService.createCategory(body);
+      return { category };
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
