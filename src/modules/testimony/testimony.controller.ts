@@ -26,7 +26,6 @@ export class TestimonyController {
 
   @Get()
   fetchTestimonies(@Query() query: PaginationQuery) {
-    console.log('query', query);
     return this.testimonyService.fetchTestimonies(query.pagination);
   }
 
