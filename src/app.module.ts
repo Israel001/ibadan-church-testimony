@@ -9,6 +9,7 @@ import { TestimonyModule } from './modules/testimony/testimony.module';
 import { CategoryModule } from './modules/category/category.module';
 import { AppController } from './app.controller';
 import { CommentModule } from './modules/comment/comment.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { CommentModule } from './modules/comment/comment.module';
     AuthModule,
     TestimonyModule,
     CategoryModule,
-    CommentModule
+    CommentModule,
+    AdminModule,
   ],
   controllers: [AppController],
 })

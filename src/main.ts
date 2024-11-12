@@ -33,6 +33,7 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');
   app.useStaticAssets(join(__dirname, '..', 'assets'));
+  app.useStaticAssets(join(__dirname, '..', 'vendors'), { prefix: '/admin/vendors' });
   const sessionStore = new MySQLStore({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
