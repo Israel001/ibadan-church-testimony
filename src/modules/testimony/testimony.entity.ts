@@ -2,14 +2,12 @@ import {
   Entity,
   Filter,
   ManyToOne,
-  OneToMany,
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
 import { Timestamp } from '../../base/timestamp.entity';
 import { Users } from '../users/users.entity';
 import { Category } from '../category/category.entity';
-import { Comment } from '../comment/comment.entity';
 
 @Filter({
   name: 'notDeleted',

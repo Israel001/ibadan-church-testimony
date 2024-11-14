@@ -43,4 +43,9 @@ export class TestimonyController {
   fetchTestimoniesByCategory() {
     return this.testimonyService.getTestimoniesGroupedByCategory();
   }
+
+  @Post(':uuid')
+  updateTestimony(@Param('uuid') uuid: string, @Body() body: CreateTestimonyDto) {
+    return this.testimonyService.updateTestimony(uuid, body);
+  }
 }

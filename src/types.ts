@@ -1,3 +1,5 @@
+import { AdminRoles } from "./modules/admin/admin.entities";
+
 export enum OrderDir {
   ASC = 'ASC',
   DESC = 'DESC',
@@ -17,4 +19,15 @@ export interface IAuthContext {
   fullname: string;
   email: string;
   uuid: string;
+}
+
+export interface RoleDecoratorOptionsInterface {
+  roles: string[];
+}
+
+export interface IAdminAuthContext {
+  name: string;
+  email: string;
+  adminUserUuid: string;
+  role: AdminRoles;
 }

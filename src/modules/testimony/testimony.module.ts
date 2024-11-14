@@ -13,6 +13,6 @@ import { CommentModule } from '../comment/comment.module';
   imports: [MikroOrmModule.forFeature({ entities: [Testimony, Users, Category, Comment] }), UsersModule, CommentModule],
   controllers: [TestimonyController],
   providers: [TestimonyService],
-  exports: [TestimonyService],
+  exports: [TestimonyService,],
 })
 export class TestimonyModule {}
