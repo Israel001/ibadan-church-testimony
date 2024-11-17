@@ -28,7 +28,8 @@ export class AdminRoleGuard implements CanActivate {
     return (
       allowUnauthorizedRequest ||
       combinedRoles.some(
-        (r) => r.toLowerCase() === request.user.role.name.toLowerCase(),
+        (r) =>
+          r.toLowerCase() === request.session.user?.role?.name?.toLowerCase(),
       )
     );
   }

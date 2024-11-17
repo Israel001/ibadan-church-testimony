@@ -1,8 +1,14 @@
-import { AdminRoles } from "./modules/admin/admin.entities";
+import { AdminRoles } from './modules/admin/admin.entities';
 
 export enum OrderDir {
   ASC = 'ASC',
   DESC = 'DESC',
+}
+
+export enum TestimonyStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
 }
 
 export interface IEmailDto {

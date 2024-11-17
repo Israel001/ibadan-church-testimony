@@ -1,5 +1,6 @@
 import {
   Entity,
+  Enum,
   Filter,
   ManyToOne,
   PrimaryKey,
@@ -8,6 +9,7 @@ import {
 import { Timestamp } from '../../base/timestamp.entity';
 import { Users } from '../users/users.entity';
 import { Category } from '../category/category.entity';
+import { TestimonyStatus } from '../../types';
 
 @Filter({
   name: 'notDeleted',
@@ -53,8 +55,8 @@ export class Testimony extends Timestamp {
   @Property({ default: false })
   isFeatured: boolean;
 
-  @Property({ default: false })
-  published: boolean;
+  @Enum({ items: () => TestimonyStatus })
+  status: TestimonyStatus;
 
   @Property()
   image: string;

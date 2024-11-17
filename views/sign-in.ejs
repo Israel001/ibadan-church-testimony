@@ -837,8 +837,6 @@
             password: password,
           };
 
-          console.log(data);
-
           // Send the form data to the server using Fetch API (AJAX)
           fetch('auth/login', {
             method: 'POST',
@@ -846,29 +844,12 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-          })
-            .then((response) => response.json()) // Parse the response as JSON
-            .then((data) => {
-              console.log('Data:', data);
-              if (data.accessToken) {
-                // Redirect to the dashboard or wherever after successful login
-
-                fetch('/admin/dashboard', {
-                  headers: {
-                    Authorization: `Bearer ${data.accessToken}`, // Send the JWT token in the Authorization header
-                  },
-                  redirect: 'follow', // Follow redirects
-                })
-              } else {
-                // Display an error message if login failed
-                alert('Login failed. Please check your credentials.');
-              }
-            })
-            .catch((error) => {
-              // Handle errors
-              console.error('Error:', error);
-              alert('An error occurred while logging in.');
-            });
+          }).then((response) => {
+            if (response.ok) {
+              console.log('here???');
+              window.location.href = '/admin/dashboard';
+            }
+          });
         });
 
         // Redirect to sign-up page when "Create an account" is clicked

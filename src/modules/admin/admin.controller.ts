@@ -1,53 +1,36 @@
-import { Body, Controller, Get, Param, Post, Query, Render, Req, Session, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Render,
+  Res,
+  Session,
+  UseGuards,
+} from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AllowUnauthorizedRequest } from 'src/decorators/unauthorized.decorator';
-import { AdminLocalAuthGuard } from './guards/local-auth-guard';
 import * as dtos from './dto';
-import { AdminJwtAuthGuard } from './guards/jwt-auth-guard';
-import { AdminRoleGuard } from './guards/role-guard';
+import { Response } from 'express';
+import { AdminAuthGuard } from './guards/auth-guard';
 
 @Controller('admin')
-@UseGuards(AdminJwtAuthGuard, AdminRoleGuard)
+@UseGuards(AdminAuthGuard)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Get('dashboard')
   @Render('dashboard')
-  async dashboard(
-    @Query('page') page: string,
-    @Query('limit') limit: string,
-    @Session() session: any,
-  ) {
-    const intPage = (page && Number(page)) || 1;
-    const intLimit = (limit && Number(limit)) || 6;
-    const response = await this.adminService.fetchTestimonies({
-      page: intPage,
-      limit: intLimit,
-    });
-    const loggedIn = !!session.userId;
-    const unpublished = response.data.filter(
-      (testimony: any) => !testimony.published,
-    ).length;
-    const published = response.data.filter(
-      (testimony: any) => testimony.published,
-    ).length;
-    return {
-      testimonies: response.data,
-      pagination: {
-        currentPage: response.pagination.page,
-        totalPages: response.pagination.pages,
-      },
-      unpublished: unpublished,
-      published: published,
-      loggedIn,
-    };
+  async dashboard(@Res() res: Response) {
+    const result = await this.adminService.fetchDashboardData();
+    return result;
   }
 
   @Post('auth/login')
   @AllowUnauthorizedRequest()
-  @UseGuards(AdminLocalAuthGuard)
-  login(@Body() _body: dtos.AdminLoginDTO, @Req() req: any) {
-    return this.adminService.login(req.user);
+  async login(@Body() body: dtos.AdminLoginDTO, @Session() session: any) {
+    return this.adminService.login(body, session);
   }
 
   @Get('forgot-password')

@@ -9,6 +9,7 @@ import { Category } from '../category/category.entity';
 import { PaginationInput } from 'src/base/dto';
 import { buildResponseDataWithPagination } from 'src/utils';
 import { CommentService } from '../comment/comment.service';
+import { TestimonyStatus } from 'src/types';
 
 @Injectable()
 export class TestimonyService {
@@ -40,7 +41,7 @@ export class TestimonyService {
         : null,
       anonymous: testimonyDto.anonymous,
       isFeatured: false,
-      published: false,
+      status: TestimonyStatus.PENDING,
       image: testimonyDto.image,
       testimony: testimonyDto.testimony,
       ...(session.userId
@@ -91,7 +92,7 @@ export class TestimonyService {
   async fetchTestimonies(pagination: PaginationInput) {
     const { page = 1, limit = 20 } = pagination;
     const [testimonies, total] = await this.testimonyRepository.findAndCount(
-      { published: true },
+      { status: TestimonyStatus.APPROVED },
       {
         orderBy: {
           isFeatured: 'DESC',
@@ -115,12 +116,18 @@ export class TestimonyService {
     const byCategory = await this.getTestimoniesGroupedByCategory();
 
     const previousTestimony = await this.testimonyRepository.findOne(
-      { createdAt: { $lt: testimony.createdAt }, published: true },
+      {
+        createdAt: { $lt: testimony.createdAt },
+        status: TestimonyStatus.APPROVED,
+      },
       { orderBy: { createdAt: 'DESC' } },
     );
 
     const nextTestimony = await this.testimonyRepository.findOne(
-      { createdAt: { $gt: testimony.createdAt }, published: true },
+      {
+        createdAt: { $gt: testimony.createdAt },
+        status: TestimonyStatus.APPROVED,
+      },
       { orderBy: { createdAt: 'ASC' } },
     );
 
@@ -144,7 +151,7 @@ export class TestimonyService {
 
   async getRandomTestimonies(): Promise<Testimony[]> {
     const allTestimonies = await this.testimonyRepository.find({
-      published: true,
+      status: TestimonyStatus.APPROVED,
     });
 
     if (allTestimonies.length <= 5) {
@@ -185,7 +192,7 @@ export class TestimonyService {
     console.log('getTestimoniesGroupedByCategory');
     // Fetch all testimonies
     const testimonies: Testimony[] = await this.testimonyRepository.find({
-      published: true,
+      status: TestimonyStatus.APPROVED,
     });
 
     // Group testimonies by category

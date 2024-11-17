@@ -7,6 +7,7 @@ import { BasePaginatedResponseDto } from './base/dto';
 import { AppModule } from './app.module';
 import { join } from 'path';
 import session from 'express-session';
+import passport from 'passport';
 const MySQLStore = require('express-mysql-session')(session);
 
 async function bootstrap() {
@@ -51,6 +52,9 @@ async function bootstrap() {
       cookie: { maxAge: 86400000 },
     }),
   );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   await app.listen(process.env.PORT || 8080, () => {
     new Logger().log(`API is started on PORT ${process.env.PORT || 8080}...`);

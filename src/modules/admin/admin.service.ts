@@ -15,9 +15,11 @@ import { buildResponseDataWithPagination } from 'src/utils';
 import { CommentService } from '../comment/comment.service';
 import { AdminUser } from './admin.entities';
 import bcrypt from 'bcryptjs';
-import { IAdminAuthContext } from 'src/types';
+import { IAdminAuthContext, TestimonyStatus } from 'src/types';
 import { JwtService } from '@nestjs/jwt';
-
+import { Response } from 'express';
+import { AdminLoginDTO } from './dto';
+import { Comment } from '../comment/comment.entity';
 
 @Injectable()
 export class AdminService {
@@ -30,6 +32,8 @@ export class AdminService {
     private readonly adminUserRepository: EntityRepository<AdminUser>,
     @InjectRepository(Category)
     private readonly categoryRepository: EntityRepository<Category>,
+    @InjectRepository(Comment)
+    private readonly commentRepository: EntityRepository<Comment>,
     private readonly commentService: CommentService,
     private readonly em: EntityManager,
     private readonly jwtService: JwtService,
@@ -52,7 +56,7 @@ export class AdminService {
         : null,
       anonymous: testimonyDto.anonymous,
       isFeatured: false,
-      published: false,
+      status: TestimonyStatus.PENDING,
       image: testimonyDto.image,
       testimony: testimonyDto.testimony,
       ...(session.userId
@@ -100,6 +104,37 @@ export class AdminService {
     }
   }
 
+  async fetchDashboardData() {
+    const [
+      pendingTestimonies,
+      activeTestimonies,
+      rejectedTestimonies,
+      allUsers,
+      allComments,
+      allAdmins,
+    ] = await Promise.all([
+      this.testimonyRepository.count({ status: TestimonyStatus.PENDING }),
+      this.testimonyRepository.count({ status: TestimonyStatus.APPROVED }),
+      this.testimonyRepository.count({ status: TestimonyStatus.REJECTED }),
+      this.usersRepository.count(),
+      this.commentRepository.count(),
+      this.adminUserRepository.count(),
+    ]);
+  
+    const allTestimonies =
+      pendingTestimonies + activeTestimonies + rejectedTestimonies;
+  
+    return {
+      pendingTestimonies,
+      activeTestimonies,
+      rejectedTestimonies,
+      allUsers,
+      allComments,
+      allTestimonies,
+      allAdmins,
+    };
+  }
+
   async fetchTestimonies(pagination: PaginationInput) {
     const { page = 1, limit = 20 } = pagination;
     const testimonies = await this.testimonyRepository.findAll();
@@ -120,7 +155,7 @@ export class AdminService {
 
   async fetchUnpublishedTestimonies(): Promise<Testimony[]> {
     return await this.testimonyRepository.find({
-      published: false,
+      status: TestimonyStatus.PENDING,
     });
   }
 
@@ -138,7 +173,8 @@ export class AdminService {
     });
   }
 
-  async login(user: AdminUser) {
+  async login(request: AdminLoginDTO, session: any) {
+    const user = await this.validateUser(request.email, request.password);
     const payload: IAdminAuthContext = {
       name: user.fullName,
       email: user.email,
@@ -149,10 +185,8 @@ export class AdminService {
     delete userInfo.password;
     delete userInfo.createdAt;
     delete userInfo.updatedAt;
-    return {
-      accessToken: this.jwtService.sign(payload),
-      user: userInfo,
-    };
+    session.user = payload;
+    return user;
   }
 
   async getTestimoniesGroupedByCategory(): Promise<{
@@ -160,7 +194,7 @@ export class AdminService {
   }> {
     // Fetch all testimonies
     const testimonies: Testimony[] = await this.testimonyRepository.find({
-      published: true,
+      status: TestimonyStatus.APPROVED,
     });
 
     // Group testimonies by category

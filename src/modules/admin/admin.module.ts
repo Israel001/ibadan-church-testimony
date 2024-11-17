@@ -21,7 +21,7 @@ import { JwtAuthConfiguration } from 'src/config/configuration';
 import { JwtModule } from '@nestjs/jwt';
 import { AdminJwtStrategy } from './strategies/jwt.strategy';
 import { AdminLocalStrategy } from './strategies/local.strategy';
-
+import { AdminAuthGuard } from './guards/auth-guard';
 
 @Module({
   imports: [
@@ -37,7 +37,7 @@ import { AdminLocalStrategy } from './strategies/local.strategy';
     CommentModule,
     AdminModule,
     UsersModule,
-    PassportModule,
+    PassportModule.register({ session: true }),
     ConfigModule.forFeature(JwtAuthConfiguration),
     JwtModule.registerAsync({
       imports: [ConfigModule.forFeature(JwtAuthConfiguration)],
@@ -48,7 +48,12 @@ import { AdminLocalStrategy } from './strategies/local.strategy';
       inject: [JwtAuthConfiguration.KEY],
     }),
   ],
-  providers: [AdminService, AdminJwtStrategy, AdminLocalStrategy],
+  providers: [
+    AdminService,
+    AdminJwtStrategy,
+    AdminLocalStrategy,
+    AdminAuthGuard,
+  ],
   controllers: [AdminController],
   exports: [AdminService],
 })
