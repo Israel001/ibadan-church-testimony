@@ -18,8 +18,15 @@ import bcrypt from 'bcryptjs';
 import { IAdminAuthContext, TestimonyStatus } from 'src/types';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
-import { AdminLoginDTO } from './dto';
+import {
+  AdminLoginDTO,
+  CreateAdminTestimonyDto,
+  UpdateCommentDto,
+  UpdateTestimonyDto,
+} from './dto';
 import { Comment } from '../comment/comment.entity';
+import { CreateCategoryDto } from '../category/category.dto';
+import { CreateCommentDto } from '../comment/comment.dto';
 
 @Injectable()
 export class AdminService {
@@ -40,8 +47,7 @@ export class AdminService {
   ) {}
 
   async createTestimony(
-    testimonyDto: CreateTestimonyDto,
-    session: any,
+    testimonyDto: CreateAdminTestimonyDto,
   ): Promise<Testimony> {
     const testimonyModel = this.testimonyRepository.create({
       uuid: v4(),
@@ -59,24 +65,89 @@ export class AdminService {
       status: TestimonyStatus.PENDING,
       image: testimonyDto.image,
       testimony: testimonyDto.testimony,
-      ...(session.userId
-        ? { user: this.usersRepository.getReference(session.userId) }
-        : {}),
     });
 
     await this.em.persistAndFlush(testimonyModel);
     return testimonyModel;
   }
 
+  async createCategory(category: CreateCategoryDto) {
+    const categoryModel = this.categoryRepository.create({
+      uuid: v4(),
+      name: category.name,
+    });
+    await this.em.persistAndFlush(categoryModel);
+    return categoryModel;
+  }
+
+  async createComment(uuid: string, comment: CreateCommentDto) {
+    const testimony = await this.testimonyRepository.find({
+      uuid,
+    });
+    if (!testimony) throw new NotFoundException('Testimony not found');
+    const commentModel = this.commentRepository.create({
+      uuid: v4(),
+      name: comment.name,
+      email: comment.email,
+      comment: comment.comment,
+      testimony,
+    });
+    await this.em.persistAndFlush(commentModel);
+    return comment;
+  }
+
+  async fetchCategories() {
+    return this.categoryRepository.findAll();
+  }
+
+  async fetchComments(uuid: string) {
+    return this.commentRepository.find({ testimony: { uuid } });
+  }
+
+  async updateCategory(uuid: string, { name }: CreateCategoryDto) {
+    return this.categoryRepository.nativeUpdate({ uuid }, { name });
+  }
+
+  async updateComment(uuid: string, comment: UpdateCommentDto) {
+    return this.commentRepository.nativeUpdate({ uuid }, { ...comment });
+  }
+
+  async deleteCategory(uuid: string) {
+    return this.categoryRepository.nativeDelete({ uuid });
+  }
+
+  async deleteComment(uuid: string) {
+    return this.commentRepository.nativeDelete({ uuid });
+  }
+
+  async fetchToptestimonies() {
+    const sql = `
+    SELECT 
+      firstname, 
+      lastname, 
+      COUNT(*) AS testimony_count
+    FROM 
+      testimonies
+    GROUP BY 
+      firstname, lastname
+    ORDER BY 
+      testimony_count DESC
+    LIMIT 10
+  `;
+
+    const result = await this.em.getConnection().execute(sql);
+    return result;
+  }
+
   async updateTestimony(
     uuid: string,
-    updates: Partial<CreateTestimonyDto>,
+    updates: UpdateTestimonyDto,
   ): Promise<Testimony> {
     try {
       const testimony = await this.testimonyRepository.findOne({ uuid });
 
       if (!testimony) {
-        throw new Error('Testimony not found');
+        throw new NotFoundException('Testimony not found');
       }
 
       if (updates.firstname) testimony.firstname = updates.firstname;
@@ -92,6 +163,7 @@ export class AdminService {
       }
       if (updates.anonymous !== undefined)
         testimony.anonymous = updates.anonymous;
+      if (updates.status) testimony.status = updates.status;
       if (updates.testimony) testimony.testimony = updates.testimony;
       if (updates.image) testimony.image = updates.image; // Update the image if a new file is uploaded
 
@@ -100,7 +172,7 @@ export class AdminService {
       return testimony;
     } catch (error) {
       console.error('Error updating testimony:', error);
-      throw new Error('Failed to upload testimony');
+      throw new Error('Failed to update testimony');
     }
   }
 
@@ -120,10 +192,10 @@ export class AdminService {
       this.commentRepository.count(),
       this.adminUserRepository.count(),
     ]);
-  
+
     const allTestimonies =
       pendingTestimonies + activeTestimonies + rejectedTestimonies;
-  
+
     return {
       pendingTestimonies,
       activeTestimonies,
@@ -135,10 +207,20 @@ export class AdminService {
     };
   }
 
-  async fetchTestimonies(pagination: PaginationInput) {
+  async fetchTestimonies(
+    pagination: PaginationInput,
+    status?: TestimonyStatus,
+  ) {
     const { page = 1, limit = 20 } = pagination;
-    const testimonies = await this.testimonyRepository.findAll();
-    const total = testimonies.length;
+    const [testimonies, total] = await this.testimonyRepository.findAndCount(
+      {
+        ...(status ? { status } : {}),
+      },
+      {
+        limit,
+        offset: limit * (page - 1),
+      },
+    );
     return buildResponseDataWithPagination(testimonies, total, { page, limit });
   }
 
@@ -154,9 +236,12 @@ export class AdminService {
   }
 
   async fetchUnpublishedTestimonies(): Promise<Testimony[]> {
-    return await this.testimonyRepository.find({
-      status: TestimonyStatus.PENDING,
-    });
+    return await this.testimonyRepository.find(
+      {
+        status: TestimonyStatus.PENDING,
+      },
+      { limit: 5 },
+    );
   }
 
   async validateUser(email: string, password: string) {

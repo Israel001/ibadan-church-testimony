@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { v4 } from 'uuid';
@@ -20,7 +20,7 @@ export class CommentService {
     const testimony = await this.testimonyRepository.findOneOrFail({
       uuid: testimonyUuid,
     });
-
+    if (!testimony) throw new NotFoundException('Testimony not found');
     const comment = this.commentRepository.create({
       uuid: v4(),
       name: createCommentDto.name,

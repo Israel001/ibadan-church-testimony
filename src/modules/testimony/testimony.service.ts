@@ -30,8 +30,8 @@ export class TestimonyService {
   ): Promise<Testimony> {
     const testimonyModel = this.testimonyRepository.create({
       uuid: v4(),
-      firstname: testimonyDto.firstname,
-      lastname: testimonyDto.lastname,
+      firstname: testimonyDto.firstname.trim(),
+      lastname: testimonyDto.lastname.trim(),
       email: testimonyDto.email,
       address: testimonyDto.address,
       country: testimonyDto.country,
@@ -100,6 +100,7 @@ export class TestimonyService {
         },
         limit,
         offset: (page - 1) * limit,
+        populate: ['user'],
       },
     );
     return buildResponseDataWithPagination(testimonies, total, { page, limit });

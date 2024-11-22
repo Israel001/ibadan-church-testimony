@@ -1,19 +1,23 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseEnumPipe,
   Post,
+  Put,
+  Query,
   Render,
-  Res,
   Session,
   UseGuards,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AllowUnauthorizedRequest } from 'src/decorators/unauthorized.decorator';
 import * as dtos from './dto';
-import { Response } from 'express';
 import { AdminAuthGuard } from './guards/auth-guard';
+import { TestimonyStatus } from 'src/types';
+import { CreateCommentDto } from '../comment/comment.dto';
 
 @Controller('admin')
 @UseGuards(AdminAuthGuard)
@@ -22,9 +26,10 @@ export class AdminController {
 
   @Get('dashboard')
   @Render('dashboard')
-  async dashboard(@Res() res: Response) {
+  async dashboard() {
     const result = await this.adminService.fetchDashboardData();
-    return result;
+    const topTestimonies = await this.adminService.fetchToptestimonies();
+    return { dashboardData: result, topTestimonies };
   }
 
   @Post('auth/login')
@@ -73,11 +78,95 @@ export class AdminController {
     return {};
   }
 
+  @Post('create-testimony')
+  createTestimony(@Body() body: dtos.CreateAdminTestimonyDto) {
+    return this.adminService.createTestimony(body);
+  }
+
+  @Post('category')
+  createCategory(@Body() body: dtos.CreateCategoryDto) {
+    return this.adminService.createCategory(body);
+  }
+
+  @Post('testimony/:uuid/comment')
+  createComment(@Param('uuid') uuid: string, @Body() body: CreateCommentDto) {
+    return this.adminService.createComment(uuid, body);
+  }
+
+  @Get('categories')
+  fetchCategories() {
+    return this.adminService.fetchCategories();
+  }
+
+  @Get('testimony/:uuid/comments')
+  fetchComments(@Param('uuid') uuid: string) {
+    return this.adminService.fetchComments(uuid);
+  }
+
+  @Put('category/:uuid')
+  updateCategory(
+    @Param('uuid') uuid: string,
+    @Body() body: dtos.CreateCategoryDto,
+  ) {
+    return this.adminService.updateCategory(uuid, body);
+  }
+
+  @Put('testimony/:uuid/comments/:commentUuid')
+  updateComment(
+    @Param('commentUuid') commentUuid: string,
+    @Body() body: dtos.UpdateCommentDto,
+  ) {
+    return this.adminService.updateComment(commentUuid, body);
+  }
+
+  @Delete('category/:uuid')
+  deleteCategory(@Param('uuid') uuid: string) {
+    return this.adminService.deleteCategory(uuid);
+  }
+
+  @Delete('testimony/:uuid/comments/:commentUuid')
+  deleteComment(@Param('commentUuid') commentUuid: string) {
+    return this.adminService.deleteComment(commentUuid);
+  }
+
   @Get('view-testimony/:uuid')
   @Render('view_testimony')
   async viewTestimony(@Param('uuid') uuid: string) {
-    const testimony = await this.adminService.fetchTestimony(uuid);
-    console.log(testimony);
-    return testimony;
+    const result = await this.adminService.fetchTestimony(uuid);
+    return result;
+  }
+
+  @Get('testimonies')
+  @Render('testimonies')
+  async fetchTestimonies(
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+    @Query('status', new ParseEnumPipe(TestimonyStatus))
+    status: TestimonyStatus,
+  ) {
+    const intPage = (page && Number(page)) || 1;
+    const intLimit = (limit && Number(limit)) || 20;
+    const response = await this.adminService.fetchTestimonies(
+      {
+        page: intPage,
+        limit: intLimit,
+      },
+      status,
+    );
+    return {
+      testimonies: response.data,
+      pagination: {
+        currentPage: response.pagination.page,
+        totalPages: response.pagination.pages,
+      },
+    };
+  }
+
+  @Put('testimony/:uuid')
+  async updateTestimony(
+    @Param('uuid') uuid: string,
+    @Body() body: dtos.UpdateTestimonyDto,
+  ) {
+    return this.adminService.updateTestimony(uuid, body);
   }
 }

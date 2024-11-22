@@ -571,13 +571,13 @@
         },
         "phone_number": {
           "name": "phone_number",
-          "type": "int",
+          "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": null,
-          "mappedType": "integer"
+          "length": 255,
+          "mappedType": "string"
         },
         "category": {
           "name": "category",

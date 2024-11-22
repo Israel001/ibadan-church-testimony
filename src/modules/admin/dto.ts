@@ -1,7 +1,15 @@
-import { Type } from "class-transformer";
-import { IsOptional, IsString, ValidateNested } from "class-validator";
-import { PaginationInput } from "src/base/dto";
-import { IsValidDate } from "src/tools/date-validator";
+import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { PaginationInput } from 'src/base/dto';
+import { IsValidDate } from 'src/tools/date-validator';
+import { TestimonyStatus } from 'src/types';
 
 export class AdminLoginDTO {
   @IsString()
@@ -11,27 +19,9 @@ export class AdminLoginDTO {
   password: string;
 }
 
-export class CreateMainCategoryDto {
+export class CreateCategoryDto {
   @IsString()
   name: string;
-
-  @IsString()
-  description: string;
-
-  featuredImage: string;
-}
-
-export class UpdateMainCategoryDto {
-  @IsString()
-  @IsOptional()
-  name: string;
-
-  @IsString()
-  @IsOptional()
-  description: string;
-
-  @IsOptional()
-  featuredImage: string;
 }
 
 export class CustomerFilter {
@@ -67,4 +57,106 @@ export class CustomerQuery {
   @ValidateNested()
   @Type(() => PaginationInput)
   pagination?: PaginationInput;
+}
+
+export class UpdateTestimonyDto {
+  @IsString()
+  @IsOptional()
+  firstname: string;
+
+  @IsString()
+  @IsOptional()
+  lastname: string;
+
+  @IsEmail()
+  @IsOptional()
+  email: string;
+
+  @IsString()
+  @IsOptional()
+  address: string;
+
+  @IsString()
+  @IsOptional()
+  country: string;
+
+  @IsString()
+  @IsOptional()
+  phoneNumber: string;
+
+  @IsString()
+  @IsOptional()
+  categoryUuid: string;
+
+  @IsBoolean()
+  @IsOptional()
+  anonymous: boolean;
+
+  @IsString()
+  @IsOptional()
+  image: string;
+
+  @IsString()
+  @IsOptional()
+  testimony: string;
+
+  @IsString()
+  @IsOptional()
+  userUuid: string;
+
+  @IsEnum(TestimonyStatus)
+  @IsOptional()
+  status: TestimonyStatus;
+}
+
+export class CreateAdminTestimonyDto {
+  @IsString()
+  firstname: string;
+
+  @IsString()
+  lastname: string;
+
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  address: string;
+
+  @IsString()
+  country: string;
+
+  @IsString()
+  phoneNumber: string;
+
+  @IsString()
+  categoryUuid: string;
+
+  @IsBoolean()
+  anonymous: boolean;
+
+  @IsBoolean()
+  isFeatured: false;
+
+  @IsEnum(TestimonyStatus)
+  status: TestimonyStatus;
+
+  @IsString()
+  image: string;
+
+  @IsString()
+  testimony: string;
+}
+
+export class UpdateCommentDto {
+  @IsString()
+  @IsOptional()
+  name: string;
+
+  @IsEmail()
+  @IsOptional()
+  email: string;
+
+  @IsString()
+  @IsOptional()
+  comment: string;
 }

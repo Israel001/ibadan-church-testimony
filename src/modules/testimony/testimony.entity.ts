@@ -37,7 +37,7 @@ export class Testimony extends Timestamp {
   country: string;
 
   @Property()
-  phoneNumber: number;
+  phoneNumber: string;
 
   @ManyToOne(() => Category, {
     fieldName: 'category',
@@ -70,7 +70,6 @@ export class Testimony extends Timestamp {
     joinColumn: 'uuid',
     columnType: 'varchar(255)',
     nullable: true,
-    eager: true,
   })
   user: Users;
 }

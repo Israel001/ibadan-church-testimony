@@ -485,13 +485,12 @@
             address: document.getElementById('address').value,
             country: document.getElementById('country').value,
             categoryUuid: document.getElementById('category').value,
-            phoneNumber: +document.getElementById('phoneNumber').value,
+            phoneNumber: document.getElementById('phoneNumber').value,
             anonymous: document.getElementById('anonymous').checked,
             image: imageUrl,
             testimony: message,
           };
 
-          console.log(formDataJson);
           try {
             const postResponse = await fetch('/testimony', {
               method: 'POST',
