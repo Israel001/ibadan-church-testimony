@@ -160,3 +160,9 @@ export class UpdateCommentDto {
   @IsOptional()
   comment: string;
 }
+
+export class TestimonyQuery {
+  @IsOptional()
+  @IsEnum(TestimonyStatus)
+  status: TestimonyStatus;
+}

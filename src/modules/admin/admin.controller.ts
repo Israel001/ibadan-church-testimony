@@ -141,8 +141,7 @@ export class AdminController {
   async fetchTestimonies(
     @Query('page') page: string,
     @Query('limit') limit: string,
-    @Query('status', new ParseEnumPipe(TestimonyStatus))
-    status: TestimonyStatus,
+    @Query() query: dtos.TestimonyQuery,
   ) {
     const intPage = (page && Number(page)) || 1;
     const intLimit = (limit && Number(limit)) || 20;
@@ -151,7 +150,7 @@ export class AdminController {
         page: intPage,
         limit: intLimit,
       },
-      status,
+      query?.status,
     );
     return {
       testimonies: response.data,
