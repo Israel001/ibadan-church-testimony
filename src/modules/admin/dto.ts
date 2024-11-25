@@ -104,6 +104,10 @@ export class UpdateTestimonyDto {
   @IsOptional()
   userUuid: string;
 
+  @IsString()
+  @IsOptional()
+  rejectionReason: string;
+
   @IsEnum(TestimonyStatus)
   @IsOptional()
   status: TestimonyStatus;

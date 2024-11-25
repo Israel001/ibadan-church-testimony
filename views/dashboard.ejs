@@ -58,59 +58,103 @@
     <!--    Main Content-->
     <!-- ===============================================-->
          <main class="main" id="top">
-      <nav class="navbar navbar-vertical navbar-expand-lg" style="display:none;">
+      <nav
+        class="navbar navbar-vertical navbar-expand-lg"
+        style="display: none"
+      >
         <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
-          <!-- scrollbar removed--> 
+          <!-- scrollbar removed-->
           <div class="navbar-vertical-content">
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
               <li class="nav-item">
                 <!-- parent pages-->
 
-                  <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" href="dashboard.html" role="button" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-icon">
-                        <span data-feather="compass"></span></span><span class="nav-link-text-wrapper">
-                          <span class="nav-link-text">Home</span>
-                        </span>
-                      </div>
-                    </a>
-                  </div>
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="http://localhost:8080/admin/dashboard"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">Home</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
 
-                  <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" href="view_testimony.html" role="button" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-icon">
-                        <span data-feather="compass"></span></span><span class="nav-link-text-wrapper">
-                          <span class="nav-link-text">View Testimony</span>
-                        </span>
-                      </div>
-                    </a>
-                  </div>
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="http://localhost:8080/admin/testimonies"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">Testimonies</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
 
-                  <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" href="upload_testimony.html" role="button" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-icon">
-                        <span data-feather="compass"></span></span><span class="nav-link-text-wrapper">
-                          <span class="nav-link-text">Upload Testimony</span>
-                        </span>
-                      </div>
-                    </a>
-                  </div>
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="http://localhost:8080/admin/upload-testimony"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">Upload Testimony</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
 
-                  <div class="nav-item-wrapper">
-                    <a class="nav-link label-1" href="pages/starter.html" role="button" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-icon">
-                        <span data-feather="compass"></span></span><span class="nav-link-text-wrapper">
-                          <span class="nav-link-text">Starter</span>
-                        </span>
-                      </div>
-                    </a>
-                  </div>
-                
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="http://localhost:8080/admin/categories"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">Categories</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
               </li>
             </ul>
           </div>
         </div>
-        <div class="navbar-vertical-footer"><button class="btn navbar-vertical-toggle border-0 fw-semibold w-100 white-space-nowrap d-flex align-items-center"><span class="uil uil-left-arrow-to-left fs-8"></span><span class="uil uil-arrow-from-right fs-8"></span><span class="navbar-vertical-footer-text ms-2">Collapsed View</span></button></div>
+        <div class="navbar-vertical-footer">
+          <button
+            class="btn navbar-vertical-toggle border-0 fw-semibold w-100 white-space-nowrap d-flex align-items-center"
+          >
+            <span class="uil uil-left-arrow-to-left fs-8"></span
+            ><span class="uil uil-arrow-from-right fs-8"></span
+            ><span class="navbar-vertical-footer-text ms-2"
+              >Collapsed View</span
+            >
+          </button>
+        </div>
       </nav>
       <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault" style="display:none;">
         <div class="collapse navbar-collapse justify-content-between">
@@ -4936,21 +4980,17 @@
                 <div class="border-bottom border-translucent">
                   <h5 class="pb-4 border-bottom border-translucent">Top 5 Testimony Occurrence</h5>
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item bg-transparent list-group-crm fw-bold text-body fs-9 py-2">
-                      <div class="d-flex justify-content-between"><span class="fw-normal fs-9 mx-1"> <span class="fw-bold">1. </span>Ayo James </span><span>(65)</span></div>
-                    </li>
-                    <li class="list-group-item bg-transparent list-group-crm fw-bold text-body fs-9 py-2">
-                      <div class="d-flex justify-content-between"><span class="fw-normal mx-1"><span class="fw-bold">2. </span>Vicolas jons</span><span>(74)</span></div>
-                    </li>
-                    <li class="list-group-item bg-transparent list-group-crm fw-bold text-body fs-9 py-2">
-                      <div class="d-flex justify-content-between"><span class="fw-normal fs-9 mx-1"><span class="fw-bold">3.</span>Victor Abel</span><span>(32)</span></div>
-                    </li>
-                    <li class="list-group-item bg-transparent list-group-crm fw-bold text-body fs-9 py-2">
-                      <div class="d-flex justify-content-between"><span class="fw-normal fs-9 mx-1"><span class="fw-bold">4.</span> Simon Joe</span><span>(25)</span></div>
-                    </li>
-                    <li class="list-group-item bg-transparent list-group-crm fw-bold text-body fs-9 py-2">
-                      <div class="d-flex justify-content-between"><span class="fw-normal fs-9 mx-1"> <span class="fw-bold">5.</span> Peace Name</span><span>(23)</span></div>
-                    </li>
+                    <% topTestimonies.forEach((testimony, index) => { %>
+                      <li class="list-group-item bg-transparent list-group-crm fw-bold text-body fs-9 py-2">
+                        <div class="d-flex justify-content-between">
+                          <span class="fw-normal fs-9 mx-1">
+                            <span class="fw-bold"><%= index + 1 %>.</span> 
+                            <%= testimony.firstname %> <%= testimony.lastname %>
+                          </span>
+                          <span>(<%= testimony.testimony_count || 0 %>)</span>
+                        </div>
+                      </li>
+                    <% }); %>
                   </ul>
                 </div>
               </div>
@@ -4960,8 +5000,8 @@
           <div class="col-12 col-xxl-6 mb-3 mb-sm-0">
             <div class="row">
               <div class="col-sm-7 col-md-8 col-xxl-8 mb-md-3 mb-lg-0">
-                <h3>New Contacts by Source</h3>
-                <p class="text-body-tertiary">Payment received across all channels</p>
+                <h3>Overview</h3>
+                <p class="text-body-tertiary">Overview of application numbers</p>
                 <div class="row g-0">
                   <div class="col-6 col-xl-4">
                     <div class="d-flex flex-column flex-center align-items-sm-start flex-md-row justify-content-md-between flex-xxl-column p-3 ps-sm-3 ps-md-4 p-md-3 h-100 border-1 border-bottom border-end border-translucent">
@@ -4977,7 +5017,7 @@
                   </div>
                   <div class="col-6 col-xl-4">
                     <div class="d-flex flex-column flex-center align-items-sm-start flex-md-row justify-content-md-between flex-xxl-column p-3 ps-sm-3 ps-md-4 p-md-3 h-100 border-1 border-bottom border-end border-end-md border-end-xl-0 border-translucent">
-                      <div class="d-flex align-items-center mb-1"><span class="fa-solid fa-square fs-11 me-2 text-info" data-fa-transform="up-2"></span><span class="mb-0 fs-9 text-body">All Testimonies/span></div>
+                      <div class="d-flex align-items-center mb-1"><span class="fa-solid fa-square fs-11 me-2 text-info" data-fa-transform="up-2"></span><span class="mb-0 fs-9 text-body">All Testimonies</div>
                       <h3 class="fw-semibold ms-xl-3 ms-xxl-0 pe-md-2 pe-xxl-0 mb-0 mb-sm-3"><%= dashboardData.allComments %></h3>
                     </div>
                   </div>
@@ -4990,13 +5030,13 @@
                   <div class="col-6 col-xl-4">
                     <div class="d-flex flex-column flex-center align-items-sm-start flex-md-row justify-content-md-between flex-xxl-column p-3 ps-sm-3 ps-md-4 p-md-3 h-100 border-1 border-end border-translucent">
                       <div class="d-flex align-items-center mb-1"><span class="fa-solid fa-square fs-11 me-2 text-danger-lighter" data-fa-transform="up-2"></span><span class="mb-0 fs-9 text-body">Referrals</span></div>
-                      <h3 class="fw-semibold ms-xl-3 ms-xxl-0 pe-md-2 pe-xxl-0 mb-0 mb-sm-3">120</h3>
+                      <h3 class="fw-semibold ms-xl-3 ms-xxl-0 pe-md-2 pe-xxl-0 mb-0 mb-sm-3">0</h3>
                     </div>
                   </div>
                   <div class="col-6 col-xl-4">
                     <div class="d-flex flex-column flex-center align-items-sm-start flex-md-row justify-content-md-between flex-xxl-column p-3 ps-sm-3 ps-md-4 p-md-3 h-100">
                       <div class="d-flex align-items-center mb-1"><span class="fa-solid fa-square fs-11 me-2 text-warning-light" data-fa-transform="up-2"></span><span class="mb-0 fs-9 text-body">Others</span></div>
-                      <h3 class="fw-semibold ms-xl-3 ms-xxl-0 pe-md-2 pe-xxl-0 mb-0 mb-sm-3">35</h3>
+                      <h3 class="fw-semibold ms-xl-3 ms-xxl-0 pe-md-2 pe-xxl-0 mb-0 mb-sm-3">0</h3>
                     </div>
                   </div>
                 </div>
@@ -5007,28 +5047,6 @@
                   <div class="position-absolute rounded-circle bg-primary-subtle top-50 start-50 translate-middle d-flex flex-center" style="height:100px; width:100px;">
                     <h3 class="mb-0 text-primary-dark fw-bolder" data-label="data-label"></h3>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mx-lg-n4">
-          <div class="row g-3 mb-9 mt-n7">
-            <div class="col-xl-5">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h3>Lead Conversion</h3>
-                  <p class="text-body-tertiary mb-0">Stages of deals &amp; conversion</p>
-                  <div class="echart-lead-conversion" style="min-height: 250px;"></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-7">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h3>Revenue Target</h3>
-                  <p class="text-body-tertiary">Country-wise target fulfilment</p>
-                  <div class="echart-revenue-target-conversion" style="min-height: 230px;"></div>
                 </div>
               </div>
             </div>
@@ -5217,6 +5235,58 @@
     <script src="vendors/echarts/echarts.min.js"></script>
     <script src="../js/phoenix-1.js"></script>
     <script src="../js/crm-dashboard.js"></script>
+    <script>
+  const pieChartData = [
+    { value: <%= dashboardData.allUsers %>, name: 'All Users' },
+    { value: <%= dashboardData.allTestimonies %>, name: 'All Testimonies' },
+    { value: <%= dashboardData.allComments %>, name: 'Total Comments' },
+    { value: <%= dashboardData.allAdmins %>, name: 'All Moderators' }
+  ];
+
+  const totalValue = pieChartData.reduce((acc, item) => acc + item.value, 0);
+  document.querySelector('[data-label="data-label"]').innerHTML = totalValue;
+
+  const contactsBySourceChartInit = () => {
+    const e = window.phoenix.utils.getColor;
+    const r = document.querySelector('.echart-contact-by-source');
+    if (r) {
+      const chartInstance = window.echarts.init(r);
+      const options = {
+        color: [
+          e('primary'),
+          e('success'),
+          e('info'),
+          e('warning')
+        ],
+        tooltip: {
+          trigger: 'item',
+          borderWidth: 0,
+          extraCssText: 'z-index: 1000',
+        },
+        series: [
+          {
+            name: 'Dashboard Data',
+            type: 'pie',
+            radius: ['55%', '90%'],
+            startAngle: 90,
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderColor: e('body-bg'),
+              borderWidth: 3,
+            },
+            label: { show: false },
+            emphasis: { label: { show: false } },
+            labelLine: { show: false },
+            data: pieChartData,
+          },
+        ],
+      };
+      chartInstance.setOption(options);
+    }
+  };
+
+  contactsBySourceChartInit();
+</script>
   </body>
 
 </html>

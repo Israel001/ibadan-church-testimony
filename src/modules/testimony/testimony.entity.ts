@@ -61,6 +61,9 @@ export class Testimony extends Timestamp {
   @Property()
   image: string;
 
+  @Property()
+  rejectionReason: string;
+
   @Property({ type: 'longtext' })
   testimony: string;
 

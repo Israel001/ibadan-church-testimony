@@ -94,8 +94,16 @@ export class AdminController {
   }
 
   @Get('categories')
-  fetchCategories() {
-    return this.adminService.fetchCategories();
+  @Render('categories')
+  async fetchCategories() {
+    try {
+      const response = await this.adminService.fetchCategories();
+      console.log('response', response);
+      return { categories: response };
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      return { categories: [] };
+    }
   }
 
   @Get('testimony/:uuid/comments')
@@ -158,6 +166,7 @@ export class AdminController {
         currentPage: response.pagination.page,
         totalPages: response.pagination.pages,
       },
+      query,
     };
   }
 

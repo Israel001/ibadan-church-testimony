@@ -571,13 +571,13 @@
         },
         "phone_number": {
           "name": "phone_number",
-          "type": "int",
+          "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": null,
-          "mappedType": "integer"
+          "length": 255,
+          "mappedType": "string"
         },
         "category": {
           "name": "category",
@@ -611,19 +611,32 @@
           "default": "false",
           "mappedType": "boolean"
         },
-        "published": {
-          "name": "published",
-          "type": "tinyint(1)",
+        "status": {
+          "name": "status",
+          "type": "enum('PENDING','APPROVED','REJECTED')",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": 1,
-          "default": "false",
-          "mappedType": "boolean"
+          "enumItems": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED"
+          ],
+          "mappedType": "enum"
         },
         "image": {
           "name": "image",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "rejection_reason": {
+          "name": "rejection_reason",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,

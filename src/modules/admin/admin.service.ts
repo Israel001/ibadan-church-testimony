@@ -132,7 +132,7 @@ export class AdminService {
       firstname, lastname
     ORDER BY 
       testimony_count DESC
-    LIMIT 10
+    LIMIT 5
   `;
 
     const result = await this.em.getConnection().execute(sql);
@@ -165,7 +165,9 @@ export class AdminService {
         testimony.anonymous = updates.anonymous;
       if (updates.status) testimony.status = updates.status;
       if (updates.testimony) testimony.testimony = updates.testimony;
+      if (updates.rejectionReason) testimony.rejectionReason = updates.rejectionReason;
       if (updates.image) testimony.image = updates.image; // Update the image if a new file is uploaded
+
 
       await this.em.persistAndFlush(testimony);
 
@@ -227,7 +229,7 @@ export class AdminService {
   async fetchTestimony(
     uuid: string,
   ): Promise<{ testimony: Testimony; unpublishedTestimonies: Testimony[] }> {
-    const unpublishedTestimonies = await this.fetchUnpublishedTestimonies();
+    const unpublishedTestimonies = await this.fetchUnpublishedTestimonies(uuid);
     const testimony = await this.testimonyRepository.findOne({ uuid });
     if (!testimony) {
       throw new NotFoundException('Testimony not found');
@@ -235,10 +237,11 @@ export class AdminService {
     return { testimony: testimony, unpublishedTestimonies };
   }
 
-  async fetchUnpublishedTestimonies(): Promise<Testimony[]> {
+  async fetchUnpublishedTestimonies(uuid: string): Promise<Testimony[]> {
     return await this.testimonyRepository.find(
       {
         status: TestimonyStatus.PENDING,
+        uuid: { $ne: uuid } ,
       },
       { limit: 5 },
     );
