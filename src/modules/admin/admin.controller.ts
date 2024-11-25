@@ -66,7 +66,7 @@ export class AdminController {
     return {};
   }
 
-  @Get('sign-up')
+  @Get('create-moderator')
   @Render('sign-up')
   signUp() {
     return {};

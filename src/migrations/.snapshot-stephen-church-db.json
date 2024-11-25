@@ -635,6 +635,16 @@
           "length": 255,
           "mappedType": "string"
         },
+        "rejection_reason": {
+          "name": "rejection_reason",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 255,
+          "mappedType": "string"
+        },
         "testimony": {
           "name": "testimony",
           "type": "longtext",

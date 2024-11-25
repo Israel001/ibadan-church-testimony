@@ -113,6 +113,10 @@ export class AdminService {
   }
 
   async deleteCategory(uuid: string) {
+    await this.testimonyRepository.nativeUpdate(
+      { category: { uuid } },
+      { category: null },
+    );
     return this.categoryRepository.nativeDelete({ uuid });
   }
 
@@ -165,11 +169,18 @@ export class AdminService {
         testimony.anonymous = updates.anonymous;
       if (updates.status) testimony.status = updates.status;
       if (updates.testimony) testimony.testimony = updates.testimony;
-      if (updates.rejectionReason) testimony.rejectionReason = updates.rejectionReason;
+      if (updates.rejectionReason)
+        testimony.rejectionReason = updates.rejectionReason;
       if (updates.image) testimony.image = updates.image; // Update the image if a new file is uploaded
 
-
       await this.em.persistAndFlush(testimony);
+
+      switch (updates.status) {
+        case TestimonyStatus.APPROVED:
+        // SEND EMAIL FOR APPROVED TESTIMONY
+        case TestimonyStatus.REJECTED:
+        // SEND EMAIL FOR REJECTED TESTIMONY
+      }
 
       return testimony;
     } catch (error) {
@@ -241,7 +252,7 @@ export class AdminService {
     return await this.testimonyRepository.find(
       {
         status: TestimonyStatus.PENDING,
-        uuid: { $ne: uuid } ,
+        uuid: { $ne: uuid },
       },
       { limit: 5 },
     );
