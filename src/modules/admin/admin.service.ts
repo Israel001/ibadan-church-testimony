@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -12,13 +13,14 @@ import { Category } from '../category/category.entity';
 import { PaginationInput } from 'src/base/dto';
 import { buildResponseDataWithPagination } from 'src/utils';
 import { CommentService } from '../comment/comment.service';
-import { AdminUser } from './admin.entities';
+import { AdminRoles, AdminUser } from './admin.entities';
 import bcrypt from 'bcryptjs';
 import { IAdminAuthContext, TestimonyStatus } from 'src/types';
 import { JwtService } from '@nestjs/jwt';
 import {
   AdminLoginDTO,
   CreateAdminTestimonyDto,
+  CreateModeratorDto,
   UpdateCommentDto,
   UpdateTestimonyDto,
 } from './dto';
@@ -35,6 +37,8 @@ export class AdminService {
     private readonly usersRepository: EntityRepository<Users>,
     @InjectRepository(AdminUser)
     private readonly adminUserRepository: EntityRepository<AdminUser>,
+    @InjectRepository(AdminRoles)
+    private readonly adminRoleRepository: EntityRepository<AdminRoles>,
     @InjectRepository(Category)
     private readonly categoryRepository: EntityRepository<Category>,
     @InjectRepository(Comment)
@@ -43,6 +47,32 @@ export class AdminService {
     private readonly em: EntityManager,
     private readonly jwtService: JwtService,
   ) {}
+
+  async fetchModerators() {
+    return this.adminUserRepository.findAll();
+  }
+
+  async deleteModerator(uuid: string) {
+    return this.adminUserRepository.nativeDelete({ uuid });
+  }
+
+  async createModerator(moderator: CreateModeratorDto) {
+    const adminRole = await this.adminRoleRepository.findOne({ name: 'Admin' });
+    if (!adminRole) throw new NotFoundException('Admin role does not exist');
+    const adminExist = await this.adminUserRepository.findOne({
+      email: moderator.email,
+    });
+    if (adminExist) throw new ConflictException('Duplicate email');
+    const hashedPassword = await bcrypt.hash(moderator.password, 12);
+    const moderatorModel = this.adminUserRepository.create({
+      uuid: v4(),
+      fullName: moderator.fullname,
+      email: moderator.email,
+      password: hashedPassword,
+      role: { uuid: adminRole.uuid },
+    });
+    await this.em.persistAndFlush(moderatorModel);
+  }
 
   async createTestimony(
     testimonyDto: CreateAdminTestimonyDto,

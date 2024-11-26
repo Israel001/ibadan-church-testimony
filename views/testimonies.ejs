@@ -4937,7 +4937,7 @@
                     <h2 style="color: black;"><%= testimony.firstname %> <%= testimony.lastname %></h2>
                     <p><strong>Address:</strong> <%= testimony.address %></p>
                     <p><strong>Status:</strong> <%= testimony.status %></p>
-                    <p class="testimony-message" id="message-<%= testimony.uuid %>"><%= testimony.testimony %></p>
+                    <p class="testimony-message" id="message-<%= testimony.uuid %>"><%= testimony.testimony.replace(/<\/?[^>]+(>|$)/g, '') %></p>
                   </div>
                 </a>
               <% }); %>

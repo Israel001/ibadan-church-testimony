@@ -170,3 +170,14 @@ export class TestimonyQuery {
   @IsEnum(TestimonyStatus)
   status: TestimonyStatus;
 }
+
+export class CreateModeratorDto {
+  @IsString()
+  fullname: string;
+
+  @IsString()
+  email: string;
+
+  @IsString()
+  password: string;
+}

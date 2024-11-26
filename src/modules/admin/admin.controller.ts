@@ -4,11 +4,11 @@ import {
   Delete,
   Get,
   Param,
-  ParseEnumPipe,
   Post,
   Put,
   Query,
   Render,
+  Res,
   Session,
   UseGuards,
 } from '@nestjs/common';
@@ -16,16 +16,19 @@ import { AdminService } from './admin.service';
 import { AllowUnauthorizedRequest } from 'src/decorators/unauthorized.decorator';
 import * as dtos from './dto';
 import { AdminAuthGuard } from './guards/auth-guard';
-import { TestimonyStatus } from 'src/types';
 import { CreateCommentDto } from '../comment/comment.dto';
+import { Response } from 'express';
+import { AdminRoleGuard } from './guards/role-guard';
+import { AdminRole } from 'src/decorators/admin_roles.decorator';
 
 @Controller('admin')
-@UseGuards(AdminAuthGuard)
+@UseGuards(AdminAuthGuard, AdminRoleGuard)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Get('dashboard')
   @Render('dashboard')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   async dashboard() {
     const result = await this.adminService.fetchDashboardData();
     const topTestimonies = await this.adminService.fetchToptestimonies();
@@ -36,6 +39,17 @@ export class AdminController {
   @AllowUnauthorizedRequest()
   async login(@Body() body: dtos.AdminLoginDTO, @Session() session: any) {
     return this.adminService.login(body, session);
+  }
+
+  @Get('logout')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
+  logout(@Res() res: Response, @Session() session: any) {
+    session.destroy((err: any) => {
+      if (err) {
+        return res.status(500).send('Could not log out');
+      }
+      res.redirect('/admin/sign-in');
+    });
   }
 
   @Get('forgot-password')
@@ -68,32 +82,56 @@ export class AdminController {
 
   @Get('create-moderator')
   @Render('sign-up')
+  @AdminRole({ roles: ['Super Admin'] })
   signUp() {
     return {};
   }
 
   @Get('upload-testimony')
   @Render('upload-testimony')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   uploadTestimony() {
     return {};
   }
 
+  @Post('create-moderator')
+  @AdminRole({ roles: ['Super Admin'] })
+  createModerator(@Body() body: dtos.CreateModeratorDto) {
+    return this.adminService.createModerator(body);
+  }
+
+  @Get('moderators')
+  @AdminRole({ roles: ['Super Admin'] })
+  fetchModerators() {
+    return this.adminService.fetchModerators();
+  }
+
+  @Delete('moderator/:uuid')
+  @AdminRole({ roles: ['Super Admin'] })
+  deleteModerator(@Param('uuid') uuid: string) {
+    return this.adminService.deleteModerator(uuid);
+  }
+
   @Post('create-testimony')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   createTestimony(@Body() body: dtos.CreateAdminTestimonyDto) {
     return this.adminService.createTestimony(body);
   }
 
   @Post('category')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   createCategory(@Body() body: dtos.CreateCategoryDto) {
     return this.adminService.createCategory(body);
   }
 
   @Post('testimony/:uuid/comment')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   createComment(@Param('uuid') uuid: string, @Body() body: CreateCommentDto) {
     return this.adminService.createComment(uuid, body);
   }
 
   @Get('allcategories')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   async fetchCategories() {
     try {
       const response = await this.adminService.fetchCategories();
@@ -106,6 +144,7 @@ export class AdminController {
 
   @Get('categories')
   @Render('categories')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   async fetchAllCategories() {
     try {
       const response = await this.adminService.fetchCategories();
@@ -117,11 +156,13 @@ export class AdminController {
   }
 
   @Get('testimony/:uuid/comments')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   fetchComments(@Param('uuid') uuid: string) {
     return this.adminService.fetchComments(uuid);
   }
 
   @Put('category/:uuid')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   updateCategory(
     @Param('uuid') uuid: string,
     @Body() body: dtos.CreateCategoryDto,
@@ -130,6 +171,7 @@ export class AdminController {
   }
 
   @Put('testimony/:uuid/comments/:commentUuid')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   updateComment(
     @Param('commentUuid') commentUuid: string,
     @Body() body: dtos.UpdateCommentDto,
@@ -138,16 +180,19 @@ export class AdminController {
   }
 
   @Delete('category/:uuid')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   deleteCategory(@Param('uuid') uuid: string) {
     return this.adminService.deleteCategory(uuid);
   }
 
   @Delete('testimony/:uuid/comments/:commentUuid')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   deleteComment(@Param('commentUuid') commentUuid: string) {
     return this.adminService.deleteComment(commentUuid);
   }
 
   @Get('view-testimony/:uuid')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   @Render('view_testimony')
   async viewTestimony(@Param('uuid') uuid: string) {
     const result = await this.adminService.fetchTestimony(uuid);
@@ -156,6 +201,7 @@ export class AdminController {
 
   @Get('testimonies')
   @Render('testimonies')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   async fetchTestimonies(
     @Query('page') page: string,
     @Query('limit') limit: string,
@@ -181,6 +227,7 @@ export class AdminController {
   }
 
   @Put('testimony/:uuid')
+  @AdminRole({ roles: ['Super Admin', 'Admin'] })
   async updateTestimony(
     @Param('uuid') uuid: string,
     @Body() body: dtos.UpdateTestimonyDto,

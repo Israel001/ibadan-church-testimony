@@ -843,12 +843,11 @@
             if (response.ok) {
               window.location.href = '/admin/dashboard';
             } else {
-              const error = await loginResponse.json();
-          alert('Error: ' + error.message);
+              const error = await response.json();
+              alert('Error: ' + error.message);
             }
           });
         });
-
       });
     </script>
   </body>

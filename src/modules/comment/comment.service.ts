@@ -16,7 +16,11 @@ export class CommentService {
     private readonly em: EntityManager,
   ) {}
 
-  async addComment(testimonyUuid: string, createCommentDto: CreateCommentDto) {
+  async addComment(
+    testimonyUuid: string,
+    createCommentDto: CreateCommentDto,
+    session: any,
+  ) {
     const testimony = await this.testimonyRepository.findOneOrFail({
       uuid: testimonyUuid,
     });
@@ -27,6 +31,7 @@ export class CommentService {
       email: createCommentDto.email,
       comment: createCommentDto.comment,
       testimony,
+      user: { uuid: session.userId },
     });
 
     await this.em.persistAndFlush(comment);
@@ -35,12 +40,11 @@ export class CommentService {
 
   async fetchCommentsByTestimony(uuid: string) {
     const comments = await this.commentRepository.find({ testimony: uuid });
-    return comments.map((comment) => ({
-      uuid: comment.uuid,
-      name: comment.name,
-      email: comment.email,
-      comment: comment.comment,
-      createdAt: comment.createdAt,
-    }));
+    return comments;
+  }
+
+  async deleteComment(uuid: string) {
+    await this.commentRepository.nativeDelete({ uuid });
+    return 'Comment deleted successfully';
   }
 }
