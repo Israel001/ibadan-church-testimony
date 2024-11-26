@@ -5139,18 +5139,22 @@
     <script src="../js/phoenix-1.js"></script>
     <script src="../js/crm-dashboard.js"></script>
     <script>
-  // Truncate function for the browser
-      function truncateText(text, wordLimit) {
-        const words = text.split(' ');
-        return words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : text;
-      }
+        function truncateHtml(html, wordLimit) {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const textContent = doc.body.textContent || ''; // Extract plain text
+          const truncatedText = textContent.split(' ').length > wordLimit
+            ? textContent.split(' ').slice(0, wordLimit).join(' ') + '...'
+            : textContent;
+          return truncatedText; // Return the truncated plain text
+        }
 
-      // Apply truncation to all testimony messages
-      document.querySelectorAll('.testimony-message').forEach((element) => {
-        const originalText = element.textContent;
-        const truncatedText = truncateText(originalText, 24);
-        element.textContent = truncatedText;
-      });
+        // Apply truncation to testimony messages with HTML
+        document.querySelectorAll('.testimony-message').forEach((element) => {
+          const originalHtml = element.innerHTML; // Get raw HTML
+          const truncatedText = truncateHtml(originalHtml, 24); // Truncate the plain text
+          element.textContent = truncatedText; // Replace content with truncated text
+        });
     </script>
     <script>
       function submitFilter() {

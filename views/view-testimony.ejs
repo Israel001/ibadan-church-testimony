@@ -27,6 +27,89 @@
   <!-- notification modal -->
 
   <!-- end of notification modal -->
+       <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h2 class="f-700 mb-12">Create an account to get notified when a testimony is posted </h2>
+                        <!-- <p>Quisque enim ipsum, commodo et venenatis rutrum, luctus in enim venenatis.</p> -->
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#">
+                            <div class="form-group relative mb-25 mb-sm-20">
+                                <input type="text" class="form-control input-lg input-white shadow-5" id="name" placeholder="Name">
+                                <i class="far fa-user transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mb-25 mb-sm-20">
+                                <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
+                                <i class="far fa-envelope transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mb-20 mb-sm-20">
+                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
+                                <i class="fas fa-lock transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mb-20 mb-sm-20">
+                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd-confirm" placeholder="Confirm Password">
+                                <i class="fas fa-lock transform-v-center"></i>
+                            </div>
+                            <div class="form-group form-check pl-0">
+                                <div class="d-flex justify-content-between">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+                                        <label class="custom-control-label fs-13" for="customCheck1"><span class="label-check">Remember me</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">SIGNUP</button>
+                            <p class="text-center mt-3">
+                                Already have an account? 
+                                <a href="#signinModal" data-toggle="modal" data-dismiss="modal" class="text-primary">
+                                    Login
+                                </a>
+                            </p>
+                        </form>
+                    </div>
+                
+                </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="signinModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h2 class="f-700 mb-12">Sign in to your account to get notified when a testimony is posted</h2>
+                        <!-- <p>Quisque enim ipsum, commodo et venenatis rutrum, luctus in enim venenatis.</p> -->
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#">
+                            <div class="form-group relative mb-25">
+                                <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
+                                <i class="far fa-envelope transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mb-25">
+                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
+                                <i class="fas fa-lock transform-v-center"></i>
+                            </div>
+                            <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">LOGIN</button>
+                            <!-- Link to switch back to Sign Up modal -->
+                            <p class="text-center mt-3">
+                                Don't have an account? 
+                                <a href="#signupModal" data-toggle="modal" data-dismiss="modal" class="text-primary">
+                                    Sign Up
+                                </a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
   <body>
     <!-- Preloader start -->
@@ -65,14 +148,14 @@
           <div class="col-lg-12 text-center">
             <div class="blog-head-top relative">
                 <h2 class="mt-20 f-700 lh-12">
-                <% if (testimony.anonymous) { %>
+                <% if (testimonies.testimony.anonymous) { %>
                     Anonymous
                 <% } else { %>
-                    <%= testimony.firstname %> <%= testimony.lastname %>
+                    <%= testimonies.testimony.firstname %> <%= testimonies.testimony.lastname %>
                 <% } %>
                 </h2>
                 <div class="nav-blog-detail mt-md-45">
-                <% if (previousTestimony) { %>
+                <% if (testimonies.previousTestimony) { %>
                     <a href="/testimony/<%= previousTestimony.uuid %>" class="left fs-13 f-700 transform-v-center">
                     <i class="fas fa-long-arrow-alt-left mr-20"></i>PREV
                     </a>
@@ -82,7 +165,7 @@
                 >
                 <% } %>
 
-                <% if (nextTestimony) { %>
+                <% if (testimonies.nextTestimony) { %>
                     <a href="/testimony/<%= nextTestimony.uuid %>" class="right fs-13 f-700 transform-v-center">
                     NEXT<i class="fas fa-long-arrow-alt-right ml-20"></i>
                     </a>
@@ -96,10 +179,10 @@
             <div class="blog-by-info pt-20 pb-20 mb-55 mt-55">
               <ul class="list-inline fs-13 text-left text-sm-center">
                 <li class="list-inline-item">
-                  <i class="far fa-calendar mr-10 fs-13 yellow"></i> <%= testimony.createdAt.toDateString() %>
+                  <i class="far fa-calendar mr-10 fs-13 yellow"></i> <%= testimonies.testimony.createdAt.toDateString() %>
                 </li>
                 <li class="list-inline-item">
-                  <i class="far fa-comments mr-10 fs-13 yellow"></i> <%= comments.length %> Comments
+                  <i class="far fa-comments mr-10 fs-13 yellow"></i> <%= testimonies.comments.length %> Comments
                 </li>
               </ul>
             </div>
@@ -115,58 +198,11 @@
           <div class="col-lg-8">
             <div class="row mb-35">
               <div class="col-md-6 mb-sm-15">
-                <img src="<%= testimony.image %>" class="img-100" alt="" />
+                <img src="<%= testimonies.testimony.image %>" class="img-100" alt="" />
               </div>
             </div>
-            <!-- left blog start -->
             <article class="blog-detail-left">
-              <h3 class="lh-15 mb-20"><%= testimony.testimony %></h3>
-              <!-- <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                bibendum, sem at condimentum sceleri sque, odio eros vestibulum
-                tortor, non posuere sapien elit at velit. Vestibulum ac
-                porttitor dolor, ac feugiat nunc. Nulla eleifend massa tortor,
-                nec laoreet lectus varius ac. Fusce scelerisque consequat eros,
-                non venenatis turpis ultricies id. Etiam nec sagittis diam, a
-                tempor risus. Nunc nisl felis, congue non euismod dignissim id
-                eros. Maecenas eu molestie purus, in digni ssim nequeo nsectetur
-                adipiscing elit.
-              </p>
-              <p>
-                SInteger bibendum. Curabitur a magna mi. Cras facilisis lacus a
-                magna luctus, nec pharetra ex varius. Sed placerat suscipit
-                massa, sed lobo rtis ex sollicitudin non. Lorem ipsum dolor sit
-                amet, consectetur adipis cing elit. Duis sed laoreet neque.
-                Mauris placerat blandit accumsan. Aliquam efficitur dictum
-                eros.Maec enas eu molestie purus, in dignissim neque.
-              </p>
-
-              <p>
-                SInteger bibendum. Curabitur a magna mi. Cras facilisis lacus a
-                magna luctus, nec pharetra ex varius. Sed placerat suscipit
-                massa, sed lobo rtis ex sollicitudin non. Lorem ipsum dolor sit
-                amet, consectetur adipis cing elit. Duis sed laoreet neque.
-                Mauris placerat blandit accumsan. Aliquam efficitur dictum
-                eros.Maec enas eu molestie purus, in dignissim neque.
-              </p>
-
-              <p>
-                SInteger bibendum. Curabitur a magna mi. Cras facilisis lacus a
-                magna luctus, nec pharetra ex varius. Sed placerat suscipit
-                massa, sed lobo rtis ex sollicitudin non. Lorem ipsum dolor sit
-                amet, consectetur adipis cing elit. Duis sed laoreet neque.
-                Mauris placerat blandit accumsan. Aliquam efficitur dictum
-                eros.Maec enas eu molestie purus, in dignissim neque.
-              </p> -->
-              <!-- <div class="block-quote-2 mb-30 mt-20"> <span class="quote-icon2 yellow">“</span>
-                            <div class="block-quote-text z-5">
-                                <p class="blue fs-23 lh-15 rbt-slab">Aenean vestibulum sapien ut felis consequat tempus. Quisque condimentum ipsum a condimentum ornare Suspendisse potentis</p> <span class="block-quote-by fs-13 f-400 uppercase">Admin</span>
-                            </div>
-                        </div> -->
-
-              <!-- <h3 class="f-700 mb-10">Condimentum Lornare</h3>
-                        <p>Vestibulum ac porttitor dolor, ac feugiat nunc. Nulla eleifend massa tortor, nec laoreet lectus varius ac. Fusce scelerisque consequat eros, non venenatis turpis ultricies id. Etiam nec sagittis diam, a tempor risus. Nunc nisl
-                            felis, congue non euismod ac, dignissim id eros.</p> -->
+              <h3 class="lh-15 mb-20"><%- testimonies.testimony.testimony %></h3>
               <div class="tag-social pt-20 pt-sm-15 pb-20 mt-30">
                 <div class="row align-items-center">
                   <div class="col-xl-5">
@@ -194,11 +230,11 @@
               </div>
               <div class="comments">
                 <h3 class="f-700 mt-35 mb-30 mb-xs-15">
-                  Comments (<%= comments.length %>)
+                  Comments (<%= testimonies.comments.length %>)
                 </h3>
                 <ul class="connent-lists">
-                    <% if (comments.length > 0) { %>
-                    <% comments.forEach(comment => { %>
+                    <% if (testimonies.comments.length > 0) { %>
+                    <% testimonies.comments.forEach(comment => { %> 
                         <li>
                         <div class="d-flex">
                             <div class="comment-image">
@@ -218,7 +254,7 @@
                     <% }) %>
                     <% } else { %>
                     <li>No comments yet.</li>
-                    <% } %>
+                    <% } %> 
                 </ul>
               </div>
               <div class="post-comment">
@@ -269,117 +305,15 @@
                 </form>
               </div>
 
-              <!-- <div class="related-blogs mb-md-80">
-                            <div class="row align-items-center mb-25">
-                                <div class="col-sm-9 col-12 text-center text-sm-left">
-                                    <h3 class="f-700 mb-xs-25">Related Articles</h3>
-                                </div>
-                                <div class="col-sm-3 col-12 text-center text-sm-right">
-                                    <div class="blog-nav">
-                                        <a href="#" class="relative-nav-left bg-yellow mr-15"> <i class='fas fa-long-arrow-alt-left'></i>
-                                        </a>
-                                        <a href="#" class="relative-nav-right bg-yellow"> <i class='fas fa-long-arrow-alt-right'></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="owl-carousel owl-theme relative-slider">
-                                        <div class="item">
-                                            <div class="each-blog">
-                                                <div class="blog-img relative">
-                                                    <img src="/images/blog/blog2.jpg" alt="">
-                                                    <a href="#" class="blog-link transform-center"> <i class="fas fa-arrow-right"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="blog-text">
-                                                    <h4 class="mt-20 mb-20">
-                                                        <a href="#" class="f-700 fs-19">Finibus Bonorum et Malorum...</a>
-                                                    </h4>
-                                                    <div class="blog-data">
-                                                        <ul class="d-flex align-items-center">
-                                                            <li><i class="far fa-calendar-alt"></i>05-05-2025</li>
-                                                            <li><i class="fas fa-comment"></i>30 Comments</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="each-blog">
-                                                <div class="blog-img relative">
-                                                    <img src="/images/blog/blog4.jpg" alt="">
-                                                    <a href="#" class="blog-link transform-center"> <i class="fas fa-arrow-right"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="blog-text">
-                                                    <h4 class="mt-20 mb-20">
-                                                        <a href="#" class="f-700 fs-19">He rejects pleasures secure...</a>
-                                                    </h4>
-                                                    <div class="blog-data">
-                                                        <ul class="d-flex align-items-center">
-                                                            <li><i class="far fa-calendar-alt"></i>21-04-2025</li>
-                                                            <li><i class="fas fa-comment"></i>35 Comments</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="each-blog">
-                                                <div class="blog-img relative">
-                                                    <img src="/images/blog/blog8.jpg" alt="">
-                                                    <a href="#" class="blog-link transform-center"> <i class="fas fa-arrow-right"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="blog-text">
-                                                    <h4 class="mt-20 mb-20">
-                                                        <a href="#" class="f-700 fs-19">Contrary to popular belief...</a>
-                                                    </h4>
-                                                    <div class="blog-data">
-                                                        <ul class="d-flex align-items-center">
-                                                            <li><i class="far fa-calendar-alt"></i>01-08-2025</li>
-                                                            <li><i class="fas fa-comment"></i>19 Comments</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="each-blog">
-                                                <div class="blog-img relative">
-                                                    <img src="/images/blog/blog1.jpg" alt="">
-                                                    <a href="#" class="blog-link transform-center"> <i class="fas fa-arrow-right"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="blog-text">
-                                                    <h4 class="mt-20 mb-20">
-                                                        <a href="#" class="f-700 fs-19">On the other hand...</a>
-                                                    </h4>
-                                                    <div class="blog-data">
-                                                        <ul class="d-flex align-items-center">
-                                                            <li><i class="far fa-calendar-alt"></i>05-05-2025</li>
-                                                            <li><i class="fas fa-comment"></i>30 Comments</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
+        
             </article>
           </div>
-          <!-- left blog end -->
-          <aside class="col-lg-4">
-            <!-- sidebar start -->
+         <aside class="col-lg-4">
             <div class="sidebar-outer bg-light-white">
                 <aside class="side-box">
                 <h4 class="f-700 mb-20">More Testimonies</h4>
                 <div class="popular-posts mb-10">
-                    <% moreTestimonies.forEach(testimony => { %>
+                    <% testimonies.moreTestimonies.forEach(testimony => { %>
                     <a href="#" class="popular-post d-flex align-items-center">
                         <div class="popular-post-img mr-20">
                         <img src="<%= testimony.image %>" alt="" />
@@ -402,20 +336,19 @@
               <aside class="side-box">
                 <h4 class="f-700 mb-20">Categories</h4>
                 <ul class="list-categiry rbt-slab">
-                    <% Object.keys(byCategory).forEach(category => { %>
+                    <% Object.keys(testimonies.byCategory).forEach(category => { %>
                     <li>
                         <a href="#">
                         <i class="fas fa-chevron-right"></i> <%= category %>
-                        <span class="count"><%= byCategory[category].length %></span>
+                        <span class="count"><%= testimonies.byCategory[category].length %></span>
                         </a>
                     </li>
                     <% }) %>
                 </ul>
               </aside>
             </div>
-          </aside>
-          <!-- sidebar end -->
-        </div>
+          </aside> 
+        <!-- </div> -->
       </div>
     </section>
     <!-- Blog details end -->
@@ -465,73 +398,78 @@
       document
         .getElementById('commentForm')
         .addEventListener('submit', async function (event) {
-          console.log('Form submitted');
           event.preventDefault();
-          let isValid = true;
+          const modal = document.getElementById('signinModal');
+            if(<%= loggedIn %>){
+                let isValid = true;
+                console.log("Here")
 
-          document
-            .querySelectorAll('.text-danger')
-            .forEach((span) => (span.innerText = ''));
+                document
+                  .querySelectorAll('.text-danger')
+                  .forEach((span) => (span.innerText = ''));
 
-          const name = document.getElementById('name').value.trim();
-          console.log(name);
-          if (name === '') {
-            document.getElementById('nameError').innerText =
-              'Name is required.';
-            isValid = false;
-          }
+                const name = document.getElementById('name').value.trim();
+                if (name === '') {
+                  document.getElementById('nameError').innerText =
+                    'Name is required.';
+                  isValid = false;
+                }
 
-          const message = document.getElementById('message').value.trim();
-          if (message === '') {
-            document.getElementById('messageError').innerText =
-              'Comment is required.';
-            isValid = false;
-          }
+                const message = document.getElementById('message').value.trim();
+                if (message === '') {
+                  document.getElementById('messageError').innerText =
+                    'Comment is required.';
+                  isValid = false;
+                }
 
-          const email = document.getElementById('email').value.trim();
-          if (email === '') {
-            document.getElementById('emailError').innerText =
-              'Email is required.';
-            isValid = false;
-          } else if (!validateEmail(email)) {
-            document.getElementById('emailError').innerText =
-              'Please enter a valid email.';
-            isValid = false;
-          }    
+                const email = document.getElementById('email').value.trim();
+                if (email === '') {
+                  document.getElementById('emailError').innerText =
+                    'Email is required.';
+                  isValid = false;
+                } else if (!validateEmail(email)) {
+                  document.getElementById('emailError').innerText =
+                    'Please enter a valid email.';
+                  isValid = false;
+                }    
 
-          if (!isValid) return;
+                if (!isValid) return;
 
-        const formDataJson = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            comment: document.getElementById('message').value
-        }
+                const formDataJson = {
+                  name: document.getElementById('name').value,
+                  email: document.getElementById('email').value,
+                  comment: document.getElementById('message').value
+                }
 
-        try {            
-            const postResponse = await fetch("/comments/<%= testimony.uuid %>", {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(formDataJson),
-            });
+                try {            
+                  const postResponse = await fetch("/comments/<%= testimonies.testimony.uuid %>", {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formDataJson),
+                  });
 
-            if (postResponse.ok) {
-              alert('Form submitted successfully!');
-              window.location.href = "/testimony/<%= testimony.uuid %>";
-            } else {
-              alert('Error submitting form.');
+                  if (postResponse.ok) {
+                    alert('Form submitted successfully!');
+                    window.location.href = "/testimony/<%= testimonies.testimony.uuid %>";
+                  } else {
+                    alert('Error submitting form.');
+                  }
+                } catch (error) {
+                  console.error('Form submission failed:', error);
+                  alert('Failed to submit form.');
+              }
+            }else{
+              alert('Please login to comment');
+              $(modal).modal('show');
             }
-        } catch (error) {
-            console.error('Form submission failed:', error);
-            alert('Failed to submit form.');
-        }
-    });
+      });
 
-        function validateEmail(email) {
-            const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            return re.test(String(email).toLowerCase());
-        }
+      function validateEmail(email) {
+          const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+          return re.test(String(email).toLowerCase());
+      }
     </script>
 
     <!-- footer end -->

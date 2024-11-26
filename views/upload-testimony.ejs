@@ -796,7 +796,6 @@
 
       // Helper Functions
       const validateEmail = (email) => /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email);
-      const removeHtmlTags = (str) => str.replace(/<\/?[^>]+(>|$)/g, '');
 
       const uploadToCloudinary = async (file) => {
         const formData = new FormData();
@@ -844,7 +843,7 @@
           phoneNumber: document.getElementById('phoneNumber').value.trim(),
           anonymous: document.getElementById('anonymous').checked,
           isFeatured: document.getElementById('isFeatured').checked,
-          testimony: removeHtmlTags(document.getElementById('message').value.trim()),
+          testimony: document.getElementById('message').value.trim(),
           status: "PENDING"
         };
 
@@ -927,15 +926,16 @@
 
       async function fetchCategories() {
         try {
-          const response = await fetch('http://localhost:8080/admin/categories');
-          console.log(response.body);
+          const response = await fetch('http://localhost:8080/admin/allcategories');
           let allCategories = await response.json();
-          console.log(allCategories);
+          console.log("allCategories", allCategories);
+          allCategories = allCategories.categories;
 
           const categorySelect = document.getElementById('category');
 
           if (allCategories.length > 0) {
             allCategories.forEach((category) => {
+              console.log("category", category);
               const option = document.createElement('option');
               option.value = category.uuid;
               option.text = category.name;

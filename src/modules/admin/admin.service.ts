@@ -209,6 +209,8 @@ export class AdminService {
     const allTestimonies =
       pendingTestimonies + activeTestimonies + rejectedTestimonies;
 
+    console.log('allTestimonies', allTestimonies);
+
     return {
       pendingTestimonies,
       activeTestimonies,

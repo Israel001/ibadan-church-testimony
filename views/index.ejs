@@ -55,51 +55,89 @@
 </head>
 
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-             
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <h2 class="f-700 mb-12">Create an account to get notified when a testimony is posted </h2>
-                <!-- <p>Quisque enim ipsum, commodo et venenatis rutrum, luctus in enim venenatis.</p> -->
-              </button>
-            </div>
-            <div class="modal-body">
-                <form action="#">
-                    <div class="form-group relative mb-25 mb-sm-20">
-                        <input type="text" class="form-control input-lg input-white shadow-5" id="name" placeholder="Name">
-                        <i class="far fa-user transform-v-center"></i>
-                    </div>
-                    <div class="form-group relative mb-25 mb-sm-20">
-                        <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
-                        <i class="far fa-envelope transform-v-center"></i>
-                    </div>
-                    <div class="form-group relative mb-20 mb-sm-20">
-                        <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
-                        <i class="fas fa-lock transform-v-center"></i>
-                    </div>
-                    <div class="form-group relative mb-20 mb-sm-20">
-                        <input type="password" class="form-control input-lg input-white shadow-5" id="pwd-confirm" placeholder="Confirm Password">
-                        <i class="fas fa-lock transform-v-center"></i>
-                    </div>
-                    <div class="form-group form-check pl-0">
-                        <div class="d-flex justify-content-between">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
-                                <label class="custom-control-label fs-13" for="customCheck1"><span class="label-check">Remember me</span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">SIGNUP</button>
+                <div class="modal-content">
+                    <div class="modal-header">
                     
-                </form>
-            </div>
-           
-          </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h2 class="f-700 mb-12">Create an account to get notified when a testimony is posted </h2>
+                        <!-- <p>Quisque enim ipsum, commodo et venenatis rutrum, luctus in enim venenatis.</p> -->
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#">
+                            <div class="form-group relative mb-25 mb-sm-20">
+                                <input type="text" class="form-control input-lg input-white shadow-5" id="name" placeholder="Name">
+                                <i class="far fa-user transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mb-25 mb-sm-20">
+                                <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
+                                <i class="far fa-envelope transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mb-20 mb-sm-20">
+                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
+                                <i class="fas fa-lock transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mb-20 mb-sm-20">
+                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd-confirm" placeholder="Confirm Password">
+                                <i class="fas fa-lock transform-v-center"></i>
+                            </div>
+                            <div class="form-group form-check pl-0">
+                                <div class="d-flex justify-content-between">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+                                        <label class="custom-control-label fs-13" for="customCheck1"><span class="label-check">Remember me</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">SIGNUP</button>
+                            <p class="text-center mt-3">
+                                Already have an account? 
+                                <a href="#signinModal" data-toggle="modal" data-dismiss="modal" class="text-primary">
+                                    Login
+                                </a>
+                            </p>
+                        </form>
+                    </div>
+                
+                </div>
         </div>
-      </div>
+    </div>
 
+    <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="signinModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h2 class="f-700 mb-12">Sign in to your account to get notified when a testimony is posted</h2>
+                        <!-- <p>Quisque enim ipsum, commodo et venenatis rutrum, luctus in enim venenatis.</p> -->
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#">
+                            <div class="form-group relative mb-25">
+                                <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
+                                <i class="far fa-envelope transform-v-center"></i>
+                            </div>
+                            <div class="form-group relative mb-25">
+                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
+                                <i class="fas fa-lock transform-v-center"></i>
+                            </div>
+                            <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">LOGIN</button>
+                            <!-- Link to switch back to Sign Up modal -->
+                            <p class="text-center mt-3">
+                                Don't have an account? 
+                                <a href="#signupModal" data-toggle="modal" data-dismiss="modal" class="text-primary">
+                                    Sign Up
+                                </a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 <body>
     <!-- Preloader start -->
@@ -112,6 +150,15 @@
   
     <!-- The search Modal start -->
     <%- include('header') %>
+
+    <div class="d-flex justify-content-center align-items-center my-4">
+        <p class="text-center mb-0" style="font-size: 18px; font-weight: bold;">
+            Do you want to share what the Lord has done for you?? 
+            <a href="/create-testimony" class="btn btn-primary btn-sm ml-2">
+                Click Here
+            </a>
+        </p>
+    </div>
 
 
     <!--Inner end -->
@@ -281,7 +328,7 @@
     <script>
   document.addEventListener("DOMContentLoaded", function() {
     // Modal element
-    const modal = document.getElementById('myModal');
+    const modal = document.getElementById('signupModal');
 
     // Check if user is logged in by checking a variable set by the backend
     const isLoggedIn = <%= loggedIn ? 'true' : 'false' %>; // Comes from backend, defined later

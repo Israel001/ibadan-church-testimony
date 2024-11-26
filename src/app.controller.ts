@@ -28,17 +28,20 @@ export class AppController {
       loggedIn,
     };
   }
-  
 
   @Get('create-testimony')
   @Render('create-testimony')
-  createTestimony() {
-    return {};
+  createTestimony(@Session() session: any) {
+    const loggedIn = !!session.userId;
+    return { loggedIn };
   }
 
   @Get('testimony/:uuid')
   @Render('view-testimony')
-  viewTestimony(@Param('uuid') uuid: string) {
-    return this.testimonyService.fetchTestimonyWithSurrounding(uuid);
+  async viewTestimony(@Param('uuid') uuid: string, @Session() session: any) {
+    const loggedIn = !!session.userId;
+    const testimonies =
+      await this.testimonyService.fetchTestimonyWithSurrounding(uuid);
+    return {loggedIn, testimonies}
   }
 }

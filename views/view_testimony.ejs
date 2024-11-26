@@ -104,6 +104,11 @@
         userLinkRTL.setAttribute('disabled', true);
       }
     </script>
+
+    <script
+      src="https://cdn.tiny.cloud/1/m714jundcur08b881q7qay47h9tzu21x2xayvvxzk6b6v34z/tinymce/7/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
   </head>
 
   <body>
@@ -179,7 +184,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href="http://localhost:8080/admin/categories"
+                    href=""
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -945,18 +950,31 @@
                   /></a>
                 </div>
               </div>
-              <div class="mb-10">
-                <%= testimony.testimony %>
-              </div>
-              <!-- testimoney testarea -->
               <div class="mb-0">
-                <label class="form-label" for="exampleTextarea">Review</label>
-                <textarea class="form-control" id="exampleTextarea" rows="6">
-                </textarea>
-              </div>
+                <label class="form-label" for="exampleTextarea">Your testimony</label>
+                    <div class="form-group relative ">
+                      <textarea
+                        class="form-control input-white shadow-5"
+                        name="message"
+                        id="message"
+                        cols="30"
+                        rows="7"
+                        placeholder="Your message"
+                      ></textarea>
+                      <span id="messageError" class="text-danger"></span>
+                    </div>
+                </div>
               <!-- testimony button -->
               <div class="card-body p-0 text-center">
                 <div class="p-4 code-to-copy">
+                  <button
+                    class="btn btn-primary btn-lg me-1 mb-1"
+                    type="button"
+                    id="update-testimony-btn"
+                    onclick="updateTestimony('<%= testimony.uuid %>')"
+                  >
+                    Save
+                  </button>
                   <button
                     class="btn btn-primary btn-lg me-1 mb-1"
                     type="button"
@@ -973,17 +991,16 @@
                     data-bs-target="#collapseExample"
                     aria-expanded="false"
                     aria-controls="collapseExample"
-                    onclick="updateTestimony('<%= testimony.uuid %>', 'REJECTED')"
                     <%= testimony.status === 'REJECTED' ? 'disabled' : '' %>
                   >
                     Reject
                   </button>
-                  <!-- testimony send button and reject textarea -->
+                  
                   <div class="collapse" id="collapseExample">
                     <label class="form-label" for="exampleTextarea"> </label>
                     <textarea
                       class="form-control"
-                      id="exampleTextarea"
+                      id="rejectionReason"
                       rows="3"
                     >
                     </textarea>
@@ -992,6 +1009,7 @@
                         <button
                           class="btn btn-primary btn-lg me-1 mb-1"
                           type="button"
+                          onclick="updateTestimony('<%= testimony.uuid %>', 'REJECTED')"
                         >
                           Send
                         </button>
@@ -1086,7 +1104,7 @@
                   >
                     <div class="col-12 col-md">
                       <h4 class="text-body mb-0" data-anchor="data-anchor">
-                        Edit Catigory
+                        Edit Category
                       </h4>
                     </div>
                     <div class="col col-md-auto">
@@ -1111,28 +1129,11 @@
                   </div>
                 </div>
                 <div class="card-body p-0">
-                  <div class="collapse code-collapse" id="default-code">
-                    <pre
-                      class="scrollbar"
-                      style="max-height: 420px"
-                    ><code class="language-html">&lt;select class=&quot;form-select&quot; aria-label=&quot;Default select example&quot;&gt;
-                    &lt;option selected=&quot;&quot;&gt;Open this select menu&lt;/option&gt;
-                    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
-                    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
-                    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
-                    &lt;/select&gt;</code></pre>
-                  </div>
                   <div class="p-4 code-to-copy">
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected="">Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                    <select class="form-select" id="category">
+                      <option selected value="">Choose...</option>
                     </select>
-                  </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -1187,13 +1188,33 @@
 
     <script>
      const updateTestimony = async (uuid, status) => {
-      console.log("Entered updateTestimony with status:", status);
-      try {
-        if (!['APPROVED', 'REJECTED'].includes(status)) {
-          throw new Error('Invalid status. Use "APPROVED" or "REJECTED".');
+     try {
+        const category = document.getElementById('category').value;
+        const message = document.getElementById('message').value;
+        console.log('message', message);
+        const rejectionReason = document.getElementById('rejectionReason').value;
+
+        // const textarea = document.getElementById('message');
+        // textarea.value = 'New value';
+        // console.log(textarea.value);
+
+        let updates = { testimony: message };
+
+        if (status) {
+          updates.status = status;
         }
 
-        const updates = { status };
+        if (category !== "") {
+          updates.categoryUuid = category;
+        }
+
+        if (status === 'REJECTED') {
+          if (!rejectionReason) {
+            alert('Please provide a reason for rejecting the testimony');
+            return; // Stop further execution
+          }
+          updates.rejectionReason = rejectionReason; // Add rejection reason
+        }
 
         const updateResponse = await fetch(
           `http://localhost:8080/admin/testimony/${uuid}`,
@@ -1213,13 +1234,17 @@
         const updatedTestimony = await updateResponse.json();
         console.log('Testimony updated successfully:', updatedTestimony);
 
-        alert(`Testimony ${status.toLowerCase()} successfully!`);
+        alert(`Testimony updates successfully!`);
+
+        window.location.reload();
+        
         return updatedTestimony;
       } catch (error) {
         console.error('Error updating testimony:', error);
         alert('Error updating testimony. Please try again later.');
-        throw error;
+        throw error; // Re-throw the error if needed
       }
+
     };
 
 
@@ -1271,6 +1296,34 @@
           }
         }
 
+        async function fetchCategories() {
+        try {
+          const response = await fetch('http://localhost:8080/admin/allcategories');
+          let allCategories = await response.json();
+          console.log("allCategories", allCategories);
+          allCategories = allCategories.categories;
+
+          const categorySelect = document.getElementById('category');
+
+          if (allCategories.length > 0) {
+            allCategories.forEach((category) => {
+              console.log("category", category);
+              const option = document.createElement('option');
+              option.value = category.uuid;
+              option.text = category.name;
+              categorySelect.appendChild(option);
+            });
+          } else {
+            const option = document.createElement('option');
+            option.value = '';
+            option.text = 'No categories available';
+            categorySelect.appendChild(option);
+          }
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+      }
+
         // Delete Comment
         async function deleteComment(commentId) {
           const uuid = '<%= testimony.uuid %>';
@@ -1295,10 +1348,20 @@
 
         // Initial Load
         fetchComments();
+        fetchCategories();
 
         // Expose deleteComment globally
         window.deleteComment = deleteComment;
+
+        tinymce.init({
+          selector: '#message',
+          plugins:
+            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+          toolbar_mode: 'floating',
+        });
       });
+
+      const message = document.getElementById('message').value = '<%= testimony.testimony %>';
 
     </script>
   </body>

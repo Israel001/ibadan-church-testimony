@@ -93,12 +93,22 @@ export class AdminController {
     return this.adminService.createComment(uuid, body);
   }
 
-  @Get('categories')
-  @Render('categories')
+  @Get('allcategories')
   async fetchCategories() {
     try {
       const response = await this.adminService.fetchCategories();
-      console.log('response', response);
+      return { categories: response };
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      return { categories: [] };
+    }
+  }
+
+  @Get('categories')
+  @Render('categories')
+  async fetchAllCategories() {
+    try {
+      const response = await this.adminService.fetchCategories();
       return { categories: response };
     } catch (error) {
       console.error('Error fetching categories:', error);
