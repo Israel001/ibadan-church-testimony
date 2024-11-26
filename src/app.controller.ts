@@ -28,12 +28,11 @@ export class AppController {
       loggedIn,
     };
   }
-  
 
   @Get('create-testimony')
   @Render('create-testimony')
-  createTestimony() {
-    return {};
+  createTestimony(@Session() session: any) {
+    return { session };
   }
 
   @Get('testimony/:uuid')

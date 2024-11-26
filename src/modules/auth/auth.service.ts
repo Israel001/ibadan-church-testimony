@@ -7,8 +7,9 @@ import {
 import { UsersService } from '../users/users.service';
 import { EntityManager } from '@mikro-orm/core';
 import { JwtService } from '@nestjs/jwt';
-import { IAuthContext } from 'src/types';
 import bcrypt from 'bcrypt';
+import { LoginDTO } from './auth.dto';
+import { Users } from '../users/users.entity';
 
 @Injectable()
 export class AuthService {
@@ -18,25 +19,16 @@ export class AuthService {
     private readonly em: EntityManager,
   ) {}
 
-  async login(user: any) {
-    if (user.pinId) return user;
-    const payload: IAuthContext = {
-      fullname: user.fullname,
-      email: user.email,
-      uuid: user.uuid,
-    };
-    await this.em.flush();
-    delete user.password;
-    delete user.createdAt;
-    delete user.updatedAt;
-    return {
-      accessToken: this.jwtService.sign(payload),
-      expiresIn: 1.2e6,
-      user,
-    };
+  async login({ email, password }: LoginDTO, session: any) {
+    const user = await this.validateUser(email, password);
+    session.userId = user.uuid;
+    session.firstName = user.fullname.split(' ')[0];
+    session.lastName = user.fullname.split(' ')[1];
+    session.email = user.email;
+    return session;
   }
 
-  async validateUser(emailOrPhone: string, password: string): Promise<any> {
+  async validateUser(emailOrPhone: string, password: string): Promise<Users> {
     const user = await this.usersService.findByEmailOrPhone(emailOrPhone);
     if (!user) throw new NotFoundException('User not found');
     const passwordMatch = await bcrypt.compare(password, user.password);
