@@ -31,6 +31,9 @@ export class UsersService {
     });
     await this.em.persistAndFlush(userModel);
     session.userId = userModel.uuid;
+    session.firstName = userModel.fullname.split(' ')[0];
+    session.lastName = userModel.fullname.split(' ')[1];
+    session.email = userModel.email;
     return { success: true, message: 'User registered and logged in' };
   }
 

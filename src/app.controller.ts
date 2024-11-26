@@ -32,8 +32,7 @@ export class AppController {
   @Get('create-testimony')
   @Render('create-testimony')
   createTestimony(@Session() session: any) {
-    const loggedIn = !!session.userId;
-    return { loggedIn };
+    return { session };
   }
 
   @Get('testimony/:uuid')

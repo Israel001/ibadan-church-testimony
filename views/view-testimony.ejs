@@ -409,6 +409,7 @@
                   .forEach((span) => (span.innerText = ''));
 
                 const name = document.getElementById('name').value.trim();
+                console.log("name", name)
                 if (name === '') {
                   document.getElementById('nameError').innerText =
                     'Name is required.';
@@ -416,6 +417,7 @@
                 }
 
                 const message = document.getElementById('message').value.trim();
+                console.log("message", message)
                 if (message === '') {
                   document.getElementById('messageError').innerText =
                     'Comment is required.';
@@ -423,6 +425,7 @@
                 }
 
                 const email = document.getElementById('email').value.trim();
+                console.log("email", email)
                 if (email === '') {
                   document.getElementById('emailError').innerText =
                     'Email is required.';
