@@ -32,6 +32,7 @@ export class AppController {
   @Get('create-testimony')
   @Render('create-testimony')
   createTestimony(@Session() session: any) {
+    console.log(session);
     return { session };
   }
 
