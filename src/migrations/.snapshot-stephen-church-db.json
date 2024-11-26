@@ -813,6 +813,16 @@
           "nullable": false,
           "length": 255,
           "mappedType": "string"
+        },
+        "user": {
+          "name": "user",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
         }
       },
       "name": "comments",
@@ -823,6 +833,16 @@
           ],
           "composite": false,
           "keyName": "comments_testimony_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "user"
+          ],
+          "composite": false,
+          "keyName": "comments_user_index",
           "constraint": false,
           "primary": false,
           "unique": false
@@ -850,6 +870,18 @@
             "uuid"
           ],
           "referencedTableName": "testimonies",
+          "updateRule": "cascade"
+        },
+        "comments_user_foreign": {
+          "constraintName": "comments_user_foreign",
+          "columnNames": [
+            "user"
+          ],
+          "localTableName": "comments",
+          "referencedColumnNames": [
+            "uuid"
+          ],
+          "referencedTableName": "users",
           "updateRule": "cascade"
         }
       },

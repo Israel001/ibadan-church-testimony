@@ -839,10 +839,12 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-          }).then((response) => {
+          }).then(async (response) => {
             if (response.ok) {
-              console.log('here???');
               window.location.href = '/admin/dashboard';
+            } else {
+              const error = await loginResponse.json();
+          alert('Error: ' + error.message);
             }
           });
         });

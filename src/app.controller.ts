@@ -42,6 +42,6 @@ export class AppController {
     const loggedIn = !!session.userId;
     const testimonies =
       await this.testimonyService.fetchTestimonyWithSurrounding(uuid);
-    return {loggedIn, testimonies}
+    return { loggedIn, testimonies, session };
   }
 }

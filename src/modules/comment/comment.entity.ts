@@ -1,6 +1,7 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { Timestamp } from '../../base/timestamp.entity';
 import { Testimony } from '../testimony/testimony.entity';
+import { Users } from '../users/users.entity';
 
 @Entity({ tableName: 'comments' })
 export class Comment extends Timestamp {
@@ -24,4 +25,13 @@ export class Comment extends Timestamp {
     eager: true,
   })
   testimony: Testimony; 
+
+  @ManyToOne(() => Users, {
+    fieldName: 'user',
+    referenceColumnName: 'uuid',
+    joinColumn: 'uuid',
+    nullable: false, 
+    eager: true,
+  })
+  user: Users; 
 }

@@ -38,13 +38,13 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#">
+                        <form action="#" id="signupForm">
                             <div class="form-group relative mb-25 mb-sm-20">
                                 <input type="text" class="form-control input-lg input-white shadow-5" id="name" placeholder="Name">
                                 <i class="far fa-user transform-v-center"></i>
                             </div>
                             <div class="form-group relative mb-25 mb-sm-20">
-                                <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
+                                <input type="email" class="form-control input-lg input-white shadow-5" id="signup-email" placeholder="Email">
                                 <i class="far fa-envelope transform-v-center"></i>
                             </div>
                             <div class="form-group relative mb-20 mb-sm-20">
@@ -88,7 +88,7 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#">
+                        <form action="#" id="loginForm">
                             <div class="form-group relative mb-25">
                                 <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
                                 <i class="far fa-envelope transform-v-center"></i>
@@ -267,7 +267,7 @@
                           type="text"
                           class="form-control input-white yellow-border"
                           name="name"
-                          id="name"
+                          id="comment-name"
                           placeholder="Enter your name"
                         />
                         <i class="far fa-user transform-v-center"></i>
@@ -280,7 +280,7 @@
                           type="email"
                           class="form-control input-white yellow-border"
                           name="email"
-                          id="email"
+                          id="comment-email"
                           placeholder="Enter your email"
                         />
                         <i class="far fa-envelope transform-v-center"></i>
@@ -323,7 +323,7 @@
                         </div>
                         <div class="popular-post-text">
                         <h5 class="mb-5 fs-15 rbt-slab lh-15">
-                            <%= testimony.testimony.split(' ').slice(0, 10).join(' ') %> 
+                            <%= testimony.testimony.split(' ').slice(0, 10).join(' ').replace(/<\/?[^>]+(>|$)/g, '') %> 
                             <%= testimony.testimony.split(' ').length > 10 ? '...' : '' %>
                         </h5>
                         <span class="fs-12 f-700 yellow"><%= testimony.createdAt.toDateString() %></span>
@@ -395,6 +395,49 @@
     <script src="/js/audio-file.js"></script>
 
     <script>
+      document.getElementById('signupForm')
+        .addEventListener('submit', async function (event) {
+          event.preventDefault();
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('signup-email').value.trim();
+          const password = document.getElementById('pwd').value.trim();
+          // TODO: Do validation
+          const signupResponse = await fetch(`/users`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fullname: name, email, password })
+          });
+          if (signupResponse.ok) {
+            window.location.reload();
+          } else {
+            const error = await signupResponse.json();
+          alert('Error: ' + error.message);
+          }
+        });
+
+      document.getElementById('loginForm')
+        .addEventListener('submit', async function (event) {
+          event.preventDefault();
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value.trim();
+          // TODO: Do validation
+          const loginResponse = await fetch(`/auth/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          });
+          if (loginResponse.ok) {
+            window.location.reload();
+          } else {
+            const error = await loginResponse.json();
+          alert('Error: ' + error.message);
+          }
+        });
+
       document
         .getElementById('commentForm')
         .addEventListener('submit', async function (event) {
@@ -408,7 +451,7 @@
                   .querySelectorAll('.text-danger')
                   .forEach((span) => (span.innerText = ''));
 
-                const name = document.getElementById('name').value.trim();
+                const name = document.getElementById('comment-name').value.trim();
                 console.log("name", name)
                 if (name === '') {
                   document.getElementById('nameError').innerText =
@@ -424,7 +467,7 @@
                   isValid = false;
                 }
 
-                const email = document.getElementById('email').value.trim();
+                const email = document.getElementById('comment-email').value.trim();
                 console.log("email", email)
                 if (email === '') {
                   document.getElementById('emailError').innerText =
@@ -439,8 +482,8 @@
                 if (!isValid) return;
 
                 const formDataJson = {
-                  name: document.getElementById('name').value,
-                  email: document.getElementById('email').value,
+                  name: document.getElementById('comment-name').value,
+                  email: document.getElementById('comment-email').value,
                   comment: document.getElementById('message').value
                 }
 

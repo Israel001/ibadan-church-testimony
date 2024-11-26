@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { CreateTestimonyDto } from '../testimony/testimony.dto';
 import { Testimony } from '../testimony/testimony.entity';
 import { v4 } from 'uuid';
 import { Users } from '../users/users.entity';
@@ -17,7 +16,6 @@ import { AdminUser } from './admin.entities';
 import bcrypt from 'bcryptjs';
 import { IAdminAuthContext, TestimonyStatus } from 'src/types';
 import { JwtService } from '@nestjs/jwt';
-import { Response } from 'express';
 import {
   AdminLoginDTO,
   CreateAdminTestimonyDto,
@@ -208,8 +206,6 @@ export class AdminService {
 
     const allTestimonies =
       pendingTestimonies + activeTestimonies + rejectedTestimonies;
-
-    console.log('allTestimonies', allTestimonies);
 
     return {
       pendingTestimonies,

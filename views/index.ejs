@@ -116,13 +116,13 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#">
+                        <form action="#" id="loginForm">
                             <div class="form-group relative mb-25">
-                                <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
+                                <input type="email" class="form-control input-lg input-white shadow-5" id="login-email" placeholder="Email">
                                 <i class="far fa-envelope transform-v-center"></i>
                             </div>
                             <div class="form-group relative mb-25">
-                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
+                                <input type="password" class="form-control input-lg input-white shadow-5" id="login-pwd" placeholder="Password">
                                 <i class="fas fa-lock transform-v-center"></i>
                             </div>
                             <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">LOGIN</button>
@@ -174,7 +174,7 @@
                                 <h3 class="fs-25 f-700 mb-20 mt-20">
                                     <%= testimony.firstname %> <%= testimony.lastname %>
                                 </h3>
-                                <p class="mb-15 testimony-message"><%= testimony.testimony %></p>
+                                <p class="mb-15 testimony-message"><%= testimony.testimony.replace(/<\/?[^>]+(>|$)/g, '') %></p>
                                 <a href="/testimony/<%= testimony.uuid %>" class="f-700 yellow fs-14 uppercase">
                                     Read More
                                     <i class="fas fa-long-arrow-alt-right ml-10"></i>
@@ -339,6 +339,27 @@
       // If the user is not logged in, show the modal
       $(modal).modal('show');
     }
+
+    document.getElementById('loginForm')
+        .addEventListener('submit', async function (event) {
+          event.preventDefault();
+          const email = document.getElementById('login-email').value.trim();
+          const password = document.getElementById('login-pwd').value.trim();
+          // TODO: Do validation
+          const loginResponse = await fetch(`/auth/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          });
+          if (loginResponse.ok) {
+            window.location.reload();
+          } else {
+            const error = await loginResponse.json();
+          alert('Error: ' + error.message);
+          }
+        });
 
     // Form submission handler
     document.querySelector('form').addEventListener('submit', async function(event) {
