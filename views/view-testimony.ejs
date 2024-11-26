@@ -142,6 +142,14 @@
     </section> -->
     <!--Inner end -->
     <!-- Blog head start -->
+    <div class="d-flex justify-content-center align-items-center my-4">
+        <p class="text-center mb-0" style="font-size: 18px; font-weight: bold;">
+            Do you want to share what the Lord has done for you?? 
+            <a href="/create-testimony" class="btn btn-primary btn-sm ml-2">
+                Click Here
+            </a>
+        </p>
+    </div>
     <section class="blogs-header pt-80">
       <div class="container">
         <div class="row">
@@ -269,6 +277,7 @@
                           name="name"
                           id="comment-name"
                           placeholder="Enter your name"
+                          value="<%= session.lastName %> <%= session.firstName %>"
                         />
                         <i class="far fa-user transform-v-center"></i>
                         <span id="nameError" class="text-danger"></span>
@@ -282,6 +291,7 @@
                           name="email"
                           id="comment-email"
                           placeholder="Enter your email"
+                          value="<%= session.email %>"
                         />
                         <i class="far fa-envelope transform-v-center"></i>
                         <span id="emailError" class="text-danger"></span>
@@ -395,13 +405,56 @@
     <script src="/js/audio-file.js"></script>
 
     <script>
+      // Utility function to validate email format
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      // Sign Up Form Validation and Submission
       document.getElementById('signupForm')
         .addEventListener('submit', async function (event) {
           event.preventDefault();
+
           const name = document.getElementById('name').value.trim();
           const email = document.getElementById('signup-email').value.trim();
           const password = document.getElementById('pwd').value.trim();
-          // TODO: Do validation
+          const confirmPassword = document.getElementById('pwd-confirm').value.trim();
+
+          // Clear previous error messages
+          document.querySelectorAll('#signupForm .error-message').forEach(el => el.innerText = '');
+
+          let isValid = true;
+
+          // Validate Name
+          if (!name) {
+            document.getElementById('name').insertAdjacentHTML('afterend', '<span class="error-message text-danger">Name is required.</span>');
+            isValid = false;
+          }
+
+          // Validate Email
+          if (!email || !isValidEmail(email)) {
+            document.getElementById('signup-email').insertAdjacentHTML('afterend', '<span class="error-message text-danger">Valid email is required.</span>');
+            isValid = false;
+          }
+
+          // Validate Password
+          if (!password || password.length < 6) {
+            document.getElementById('pwd').insertAdjacentHTML('afterend', '<span class="error-message text-danger">Password must be at least 6 characters long.</span>');
+            isValid = false;
+          }
+
+          // Validate Confirm Password
+          if (password !== confirmPassword) {
+            document.getElementById('pwd-confirm').insertAdjacentHTML('afterend', '<span class="error-message text-danger">Passwords do not match.</span>');
+            isValid = false;
+          }
+
+          if (!isValid) {
+            return; // Stop form submission if validation fails
+          }
+
+          // Submit the form if validation passes
           const signupResponse = await fetch(`/users`, {
             method: 'POST',
             headers: {
@@ -409,20 +462,45 @@
             },
             body: JSON.stringify({ fullname: name, email, password })
           });
+
           if (signupResponse.ok) {
             window.location.reload();
           } else {
             const error = await signupResponse.json();
-          alert('Error: ' + error.message);
+            alert('Error: ' + error.message);
           }
         });
 
+      // Login Form Validation and Submission
       document.getElementById('loginForm')
         .addEventListener('submit', async function (event) {
           event.preventDefault();
+
           const email = document.getElementById('email').value.trim();
-          const password = document.getElementById('password').value.trim();
-          // TODO: Do validation
+          const password = document.getElementById('pwd').value.trim();
+
+          // Clear previous error messages
+          document.querySelectorAll('#loginForm .error-message').forEach(el => el.innerText = '');
+
+          let isValid = true;
+
+          // Validate Email
+          if (!email || !isValidEmail(email)) {
+            document.getElementById('email').insertAdjacentHTML('afterend', '<span class="error-message text-danger">Valid email is required.</span>');
+            isValid = false;
+          }
+
+          // Validate Password
+          if (!password) {
+            document.getElementById('pwd').insertAdjacentHTML('afterend', '<span class="error-message text-danger">Password is required.</span>');
+            isValid = false;
+          }
+
+          if (!isValid) {
+            return; // Stop form submission if validation fails
+          }
+
+          // Submit the form if validation passes
           const loginResponse = await fetch(`/auth/login`, {
             method: 'POST',
             headers: {
@@ -430,11 +508,12 @@
             },
             body: JSON.stringify({ email, password })
           });
+
           if (loginResponse.ok) {
             window.location.reload();
           } else {
             const error = await loginResponse.json();
-          alert('Error: ' + error.message);
+            alert('Error: ' + error.message);
           }
         });
 

@@ -413,9 +413,7 @@
 
           // Validate Message
           tinymce.triggerSave();
-          const message = removeHtmlTagsFromString(
-            document.getElementById('message').value.trim(),
-          );
+          const message = document.getElementById('message').value.trim();
           if (message === '') {
             document.getElementById('messageError').innerText =
               'Message is required.';
@@ -544,7 +542,7 @@
 
       async function fetchCategories() {
         try {
-          const response = await fetch('http://localhost:8080/categories');
+          const response = await fetch('categories');
           // console.log(response.body);
           let allCategories = await response.json();
           let categories = allCategories.categories;

@@ -130,7 +130,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href="http://localhost:8080/admin/dashboard"
+                    href="/admin/dashboard"
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -148,7 +148,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href="http://localhost:8080/admin/testimonies"
+                    href="/admin/testimonies"
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -166,7 +166,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href="http://localhost:8080/admin/upload-testimony"
+                    href="/admin/upload-testimony"
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -184,7 +184,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href=""
+                    href="/admin/categories"
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -730,7 +730,7 @@
                     <div class="px-3">
                       <a
                         class="btn btn-phoenix-secondary d-flex flex-center w-100"
-                        href="#!"
+                        href="/admin/logout"
                       >
                         <span class="me-2" data-feather="log-out"> </span>Sign
                         out</a
@@ -1190,9 +1190,10 @@
      const updateTestimony = async (uuid, status) => {
      try {
         const category = document.getElementById('category').value;
-        const message = document.getElementById('message').value;
+        tinymce.triggerSave();
+        const message = document.getElementById('message').value.trim();
         console.log('message', message);
-        const rejectionReason = document.getElementById('rejectionReason').value;
+        const rejectionReason = document.getElementById('rejectionReason').value.trim();
 
         // const textarea = document.getElementById('message');
         // textarea.value = 'New value';
@@ -1217,7 +1218,7 @@
         }
 
         const updateResponse = await fetch(
-          `http://localhost:8080/admin/testimony/${uuid}`,
+          `/admin/testimony/${uuid}`,
           {
             method: 'PUT',
             headers: {
@@ -1263,7 +1264,7 @@
         // Fetch Comments
         async function fetchComments() {
           try {
-            const response = await fetch(`http://localhost:8080/admin/testimony/${uuid}/comments`);
+            const response = await fetch(`/admin/testimony/${uuid}/comments`);
             const comments = await response.json();
 
             // Clear existing comments
@@ -1298,7 +1299,7 @@
 
         async function fetchCategories() {
         try {
-          const response = await fetch('http://localhost:8080/admin/allcategories');
+          const response = await fetch('/admin/allcategories');
           let allCategories = await response.json();
           console.log("allCategories", allCategories);
           allCategories = allCategories.categories;
@@ -1330,7 +1331,7 @@
           if (!confirm('Are you sure you want to delete this comment?')) return;
 
           try {
-            const response = await fetch(`http://localhost:8080/admin/testimony/${uuid}/comments/${commentId}`, {
+            const response = await fetch(`/admin/testimony/${uuid}/comments/${commentId}`, {
               method: 'DELETE',
             });
 
@@ -1361,7 +1362,7 @@
         });
       });
 
-      const message = document.getElementById('message').value = '<%= testimony.testimony %>';
+      const message = document.getElementById('message').value = '<%- testimony.testimony %>';
 
     </script>
   </body>

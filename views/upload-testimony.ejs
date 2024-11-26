@@ -78,7 +78,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href="http://localhost:8080/admin/dashboard"
+                    href="/admin/dashboard"
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -96,7 +96,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href="http://localhost:8080/admin/testimonies"
+                    href="/admin/testimonies"
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -114,7 +114,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href="http://localhost:8080/admin/upload-testimony"
+                    href="/admin/upload-testimony"
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -132,7 +132,7 @@
                 <div class="nav-item-wrapper">
                   <a
                     class="nav-link label-1"
-                    href="http://localhost:8080/admin/categories"
+                    href="/admin/categories"
                     role="button"
                     data-bs-toggle=""
                     aria-expanded="false"
@@ -319,7 +319,7 @@
                 </div>
                 <div class="card-footer p-0 border-top border-translucent">
                   <hr>
-                  <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!"> <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
+                  <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="/admin/logout"> <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
                   <div class="my-2 text-center fw-bold fs-10 text-body-quaternary"><a class="text-body-quaternary me-1" href="#!">Privacy policy</a>&bull;<a class="text-body-quaternary mx-1" href="#!">Terms</a>&bull;<a class="text-body-quaternary ms-1" href="#!">Cookies</a></div>
                 </div>
               </div>
@@ -540,7 +540,7 @@
                       <li class="nav-item"><a class="nav-link px-3 d-block" href="#!"> <span class="me-2 text-body align-bottom" data-feather="user-plus"></span>Add another account</a></li>
                     </ul>
                     <hr>
-                    <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!"> <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
+                    <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="/admin/logout"> <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
                     <div class="my-2 text-center fw-bold fs-10 text-body-quaternary"><a class="text-body-quaternary me-1" href="#!">Privacy policy</a>&bull;<a class="text-body-quaternary mx-1" href="#!">Terms</a>&bull;<a class="text-body-quaternary ms-1" href="#!">Cookies</a></div>
                   </div>
                 </div>
@@ -732,7 +732,7 @@
                         <div class="col-12">
                           <label for="message" class="form-label">Description</label>
                           <textarea class="form-control" id="message" rows="7" placeholder="Enter testimony"></textarea>
-                          <span class="text-danger" id="messageError"></span>
+                          <span class="text-danger" id="testimonyError"></span>
                         </div>
 
                         <!-- Anonymous Checkbox -->
@@ -820,6 +820,7 @@
       // Form Submission Handler
       document.getElementById('testimonyForm').addEventListener('submit', async (event) => {
         event.preventDefault();
+        tinymce.triggerSave();
 
         let isValid = true;
         const errors = {
@@ -831,11 +832,12 @@
           category: 'Category is required.',
           phoneNumber: 'Phone number is required.',
           file: 'Image file is required.',
-          message: 'Message is required.',
+          testimony: 'Testimony is required.',
         };
 
         // Clear Previous Errors
         document.querySelectorAll('.text-danger').forEach((error) => (error.innerText = ''));
+
 
         // Collect Inputs
         const formData = {
@@ -846,8 +848,8 @@
           country: document.getElementById('country').value.trim(),
           categoryUuid: document.getElementById('category').value.trim(),
           phoneNumber: document.getElementById('phoneNumber').value.trim(),
-          anonymous: document.getElementById('anonymous').checked,
-          isFeatured: document.getElementById('isFeatured').checked,
+          anonymous: document.getElementById('anonymous').checked || false,
+          isFeatured: document.getElementById('isFeatured').checked || false,
           testimony: document.getElementById('message').value.trim(),
           status: "PENDING"
         };
@@ -855,11 +857,16 @@
         const file = document.getElementById('formFile').files[0];
 
         // Validate Inputs
+      
         for (const [key, value] of Object.entries(formData)) {
-          if (!value) {
-            document.getElementById(`${key}Error`).innerText = errors[key];
-            isValid = false;
-          }
+          if (key !== 'anonymous' && key !== 'isFeatured') {
+            console.log("key", key);
+            const errorElement = document.getElementById(`${key}Error`);
+            if (!value) {
+              document.getElementById(`${key}Error`).innerText = errors[key];
+              isValid = false;
+            }            
+         }
         }
 
         if (!file) {
@@ -887,7 +894,7 @@
         // Submit Form
         console.log('Form Data:', formData);
           try {
-            const postResponse = await fetch('create-testimony', {
+            const postResponse = await fetch('/admin/create-testimony', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -898,7 +905,6 @@
 
             if (postResponse.ok) {
               alert('Form submitted successfully!');
-              window.location.href = '/';
             } else {
               alert('Error submitting form.');
             }
@@ -933,7 +939,7 @@
       
       async function fetchCategories() {
         try {
-          const response = await fetch('http://localhost:8080/admin/allcategories');
+          const response = await fetch('/admin/allcategories');
           let allCategories = await response.json();
           console.log("allCategories", allCategories);
           allCategories = allCategories.categories;
