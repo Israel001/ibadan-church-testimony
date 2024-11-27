@@ -5,6 +5,7 @@ import { v4 } from 'uuid';
 import { Comment } from './comment.entity';
 import { CreateCommentDto } from './comment.dto';
 import { Testimony } from '../testimony/testimony.entity';
+import { Users } from '../users/users.entity';
 
 @Injectable()
 export class CommentService {
@@ -13,6 +14,8 @@ export class CommentService {
     private readonly commentRepository: EntityRepository<Comment>,
     @InjectRepository(Testimony)
     private readonly testimonyRepository: EntityRepository<Testimony>,
+    @InjectRepository(Users)
+    private readonly userRepository: EntityRepository<Users>,
     private readonly em: EntityManager,
   ) {}
 
@@ -31,7 +34,7 @@ export class CommentService {
       email: createCommentDto.email,
       comment: createCommentDto.comment,
       testimony,
-      user: { uuid: session.userId },
+      user: this.userRepository.getReference(session.userId),
     });
 
     await this.em.persistAndFlush(comment);

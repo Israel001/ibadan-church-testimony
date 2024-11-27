@@ -29,10 +29,10 @@ export class AdminController {
   @Get('dashboard')
   @Render('dashboard')
   @AdminRole({ roles: ['Super Admin', 'Admin'] })
-  async dashboard() {
+  async dashboard(@Session() session: any) {
     const result = await this.adminService.fetchDashboardData();
     const topTestimonies = await this.adminService.fetchToptestimonies();
-    return { dashboardData: result, topTestimonies };
+    return { dashboardData: result, topTestimonies, session };
   }
 
   @Post('auth/login')
@@ -80,18 +80,20 @@ export class AdminController {
     return {};
   }
 
-  @Get('create-moderator')
-  @Render('sign-up')
+  @Get('view-moderator')
+  @Render('view-moderator')
   @AdminRole({ roles: ['Super Admin'] })
-  signUp() {
-    return {};
+  async viewModerator(@Session() session: any) {
+    const moderators = await this.adminService.fetchModerators();
+    console.log('moderators', moderators);
+    return { moderators, session };
   }
 
   @Get('upload-testimony')
   @Render('upload-testimony')
   @AdminRole({ roles: ['Super Admin', 'Admin'] })
-  uploadTestimony() {
-    return {};
+  uploadTestimony(@Session() session: any) {
+    return { session };
   }
 
   @Post('create-moderator')
@@ -100,11 +102,18 @@ export class AdminController {
     return this.adminService.createModerator(body);
   }
 
-  @Get('moderators')
+  @Get('create-moderator')
+  @Render('create-moderator')
   @AdminRole({ roles: ['Super Admin'] })
-  fetchModerators() {
-    return this.adminService.fetchModerators();
+  signup(@Session() session: any) {
+    return { session };
   }
+
+  // @Get('moderators')
+  // @AdminRole({ roles: ['Super Admin'] })
+  // fetchModerators() {
+  //   return this.adminService.fetchModerators();
+  // }
 
   @Delete('moderator/:uuid')
   @AdminRole({ roles: ['Super Admin'] })
@@ -145,13 +154,13 @@ export class AdminController {
   @Get('categories')
   @Render('categories')
   @AdminRole({ roles: ['Super Admin', 'Admin'] })
-  async fetchAllCategories() {
+  async fetchAllCategories(@Session() session: any) {
     try {
       const response = await this.adminService.fetchCategories();
-      return { categories: response };
+      return { categories: response, session };
     } catch (error) {
       console.error('Error fetching categories:', error);
-      return { categories: [] };
+      return { categories: [], session };
     }
   }
 
@@ -194,9 +203,9 @@ export class AdminController {
   @Get('view-testimony/:uuid')
   @AdminRole({ roles: ['Super Admin', 'Admin'] })
   @Render('view_testimony')
-  async viewTestimony(@Param('uuid') uuid: string) {
+  async viewTestimony(@Param('uuid') uuid: string, @Session() session: any) {
     const result = await this.adminService.fetchTestimony(uuid);
-    return result;
+    return { result, session };
   }
 
   @Get('testimonies')
@@ -206,6 +215,7 @@ export class AdminController {
     @Query('page') page: string,
     @Query('limit') limit: string,
     @Query() query: dtos.TestimonyQuery,
+    @Session() session: any,
   ) {
     const intPage = (page && Number(page)) || 1;
     const intLimit = (limit && Number(limit)) || 20;
@@ -223,6 +233,7 @@ export class AdminController {
         totalPages: response.pagination.pages,
       },
       query,
+      session,
     };
   }
 

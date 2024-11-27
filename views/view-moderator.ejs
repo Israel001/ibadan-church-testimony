@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US" dir="ltr" data-navigation-type="default" data-navbar-horizontal-shape="default">
 
   <head>
@@ -52,11 +52,6 @@
         userLinkRTL.setAttribute('disabled', true);
       }
     </script>
-
-    <script
-      src="https://cdn.tiny.cloud/1/m714jundcur08b881q7qay47h9tzu21x2xayvvxzk6b6v34z/tinymce/7/tinymce.min.js"
-      referrerpolicy="origin"
-    ></script>
   </head>
 
   <body>
@@ -687,114 +682,49 @@
         }
       </script>
       <div class="content">
-        <h2 class="mb-2 lh-sm">Believer's Testimony Form</h2>
-        <p class="text-body-tertiary lead mb-2">I will speak of thy testimonies also before kings, and will not be ashamed. – Psalm 119:46</p>
-        <div class="mt-4">
-          <div class="row g-4">
-            <div class="col-12 col-xl-10 order-1 order-xl-0">
-              <div class="mb-12">
-                
-                <div class="card shadow-none border my-4" data-component-card="data-component-card">
-                  <div class="card-header p-4 border-bottom bg-body">
-                    <div class="row g-3 justify-content-between align-items-center">
-                      <div class="col-12 col-md">
-                        <h4 class="text-body mb-0" data-anchor="data-anchor">Testimony Details</h4>
+        <div class="container my-5">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Full Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% moderators.forEach((moderator, index) => { %>
+                  <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= moderator.fullName %></td>
+                    <td><%= moderator.email %></td>
+                    <td><%= moderator.role.name %></td>
+                    <td><%= moderator.phone || 'N/A' %></td>
+                    <td>
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-link text-secondary"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                          <li><a class="dropdown-item text-danger" onclick="deleteUser('<%= moderator.uuid %>')">Delete</a></li>
+                        </ul>
                       </div>
-                    </div>
-                  </div>
-                  
-                    <div class="p-4 code-to-copy">
-                      <form id="testimonyForm" class="row g-3">
-                        <!-- First Name -->
-                        <div class="col-md-6">
-                          <label for="firstName" class="form-label">First Name</label>
-                          <input class="form-control" id="firstName" type="text" placeholder="Enter first name">
-                          <span class="text-danger" id="firstNameError"></span>
-                        </div>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-                        <!-- Last Name -->
-                        <div class="col-md-6">
-                          <label for="lastName" class="form-label">Last Name</label>
-                          <input class="form-control" id="lastName" type="text" placeholder="Enter last name">
-                          <span class="text-danger" id="lastNameError"></span>
-                        </div>
-
-                        <!-- Email -->
-                        <div class="col-md-6">
-                          <label for="email" class="form-label">Email</label>
-                          <input class="form-control" id="email" type="email" placeholder="Enter email">
-                          <span class="text-danger" id="emailError"></span>
-                        </div>
-
-                        <!-- Country -->
-                        <div class="col-md-6">
-                          <label for="country" class="form-label">Country</label>
-                          <select class="form-select" id="country" name="country">
-                            <option selected>Choose...</option>
-                          </select>
-                          <span class="text-danger" id="countryError"></span>
-                        </div>
-
-                        <!-- Address -->
-                        <div class="col-md-6">
-                          <label for="address" class="form-label">Address</label>
-                          <input class="form-control" id="address" type="text" placeholder="1234 Main St">
-                          <span class="text-danger" id="addressError"></span>
-                        </div>
-
-                        <!-- Phone -->
-                        <div class="col-md-6">
-                          <label for="phoneNumber" class="form-label">Phone Number</label>
-                          <input class="form-control" id="phoneNumber" type="tel" placeholder="Enter phone number">
-                          <span class="text-danger" id="phoneNumberError"></span>
-                        </div>
-
-                        <!-- Category -->
-                        <div class="col-md-6">
-                          <label for="category" class="form-label">Category</label>
-                          <select class="form-select" id="category">
-                            <option selected>Choose...</option>
-                          </select>
-                          <span class="text-danger" id="categoryError"></span>
-                        </div>
-
-                        <!-- Image Upload -->
-                        <div class="col-md-6">
-                          <label for="formFile" class="form-label">Upload Image</label>
-                          <input class="form-control" id="formFile" type="file">
-                          <!-- <span class="text-danger" id="fileError"></span> -->
-                          <img id="imagePreview" style="display:none; max-width: 100%; margin-top: 10px;" alt="Preview">
-                        </div>
-
-                        <!-- Description -->
-                        <div class="col-12">
-                          <label for="message" class="form-label">Description</label>
-                          <textarea class="form-control" id="message" rows="7" placeholder="Enter testimony"></textarea>
-                          <span class="text-danger" id="testimonyError"></span>
-                        </div>
-
-                        <!-- Anonymous Checkbox -->
-                        <div class="col-12">
-                          <div class="form-check">
-                            <input class="form-check-input" id="anonymous" type="checkbox">
-                            <label for="anonymous" class="form-check-label">Submit as Anonymous</label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" id="isFeatured" type="checkbox">
-                            <label for="isFeatured" class="form-check-label">Is Featured</label>
-                          </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="col-12">
-                          <button type="submit" class="btn btn-primary">Upload</button>
-                          <div id="uploadStatus" style="display: none;">Uploading...</div>
-                        </div>
-                      </form>
-                    </div>
-                </div>
-              </div>
-                
 
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
           <div class="toast align-items-center text-white bg-dark border-0" id="icon-copied-toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -834,188 +764,29 @@
     <script src="vendors/prism/prism.js"></script>
     <script src="../js/phoenix-1.js"></script>
     <script>
-      const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/drtsuuj3r/image/upload';
-      const UPLOAD_PRESET = 'ml_default';
-
-      // Helper Functions
-      const validateEmail = (email) => /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email);
-
-      const uploadToCloudinary = async (file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', UPLOAD_PRESET);
-
-        try {
-          const response = await fetch(CLOUDINARY_URL, { method: 'POST', body: formData });
-          const data = await response.json();
-          return data.secure_url;
-        } catch (error) {
-          console.error('Cloudinary upload failed:', error);
-          throw new Error('Image upload failed');
-        }
-      };
-
-      // Form Submission Handler
-      document.getElementById('testimonyForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        tinymce.triggerSave();
-
-        let isValid = true;
-        const errors = {
-          firstName: 'First name is required.',
-          lastName: 'Last name is required.',
-          email: 'Email is required.',
-          address: 'Address is required.',
-          country: 'Country is required.',
-          category: 'Category is required.',
-          phoneNumber: 'Phone number is required.',
-          file: 'Image file is required.',
-          testimony: 'Testimony is required.',
-        };
-
-        // Clear Previous Errors
-        document.querySelectorAll('.text-danger').forEach((error) => (error.innerText = ''));
-
-
-        // Collect Inputs
-        const formData = {
-          firstname: document.getElementById('firstName').value.trim(),
-          lastname: document.getElementById('lastName').value.trim(),
-          email: document.getElementById('email').value.trim(),
-          address: document.getElementById('address').value.trim(),
-          country: document.getElementById('country').value.trim(),
-          categoryUuid: document.getElementById('category').value.trim(),
-          phoneNumber: document.getElementById('phoneNumber').value.trim(),
-          anonymous: document.getElementById('anonymous').checked || false,
-          isFeatured: document.getElementById('isFeatured').checked || false,
-          testimony: document.getElementById('message').value.trim(),
-          status: "PENDING"
-        };
-
-        const file = document.getElementById('formFile').files[0];
-
-        // Validate Inputs
-      
-        for (const [key, value] of Object.entries(formData)) {
-          if (key !== 'anonymous' && key !== 'isFeatured') {
-            console.log("key", key);
-            const errorElement = document.getElementById(`${key}Error`);
-            if (!value) {
-              document.getElementById(`${key}Error`).innerText = errors[key];
-              isValid = false;
-            }            
-         }
-        }
-
-        if (!file) {
-          document.getElementById('fileError').innerText = errors.file;
-          isValid = false;
-        }
-
-        if (!validateEmail(formData.email)) {
-          document.getElementById('emailError').innerText = 'Invalid email format.';
-          isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // Upload Image
-        document.getElementById('uploadStatus').style.display = 'block';
-        try {
-          formData.image = await uploadToCloudinary(file);
-          document.getElementById('uploadStatus').style.display = 'none';
-        } catch (error) {
-          alert(error.message);
-          return;
-        }
-
-        // Submit Form
-        console.log('Form Data:', formData);
+      async function deleteUser(userUuid){
+        if(confirm('Are you sure you want to delete this user?')){
           try {
-            const postResponse = await fetch('/admin/create-testimony', {
-              method: 'POST',
+            const postResponse = await fetch(`/admin/moderator/${userUuid}`, {
+              method: 'DELETE',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify(formData),
             });
             console.log(postResponse);
 
             if (postResponse.ok) {
-              alert('Form submitted successfully!');
+              alert('User deleted successfully!');
+              window.location.reload();
             } else {
-              alert('Error submitting form.');
+              alert('Error deleting user.');
             }
           } catch (error) {
-            console.error('Form submission failed:', error);
-            alert('Failed to submit form.');
+            console.error('User deletion failed:', error);
+            alert('Failed to delete user.');
           }
-        alert('Testimony submitted successfully!');
-      });
-
-      async function fetchCountries() {
-        try {
-          const response = await fetch(
-            'https://countriesnow.space/api/v0.1/countries',
-          );
-          const countries = await response.json();
-
-          const countrySelect = document.getElementById('country');
-
-          countries.data.sort((a, b) => a.country.localeCompare(b.country));
-
-          countries.data.forEach((country) => {
-            const option = document.createElement('option');
-            option.value = country.country;
-            option.text = country.country;
-            countrySelect.add(option);
-          });
-        } catch (error) {
-          console.error('Failed to fetch countries:', error);
         }
       }
-      
-      async function fetchCategories() {
-        try {
-          const response = await fetch('/admin/allcategories');
-          let allCategories = await response.json();
-          console.log("allCategories", allCategories);
-          allCategories = allCategories.categories;
-
-          const categorySelect = document.getElementById('category');
-
-          if (allCategories.length > 0) {
-            allCategories.forEach((category) => {
-              console.log("category", category);
-              const option = document.createElement('option');
-              option.value = category.uuid;
-              option.text = category.name;
-              categorySelect.appendChild(option);
-            });
-          } else {
-            const option = document.createElement('option');
-            option.value = '';
-            option.text = 'No categories available';
-            categorySelect.appendChild(option);
-          }
-        } catch (error) {
-          console.error('Error fetching categories:', error);
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', function () {
-        fetchCountries();
-        fetchCategories();
-
-        tinymce.init({
-          selector: '#message',
-          plugins:
-            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-          toolbar_mode: 'floating',
-        });
-
-      });
-
     </script>
   </body>
 

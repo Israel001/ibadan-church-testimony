@@ -55,7 +55,7 @@
 </head>
 
 
-    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalTitle" aria-hidden="true">
+       <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -66,39 +66,43 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#">
-                            <div class="form-group relative mb-25 mb-sm-20">
-                                <input type="text" class="form-control input-lg input-white shadow-5" id="name" placeholder="Name">
-                                <i class="far fa-user transform-v-center"></i>
+                      <form action="#" id="signupForm">
+                        <div class="form-group relative mb-25 mb-sm-20">
+                          <input type="text" class="form-control input-lg input-white shadow-5" id="name" placeholder="Name">
+                          <i class="far fa-user transform-v-center"></i>
+                          <span id="nameError" class="text-danger"></span> <!-- Error span -->
+                        </div>
+                        <div class="form-group relative mb-25 mb-sm-20">
+                          <input type="email" class="form-control input-lg input-white shadow-5" id="signup-email" placeholder="Email">
+                          <i class="far fa-envelope transform-v-center"></i>
+                          <span id="signupEmailError" class="text-danger"></span> <!-- Error span -->
+                        </div>
+                        <div class="form-group relative mb-20 mb-sm-20">
+                          <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
+                          <i class="fas fa-lock transform-v-center"></i>
+                          <span id="pwdError" class="text-danger"></span> <!-- Error span -->
+                        </div>
+                        <div class="form-group relative mb-20 mb-sm-20">
+                          <input type="password" class="form-control input-lg input-white shadow-5" id="pwd-confirm" placeholder="Confirm Password">
+                          <i class="fas fa-lock transform-v-center"></i>
+                          <span id="pwdConfirmError" class="text-danger"></span> <!-- Error span -->
+                        </div>
+                        <div class="form-group form-check pl-0">
+                          <div class="d-flex justify-content-between">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+                                <label class="custom-control-label fs-13" for="customCheck1"><span class="label-check">Remember me</span></label>
                             </div>
-                            <div class="form-group relative mb-25 mb-sm-20">
-                                <input type="email" class="form-control input-lg input-white shadow-5" id="email" placeholder="Email">
-                                <i class="far fa-envelope transform-v-center"></i>
                             </div>
-                            <div class="form-group relative mb-20 mb-sm-20">
-                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd" placeholder="Password">
-                                <i class="fas fa-lock transform-v-center"></i>
-                            </div>
-                            <div class="form-group relative mb-20 mb-sm-20">
-                                <input type="password" class="form-control input-lg input-white shadow-5" id="pwd-confirm" placeholder="Confirm Password">
-                                <i class="fas fa-lock transform-v-center"></i>
-                            </div>
-                            <div class="form-group form-check pl-0">
-                                <div class="d-flex justify-content-between">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
-                                        <label class="custom-control-label fs-13" for="customCheck1"><span class="label-check">Remember me</span></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">SIGNUP</button>
-                            <p class="text-center mt-3">
-                                Already have an account? 
-                                <a href="#signinModal" data-toggle="modal" data-dismiss="modal" class="text-primary">
-                                    Login
-                                </a>
-                            </p>
-                        </form>
+                        </div>
+                        <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">SIGNUP</button>
+                        <p class="text-center mt-3">
+                          Already have an account? 
+                          <a href="#signinModal" data-toggle="modal" data-dismiss="modal" class="text-primary">
+                              Login
+                          </a>
+                        </p>
+                      </form>
                     </div>
                 
                 </div>
@@ -116,24 +120,33 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" id="loginForm">
-                            <div class="form-group relative mb-25">
-                                <input type="email" class="form-control input-lg input-white shadow-5" id="login-email" placeholder="Email">
-                                <i class="far fa-envelope transform-v-center"></i>
+                      <form action="#" id="loginForm">
+                        <div class="form-group relative mb-25">
+                          <input type="email" class="form-control input-lg input-white shadow-5" id="email2" placeholder="Email">
+                          <i class="far fa-envelope transform-v-center"></i>
+                          <span id="emailError" class="text-danger"></span> <!-- Error span -->
+                        </div>
+                        <div class="form-group relative mb-25">
+                          <input type="password" class="form-control input-lg input-white shadow-5" id="pwd2" placeholder="Password">
+                          <i class="fas fa-lock transform-v-center"></i>
+                          <span id="loginPwdError" class="text-danger"></span> <!-- Error span -->
+                        </div>
+                        <div class="form-group form-check pl-0">
+                          <div class="d-flex justify-content-between">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+                                <label class="custom-control-label fs-13" for="customCheck1"><span class="label-check">Remember me</span></label>
                             </div>
-                            <div class="form-group relative mb-25">
-                                <input type="password" class="form-control input-lg input-white shadow-5" id="login-pwd" placeholder="Password">
-                                <i class="fas fa-lock transform-v-center"></i>
                             </div>
-                            <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">LOGIN</button>
-                            <!-- Link to switch back to Sign Up modal -->
-                            <p class="text-center mt-3">
-                                Don't have an account? 
-                                <a href="#signupModal" data-toggle="modal" data-dismiss="modal" class="text-primary">
-                                    Sign Up
-                                </a>
-                            </p>
-                        </form>
+                        </div>
+                        <button type="submit" class="btn btn-black btn-block shadow-4 mt-20">LOGIN</button>
+                        <p class="text-center mt-3">
+                          Don't have an account? 
+                          <a href="#signupModal" data-toggle="modal" data-dismiss="modal" class="text-primary">
+                              Sign Up
+                          </a>
+                        </p>
+                      </form>
                     </div>
                 </div>
             </div>
@@ -340,12 +353,99 @@
       $(modal).modal('show');
     }
 
-    document.getElementById('loginForm')
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      // Sign Up Form Validation and Submission
+      document.getElementById('signupForm')
         .addEventListener('submit', async function (event) {
           event.preventDefault();
-          const email = document.getElementById('login-email').value.trim();
-          const password = document.getElementById('login-pwd').value.trim();
-          // TODO: Do validation
+          
+          // Clear previous error messages
+          document.getElementById('nameError').innerText = '';
+          document.getElementById('signupEmailError').innerText = '';
+          document.getElementById('pwdError').innerText = '';
+          document.getElementById('pwdConfirmError').innerText = '';
+
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('signup-email').value.trim();
+          const password = document.getElementById('pwd').value.trim();
+          const confirmPassword = document.getElementById('pwd-confirm').value.trim();
+
+          let isValid = true;
+
+          // Validation checks
+          if (!name) {
+            document.getElementById('nameError').innerText = 'Name is required';
+            isValid = false;
+          }
+          if (!email) {
+            document.getElementById('signupEmailError').innerText = 'Email is required';
+            isValid = false;
+          } else if (!/\S+@\S+\.\S+/.test(email)) {
+            document.getElementById('signupEmailError').innerText = 'Invalid email address';
+            isValid = false;
+          }
+          if (!password) {
+            document.getElementById('pwdError').innerText = 'Password is required';
+            isValid = false;
+          }
+          if (password !== confirmPassword) {
+            document.getElementById('pwdConfirmError').innerText = 'Passwords do not match';
+            isValid = false;
+          }
+
+          if (!isValid) return;
+
+          // Proceed with signup
+          const signupResponse = await fetch(`/users`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fullname: name, email, password })
+          });
+
+          if (signupResponse.ok) {
+            window.location.reload();
+          } else {
+            const error = await signupResponse.json();
+            alert('Error: ' + error.message);
+          }
+        });
+
+      // Login Form Validation and Submission
+      document.getElementById('loginForm')
+        .addEventListener('submit', async function (event) {
+          event.preventDefault();
+
+          // Clear previous error messages
+          document.getElementById('emailError').innerText = '';
+          document.getElementById('loginPwdError').innerText = '';
+
+          const email = document.getElementById('email2').value.trim();
+          const password = document.getElementById('pwd2').value.trim();
+
+          let isValid = true;
+
+          // Validation checks
+          if (!email) {
+            document.getElementById('emailError').innerText = 'Email is required';
+            isValid = false;
+          } else if (!/\S+@\S+\.\S+/.test(email)) {
+            document.getElementById('emailError').innerText = 'Invalid email address';
+            isValid = false;
+          }
+          if (!password) {
+            document.getElementById('loginPwdError').innerText = 'Password is required';
+            isValid = false;
+          }
+
+          if (!isValid) return;
+
+          // Proceed with login
           const loginResponse = await fetch(`/auth/login`, {
             method: 'POST',
             headers: {
@@ -353,64 +453,15 @@
             },
             body: JSON.stringify({ email, password })
           });
+
           if (loginResponse.ok) {
             window.location.reload();
           } else {
             const error = await loginResponse.json();
-          alert('Error: ' + error.message);
+            alert('Error: ' + error.message);
           }
         });
 
-    // Form submission handler
-    document.querySelector('form').addEventListener('submit', async function(event) {
-      event.preventDefault();
-
-      // Validate the form fields
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('pwd').value;
-      const confirmPassword = document.getElementById('pwd-confirm').value;
-
-      if (!name || !email || !password || !confirmPassword) {
-        alert('All fields are required!');
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert('Passwords do not match!');
-        return;
-      }
-
-      // Prepare data to be sent
-      const data = {
-        fullname: name,
-        email,
-        password
-      };
-
-      try {
-        // Make the POST request to "/users"
-        const response = await fetch('/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          // Assume the server logs the user in automatically after signup
-          window.location.reload(); // Reload page to check if logged in
-        } else {
-          const error = await response.json();
-          alert('Error: ' + error.message);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
-      }
-    });
   });
 </script>
 

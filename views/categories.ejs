@@ -140,6 +140,44 @@
                     </div>
                   </a>
                 </div>
+
+                <% if(session.user.role.name === 'Super Admin') { %>
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="/admin/create-moderator"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">Create Moderator</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="/admin/view-moderator"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">View Moderator</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                <% } %>
               </li>
             </ul>
           </div>
@@ -5160,7 +5198,6 @@
     <script src="../js/phoenix-1.js"></script>
     <script src="../js/crm-dashboard.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
             const categoriesList = document.getElementById('categories-list');
             const createCategoryForm = document.getElementById('create-category-form');
             const categoryNameInput = document.getElementById('category-name');
@@ -5176,7 +5213,7 @@
                 }
 
                 try {
-                const response = await fetch('admin/category', {
+                const response = await fetch('/admin/category', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name: categoryName }),
@@ -5197,7 +5234,7 @@
                 if (!confirm('Are you sure you want to delete this category?')) return;
 
                 try {
-                const response = await fetch(`admin/category/${categoryId}`, {
+                const response = await fetch(`/admin/category/${categoryId}`, {
                     method: 'DELETE',
                 });
                 alert('Category deleted successfully!');
@@ -5214,7 +5251,7 @@
             createCategoryForm.addEventListener('submit', createCategory);
 
             window.deleteCategory = deleteCategory;
-            });
+
 
     </script>
     <script>
@@ -5233,13 +5270,14 @@
 
     // Handle edit category form submission
     document.getElementById('edit-category-form').addEventListener('submit', async function (event) {
+      console.log('Edit category form submitted');
       event.preventDefault();
       const uuid = document.getElementById('edit-category-id').value;
       const newName = document.getElementById('edit-category-name').value;
 
       try {
-        const response = await fetch(`/update-category/${uuid}`, {
-          method: 'POST',
+        const response = await fetch(`/admin/category/${uuid}`, {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },

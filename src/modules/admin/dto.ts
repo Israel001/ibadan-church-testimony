@@ -180,4 +180,7 @@ export class CreateModeratorDto {
 
   @IsString()
   password: string;
+
+  @IsString()
+  phone: string;
 }

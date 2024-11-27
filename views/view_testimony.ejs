@@ -198,6 +198,44 @@
                     </div>
                   </a>
                 </div>
+
+                <% if(session.user.role.name === 'Super Admin') { %>
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="/admin/create-moderator"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">Create Moderator</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="/admin/view-moderator"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">View Moderator</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                <% } %>
               </li>
             </ul>
           </div>
@@ -882,8 +920,8 @@
             <div class="col-xl-8 border-end-xl">
               <div class="card mb-9">
                 <div class="card-body">
-                  <h1 class="lh-sm fs-6 fs-xxl-4 mb-2"><%= testimony.firstname %> <%= testimony.lastname %></h1>
-                  <p class="fs-8 mb-4 text-body-tertiary"><%= testimony.address %></p>
+                  <h1 class="lh-sm fs-6 fs-xxl-4 mb-2"><%= result.testimony.firstname %> <%= result.testimony.lastname %></h1>
+                  <p class="fs-8 mb-4 text-body-tertiary"><%= result.testimony.address %></p>
                   <div class="card mb-5 mb-xxl-7">
                     <div class="card-body">
                       <div class="row gy-5">
@@ -903,7 +941,7 @@
                               </div>
                             </div>
                             <p class="lh-sm mb-0 text-body-tertiary">
-                              <%= testimony.address %>
+                              <%= result.testimony.address %>
                             </p>
                           </div>
                           <div
@@ -923,7 +961,7 @@
                             </div>
                           </div>
                           <p class="lh-sm mb-0 text-body-tertiary">
-                            <%= new Date(testimony.createdAt).toDateString().toUpperCase() %>
+                            <%= new Date(result.testimony.createdAt).toDateString().toUpperCase() %>
                           </p>
                         </div>
                       </div>
@@ -945,7 +983,7 @@
                     data-gallery="gallery-posts-undefined"
                     ><img
                       class="rounded h-100 w-100 object-fit-cover"
-                      src="<%= testimony.image %>""
+                      src="<%= result.testimony.image %>""
                       alt="Testimony Image"
                   /></a>
                 </div>
@@ -971,7 +1009,7 @@
                     class="btn btn-primary btn-lg me-1 mb-1"
                     type="button"
                     id="update-testimony-btn"
-                    onclick="updateTestimony('<%= testimony.uuid %>')"
+                    onclick="updateTestimony('<%= result.testimony.uuid %>')"
                   >
                     Save
                   </button>
@@ -979,8 +1017,8 @@
                     class="btn btn-primary btn-lg me-1 mb-1"
                     type="button"
                     id="update-testimony-btn"
-                    onclick="updateTestimony('<%= testimony.uuid %>', 'APPROVED')"
-                    <%= testimony.status === 'APPROVED' ? 'disabled' : '' %>
+                    onclick="updateTestimony('<%= result.testimony.uuid %>', 'APPROVED')"
+                    <%= result.testimony.status === 'APPROVED' ? 'disabled' : '' %>
                   >
                     Approve
                   </button>
@@ -991,7 +1029,7 @@
                     data-bs-target="#collapseExample"
                     aria-expanded="false"
                     aria-controls="collapseExample"
-                    <%= testimony.status === 'REJECTED' ? 'disabled' : '' %>
+                    <%= result.testimony.status === 'REJECTED' ? 'disabled' : '' %>
                   >
                     Reject
                   </button>
@@ -1009,7 +1047,7 @@
                         <button
                           class="btn btn-primary btn-lg me-1 mb-1"
                           type="button"
-                          onclick="updateTestimony('<%= testimony.uuid %>', 'REJECTED')"
+                          onclick="updateTestimony('<%= result.testimony.uuid %>', 'REJECTED')"
                         >
                           Send
                         </button>
@@ -1031,7 +1069,7 @@
               <div
                 class="d-flex flex-wrap pb-7 border-bottom border-translucent"
               >
-                <span class="badge badge-tag me-2 mb-2"><%= testimony.category.name %></span>
+                <span class="badge badge-tag me-2 mb-2"><%= result.testimony.category.name %></span>
               </div>
               <div
                 class="row g-0 py-3 border-bottom border-dashed align-items-end justify-content-between"
@@ -1043,7 +1081,7 @@
                 </div>
               </div>
               <div id="unpublished-container">
-                <% unpublishedTestimonies.forEach((testimony) => { %>
+                <% result.unpublishedTestimonies.forEach((testimony) => { %>
                   <div class="py-3 border-bottom border-translucent border-dashed">
                     <div class="d-flex flex-between-center">
                       <p class="text-warning fs-10 mb-0 fw-bold mb-1">
@@ -1253,12 +1291,12 @@
 //   .getElementById('update-testimony-btn')
 //   .addEventListener('click', () => {
 //     console.log('Update testimony button clicked');
-//     updateTestimony('<%= testimony.uuid %>');
+//     updateTestimony('<%= result.testimony.uuid %>');
 //   });
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const uuid = '<%= testimony.uuid %>'; // Testimony UUID
+        const uuid = '<%= result.testimony.uuid %>'; // Testimony UUID
         const commentsContainer = document.getElementById('comments-container');
 
         // Fetch Comments
@@ -1327,7 +1365,7 @@
 
         // Delete Comment
         async function deleteComment(commentId) {
-          const uuid = '<%= testimony.uuid %>';
+          const uuid = '<%= result.testimony.uuid %>';
           if (!confirm('Are you sure you want to delete this comment?')) return;
 
           try {
@@ -1362,7 +1400,7 @@
         });
       });
 
-      const message = document.getElementById('message').value = '<%- testimony.testimony %>';
+      const message = document.getElementById('message').value = '<%- result.testimony.testimony %>';
 
     </script>
   </body>

@@ -68,6 +68,7 @@ export class AdminService {
       uuid: v4(),
       fullName: moderator.fullname,
       email: moderator.email,
+      phone: moderator.phone,
       password: hashedPassword,
       role: { uuid: adminRole.uuid },
     });

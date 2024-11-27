@@ -40,9 +40,9 @@ export class AppController {
   @Render('view-testimony')
   async viewTestimony(@Param('uuid') uuid: string, @Session() session: any) {
     const loggedIn = !!session.userId;
-    console.log("session", session);
     const testimonies =
       await this.testimonyService.fetchTestimonyWithSurrounding(uuid);
+    console.log("testimonies", testimonies.comments);
     return { loggedIn, testimonies, session };
   }
 }

@@ -140,6 +140,44 @@
                     </div>
                   </a>
                 </div>
+
+                <% if(session.user.role.name === 'Super Admin') { %>
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="/admin/create-moderator"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">Create Moderator</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="nav-item-wrapper">
+                  <a
+                    class="nav-link label-1"
+                    href="/admin/view-moderator"
+                    role="button"
+                    data-bs-toggle=""
+                    aria-expanded="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span data-feather="compass"></span></span
+                      ><span class="nav-link-text-wrapper">
+                        <span class="nav-link-text">View Moderator</span>
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                <% } %>
               </li>
             </ul>
           </div>
