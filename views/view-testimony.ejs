@@ -177,7 +177,7 @@
                 </h2>
                 <div class="nav-blog-detail mt-md-45">
                 <% if (testimonies.previousTestimony) { %>
-                    <a href="/testimony/<%= previousTestimony.uuid %>" class="left fs-13 f-700 transform-v-center">
+                    <a href="/testimony/<%= testimonies.previousTestimony.uuid %>" class="left fs-13 f-700 transform-v-center">
                     <i class="fas fa-long-arrow-alt-left mr-20"></i>PREV
                     </a>
                 <% } else { %>
@@ -187,7 +187,7 @@
                 <% } %>
 
                 <% if (testimonies.nextTestimony) { %>
-                    <a href="/testimony/<%= nextTestimony.uuid %>" class="right fs-13 f-700 transform-v-center">
+                    <a href="/testimony/<%= testimonies.nextTestimony.uuid %>" class="right fs-13 f-700 transform-v-center">
                     NEXT<i class="fas fa-long-arrow-alt-right ml-20"></i>
                     </a>
                 <% } else { %>

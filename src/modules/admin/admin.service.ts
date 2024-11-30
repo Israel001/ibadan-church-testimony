@@ -91,7 +91,7 @@ export class AdminService {
         : null,
       anonymous: testimonyDto.anonymous,
       isFeatured: false,
-      status: TestimonyStatus.PENDING,
+      status: TestimonyStatus.APPROVED,
       image: testimonyDto.image,
       testimony: testimonyDto.testimony,
     });

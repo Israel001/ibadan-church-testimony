@@ -192,9 +192,12 @@ export class TestimonyService {
   }> {
     console.log('getTestimoniesGroupedByCategory');
     // Fetch all testimonies
-    const testimonies: Testimony[] = await this.testimonyRepository.find({
-      status: TestimonyStatus.APPROVED,
-    });
+    const testimonies: Testimony[] = await this.testimonyRepository.find(
+      {
+        status: TestimonyStatus.APPROVED,
+        category: { $ne: null }, // `$ne` checks for "not equal to null"
+      },
+    );
 
     // Group testimonies by category
     const groupedTestimonies = testimonies.reduce(
@@ -210,6 +213,8 @@ export class TestimonyService {
       },
       {} as { [category: string]: Testimony[] },
     );
+
+    console.log('groupedTestimonies', groupedTestimonies);
 
     return groupedTestimonies;
   }
