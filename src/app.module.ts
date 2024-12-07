@@ -10,6 +10,7 @@ import { CategoryModule } from './modules/category/category.module';
 import { AppController } from './app.controller';
 import { CommentModule } from './modules/comment/comment.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AdminModule } from './modules/admin/admin.module';
     CategoryModule,
     CommentModule,
     AdminModule,
+    SharedModule,
   ],
   controllers: [AppController],
 })

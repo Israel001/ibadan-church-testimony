@@ -27,6 +27,7 @@ import {
 import { Comment } from '../comment/comment.entity';
 import { CreateCategoryDto } from '../category/category.dto';
 import { CreateCommentDto } from '../comment/comment.dto';
+import { SharedService } from '../shared/shared.service';
 
 @Injectable()
 export class AdminService {
@@ -46,6 +47,7 @@ export class AdminService {
     private readonly commentService: CommentService,
     private readonly em: EntityManager,
     private readonly jwtService: JwtService,
+    private readonly sharedService: SharedService,
   ) {}
 
   async fetchModerators() {
@@ -245,9 +247,27 @@ export class AdminService {
 
       switch (updates.status) {
         case TestimonyStatus.APPROVED:
-        // SEND EMAIL FOR APPROVED TESTIMONY
+          // SEND EMAIL FOR APPROVED TESTIMONY
+          await this.sharedService.sendEmail({
+            templateCode: 'testimony_approved',
+            to: updates.email || testimony.email,
+            subject: `Testimony Approved`,
+            data: {
+              firstname: updates.firstname || testimony.firstname,
+              createdAt: testimony.createdAt,
+            },
+          });
         case TestimonyStatus.REJECTED:
-        // SEND EMAIL FOR REJECTED TESTIMONY
+          // SEND EMAIL FOR REJECTED TESTIMONY
+          await this.sharedService.sendEmail({
+            templateCode: 'testimony_rejected',
+            to: updates.email || testimony.email,
+            subject: `Testimony Rejected`,
+            data: {
+              firstname: updates.firstname || testimony.firstname,
+              createdAt: testimony.createdAt,
+            },
+          });
       }
 
       return testimony;
