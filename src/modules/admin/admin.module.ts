@@ -22,6 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AdminJwtStrategy } from './strategies/jwt.strategy';
 import { AdminLocalStrategy } from './strategies/local.strategy';
 import { AdminAuthGuard } from './guards/auth-guard';
+import { SharedModule } from '../shared/shared.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { AdminAuthGuard } from './guards/auth-guard';
       }),
       inject: [JwtAuthConfiguration.KEY],
     }),
+    SharedModule,
   ],
   providers: [
     AdminService,
