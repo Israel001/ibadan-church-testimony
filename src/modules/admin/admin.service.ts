@@ -255,6 +255,7 @@ export class AdminService {
             data: {
               firstname: updates.firstname || testimony.firstname,
               createdAt: testimony.createdAt,
+              link: `${process.env.FRONTEND_URL}/testimony/${testimony.uuid}`,
             },
           });
           break;
@@ -267,6 +268,7 @@ export class AdminService {
             data: {
               firstname: updates.firstname || testimony.firstname,
               createdAt: testimony.createdAt,
+              reason: updates.rejectionReason || testimony.rejectionReason,
             },
           });
           break;
