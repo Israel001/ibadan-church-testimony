@@ -38,6 +38,7 @@ export class SharedService {
     email.html = email.data
       ? replacer(0, Object.entries(email.data), notificationTemplate.body)
       : notificationTemplate.body;
+    email.from = 'random@fonu.com';
     delete email.templateCode;
     sendMail(email);
   }

@@ -257,6 +257,7 @@ export class AdminService {
               createdAt: testimony.createdAt,
             },
           });
+          break;
         case TestimonyStatus.REJECTED:
           // SEND EMAIL FOR REJECTED TESTIMONY
           await this.sharedService.sendEmail({
@@ -268,6 +269,7 @@ export class AdminService {
               createdAt: testimony.createdAt,
             },
           });
+          break;
       }
 
       return testimony;

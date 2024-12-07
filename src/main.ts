@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { corsConfiguration } from './config/cors-configuration';
 import { BasePaginatedResponseDto } from './base/dto';
+import * as eavSeeder from './seeders/main';
 import { AppModule } from './app.module';
 import { join } from 'path';
 import session from 'express-session';
@@ -34,7 +35,9 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');
   app.useStaticAssets(join(__dirname, '..', 'assets'));
-  app.useStaticAssets(join(__dirname, '..', 'vendors'), { prefix: '/admin/vendors' });
+  app.useStaticAssets(join(__dirname, '..', 'vendors'), {
+    prefix: '/admin/vendors',
+  });
   const sessionStore = new MySQLStore({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -52,6 +55,10 @@ async function bootstrap() {
       cookie: { maxAge: 86400000 },
     }),
   );
+
+  if (parseInt(process.env.RUN_SEEDER || '1')) {
+    await eavSeeder.bootstrap(false);
+  }
 
   app.use(passport.initialize());
   app.use(passport.session());
