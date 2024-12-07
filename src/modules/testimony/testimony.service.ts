@@ -42,7 +42,9 @@ export class TestimonyService {
       anonymous: testimonyDto.anonymous,
       isFeatured: false,
       status: TestimonyStatus.PENDING,
-      image: testimonyDto.image,
+      image: testimonyDto.image
+        ? testimonyDto.image
+        : 'https://res.cloudinary.com/drtsuuj3r/image/upload/v1733089533/zgrmlthemgyjh8vxx3te.svg',
       testimony: testimonyDto.testimony,
       ...(session.userId
         ? { user: this.usersRepository.getReference(session.userId) }

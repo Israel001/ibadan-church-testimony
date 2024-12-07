@@ -178,16 +178,31 @@
     <!-- Album gallery start -->
     <section class="albums pt-80 pb-80">
         <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <select id="categoryFilter" class="form-control w-auto d-inline">
+                        <option value="all">All Categories</option>
+                        <% categories.forEach((category) => { %>
+                            <option value="<%= category.uuid %>"><%= category.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
             <div class="row align-items-center">
-                <% if (testimonies.length > 0) { %>
+              <% if (testimonies.length > 0) { %>
                     <% testimonies.forEach((testimony) => { %>
-                        <div class="col-lg-4 col-md-6 text-center">
+                        <div class="col-lg-4 col-md-6 text-center testimony-item" data-category="<%= testimony.category?.uuid %>">
                             <div class="album-gl album-gl2">
                                 <img src="<%= testimony.image %>" alt="Testimony Image">
-                                <h3 class="fs-25 f-700 mb-20 mt-20">
+                                <h3 class="fs-25 f-700 mb-10 mt-20">
                                     <%= testimony.firstname %> <%= testimony.lastname %>
+                                    <% if (testimony.isFeatured) { %> 
+                                        <p class="badge badge-success ml-2">Featured</p>
+                                    <% } %>
                                 </h3>
-                                <p class="mb-15 testimony-message"><%= testimony.testimony.replace(/<\/?[^>]+(>|$)/g, '') %></p>
+                                <p class="mb-15 testimony-message">
+                                    <%= testimony.testimony.replace(/<\/?[^>]+(>|$)/g, '') %>
+                                </p>
                                 <a href="/testimony/<%= testimony.uuid %>" class="f-700 yellow fs-14 uppercase">
                                     Read More
                                     <i class="fas fa-long-arrow-alt-right ml-10"></i>
@@ -462,6 +477,24 @@
           }
         });
 
+  });
+</script>
+<script>
+  document.getElementById('categoryFilter').addEventListener('change', (event) => {
+    const selectedCategory = event.target.value;
+    console.log("selected", selectedCategory);
+    const testimonies = document.querySelectorAll('.testimony-item');
+    console.log("testimonies", testimonies); 
+
+    testimonies.forEach((testimony) => {
+      const testimonyCategory = testimony.getAttribute('data-category');
+      console.log("testimonyCategory", testimonyCategory);
+      if (selectedCategory === 'all' || testimonyCategory === selectedCategory) {
+        testimony.style.display = 'block';
+      } else {
+        testimony.style.display = 'none'
+      }
+    });
   });
 </script>
 

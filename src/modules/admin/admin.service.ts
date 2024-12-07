@@ -68,7 +68,7 @@ export class AdminService {
       uuid: v4(),
       fullName: moderator.fullname,
       email: moderator.email,
-      phone: moderator.phone,
+      phone: moderator.phone ? moderator.phone : null,
       password: hashedPassword,
       role: { uuid: adminRole.uuid },
     });
@@ -92,7 +92,9 @@ export class AdminService {
       anonymous: testimonyDto.anonymous,
       isFeatured: false,
       status: TestimonyStatus.APPROVED,
-      image: testimonyDto.image,
+      image: testimonyDto.image
+        ? testimonyDto.image
+        : 'https://res.cloudinary.com/drtsuuj3r/image/upload/v1733089533/zgrmlthemgyjh8vxx3te.svg',
       testimony: testimonyDto.testimony,
     });
 
@@ -126,7 +128,44 @@ export class AdminService {
   }
 
   async fetchCategories() {
-    return this.categoryRepository.findAll();
+    const result = await this.em.getConnection().execute(`
+    SELECT 
+      c.uuid AS category_uuid,
+      c.name AS category_name,
+      JSON_ARRAYAGG(
+        CASE 
+          WHEN t.uuid IS NOT NULL THEN JSON_OBJECT(
+            'uuid', t.uuid,
+            'firstname', t.firstname,
+            'lastname', t.lastname,
+            'email', t.email,
+            'address', t.address,
+            'country', t.country,
+            'phone_number', t.phone_number,
+            'anonymous', t.anonymous,
+            'is_featured', t.is_featured,
+            'status', t.status,
+            'image', t.image,
+            'rejection_reason', t.rejection_reason,
+            'testimony', t.testimony,
+            'category', t.category
+          )
+          ELSE NULL
+        END
+      ) AS testimonies
+    FROM categories c
+    LEFT JOIN testimonies t ON c.uuid = t.category
+    GROUP BY c.uuid
+  `);
+
+    console.log('result', result);
+
+    // Map the result to format the data correctly
+    return result.map((row: any) => ({
+      uuid: row.category_uuid,
+      name: row.category_name,
+      testimonies: row.testimonies ? row.testimonies : [],
+    }));
   }
 
   async fetchComments(uuid: string) {
@@ -252,17 +291,23 @@ export class AdminService {
   async fetchTestimonies(
     pagination: PaginationInput,
     status?: TestimonyStatus,
+    categoryUuid?: string,
   ) {
     const { page = 1, limit = 20 } = pagination;
+
+    const whereCondition = {
+      ...(status ? { status } : {}),
+      ...(categoryUuid ? { category: { uuid: categoryUuid } } : {}),
+    };
+
     const [testimonies, total] = await this.testimonyRepository.findAndCount(
-      {
-        ...(status ? { status } : {}),
-      },
+      whereCondition,
       {
         limit,
         offset: limit * (page - 1),
       },
     );
+
     return buildResponseDataWithPagination(testimonies, total, { page, limit });
   }
 

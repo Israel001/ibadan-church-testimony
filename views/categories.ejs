@@ -4982,9 +4982,9 @@
               <% categories.forEach((category) => { %>
               <div class="category-card">
                 <h3 class="category-title"><%= category.name %></h3>
-                <p class="category-info">Items: <strong><%= category.itemCount || 0 %></strong></p>
+                <p class="category-info">Items: <strong><%= category.testimonies[0] === null ? 0 : category.testimonies.length %></strong></p>
                 <div class="category-actions">
-                  <a href="/view-category/<%= category.uuid %>" class="view-btn">View</a>
+                  <a href="/admin/testimonies?category=<%= category.uuid %>" class="view-btn">View</a>
                   <button class="edit-btn" onclick="showEditModal('<%= category.uuid %>', '<%= category.name %>')">Edit</button>
                   <button class="delete-btn" onclick="deleteCategory('<%= category.uuid %>')">Delete</button>
                 </div>

@@ -1,9 +1,13 @@
 import { Controller, Get, Param, Query, Render, Session } from '@nestjs/common';
 import { TestimonyService } from './modules/testimony/testimony.service';
+import { CategoryService } from './modules/category/category.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly testimonyService: TestimonyService) {}
+  constructor(
+    private readonly testimonyService: TestimonyService,
+    private readonly categoryService: CategoryService,
+  ) {}
 
   @Get()
   @Render('index')
@@ -18,6 +22,9 @@ export class AppController {
       page: intPage,
       limit: intLimit,
     });
+    const categories = await this.categoryService.fetchCategories();
+    console.log('categories', categories);
+    console.log('response', response.data);
     const loggedIn = !!session.userId;
     return {
       testimonies: response.data,
@@ -25,6 +32,7 @@ export class AppController {
         currentPage: response.pagination.page,
         totalPages: response.pagination.pages,
       },
+      categories,
       loggedIn,
     };
   }
@@ -42,7 +50,7 @@ export class AppController {
     const loggedIn = !!session.userId;
     const testimonies =
       await this.testimonyService.fetchTestimonyWithSurrounding(uuid);
-    console.log("testimonies", testimonies.comments);
+    console.log('testimonies', testimonies.comments);
     return { loggedIn, testimonies, session };
   }
 }

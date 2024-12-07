@@ -998,7 +998,7 @@
                         cols="30"
                         rows="7"
                         placeholder="Your message"
-                      ></textarea>
+                      ><%- result.testimony.testimony %></textarea>
                       <span id="messageError" class="text-danger"></span>
                     </div>
                 </div>
@@ -1115,7 +1115,7 @@
                     </a>
                     <p class="fs-9 text-body-tertiary fw-bold mb-1">
                       <span class="fa-solid fa-message text-body-secondary me-1"></span>
-                      <%= (() => {
+                      <%- (() => {
                         const words = testimony.testimony.split(' ');
                         if (words.length > 24) {
                           return words.slice(0, 24).join(' ') + '...';
@@ -1400,8 +1400,8 @@
         });
       });
 
-      const message = document.getElementById('message').value = '<%- result.testimony.testimony %>';
-
     </script>
   </body>
 </html>
+
+const message = document.getElementById('message').value = '<%- result.testimony.testimony %>';

@@ -305,6 +305,7 @@
        * Image Preview Handler
        * Displays a preview of the selected image file.
        */
+      if(document.getElementById('formFile')){
       document
         .getElementById('formFile')
         .addEventListener('change', function (event) {
@@ -329,6 +330,7 @@
             imagePreview.style.display = 'none';
           }
         });
+      }
 
       /**
        * Form Submission Handler
@@ -421,14 +423,11 @@
           }
 
           // Validate File Input
-          const fileInput = document.getElementById('formFile');
-          const file = fileInput.files[0];
+          const file = document.getElementById('formFile').files[0];
+          console.log("file", file);
 
-          if (!file) {
-            document.getElementById('fileError').innerText =
-              'Please select an image file.';
-            isValid = false;
-          } else {
+         if (file) {
+            console.log("Entered here")
             // Validate file type (only images allowed: JPEG, PNG)
             const allowedTypes = ['image/jpeg', 'image/png'];
             if (!allowedTypes.includes(file.type)) {
@@ -451,6 +450,7 @@
           // Show upload status
           document.getElementById('uploadStatus').style.display = 'block';
 
+          if(file){
           // Upload Image to Cloudinary
           const formData = new FormData();
           formData.append('file', file); // The file from the input
@@ -473,6 +473,7 @@
             alert('Failed to upload image');
             return;
           }
+        }
 
           const formDataJson = {
             firstname: document.getElementById('firstName').value,
@@ -483,9 +484,13 @@
             categoryUuid: document.getElementById('category').value,
             phoneNumber: document.getElementById('phoneNumber').value,
             anonymous: document.getElementById('anonymous').checked,
-            image: imageUrl,
             testimony: message,
           };
+
+          if (file) {
+            console.log('Entered here')
+            formDataJson.image = imageUrl;
+          }
 
           try {
             const postResponse = await fetch('/testimony', {
@@ -512,10 +517,6 @@
       function validateEmail(email) {
         const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         return re.test(String(email).toLowerCase());
-      }
-
-      function removeHtmlTagsFromString(str) {
-        return str.replace(/<\/?[^>]+(>|$)/g, '');
       }
 
       async function fetchCountries() {

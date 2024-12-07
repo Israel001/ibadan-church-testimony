@@ -762,7 +762,6 @@
                         <div class="col-md-6">
                           <label for="formFile" class="form-label">Upload Image</label>
                           <input class="form-control" id="formFile" type="file">
-                          <!-- <span class="text-danger" id="fileError"></span> -->
                           <img id="imagePreview" style="display:none; max-width: 100%; margin-top: 10px;" alt="Preview">
                         </div>
 
@@ -907,10 +906,6 @@
          }
         }
 
-        if (!file) {
-          document.getElementById('fileError').innerText = errors.file;
-          isValid = false;
-        }
 
         if (!validateEmail(formData.email)) {
           document.getElementById('emailError').innerText = 'Invalid email format.';
@@ -920,6 +915,7 @@
         if (!isValid) return;
 
         // Upload Image
+        if(file){
         document.getElementById('uploadStatus').style.display = 'block';
         try {
           formData.image = await uploadToCloudinary(file);
@@ -928,6 +924,7 @@
           alert(error.message);
           return;
         }
+      }
 
         // Submit Form
         console.log('Form Data:', formData);
@@ -943,6 +940,8 @@
 
             if (postResponse.ok) {
               alert('Form submitted successfully!');
+              const form = document.getElementById('testimonyForm');
+              form.reset();
             } else {
               alert('Error submitting form.');
             }

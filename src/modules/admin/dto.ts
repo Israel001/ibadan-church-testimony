@@ -145,6 +145,7 @@ export class CreateAdminTestimonyDto {
   status: TestimonyStatus;
 
   @IsString()
+  @IsOptional()
   image: string;
 
   @IsString()
@@ -169,6 +170,10 @@ export class TestimonyQuery {
   @IsOptional()
   @IsEnum(TestimonyStatus)
   status: TestimonyStatus;
+
+  @IsOptional()
+  @IsString()
+  category: string;
 }
 
 export class CreateModeratorDto {
@@ -182,5 +187,6 @@ export class CreateModeratorDto {
   password: string;
 
   @IsString()
+  @IsOptional()
   phone: string;
 }

@@ -701,7 +701,6 @@
                   <div class="mb-3">
                     <label for="phone" class="form-label">Phone Number</label>
                     <input type="text" class="form-control" id="phone" placeholder="08012345678">
-                    <span id="phoneError" class="text-danger"></span>
                   </div>
                   <div class="row g-3">
                     <div class="col-md-6">
@@ -774,7 +773,6 @@
         const errors = {
           fullName: 'First name is required.',
           email: 'Email is required.',
-          phone: 'Phone number is required.',
           password: 'Address is required.',
           confirmPassword: 'Passwords are not equal',
         };
@@ -787,21 +785,27 @@
         const formData = {
           fullname: document.getElementById('fullName').value.trim(),
           email: document.getElementById('email').value.trim(),
-          phone: document.getElementById('phone').value.trim(),
           password: document.getElementById('password').value.trim(),
         };
         const confirmPassword = document.getElementById('confirmPassword').value.trim();
+        const phone = document.getElementById('phone').value.trim();
 
         // const file = document.getElementById('formFile').files[0];
 
         // Validate Inputs
-      
+        
         for (const [key, value] of Object.entries(formData)) {
+          if (key !== 'phone') { 
             const errorElement = document.getElementById(`${key}Error`);
             if (!value) {
-              document.getElementById(`${key}Error`).innerText = errors[key];
+              errorElement.innerText = errors[key];
               isValid = false;
-            }            
+            }
+          }
+        }
+
+        if(phone !== '' && phone !== null && phone !== undefined) {
+          formData.phone = phone;
         }
 
         if (!validateEmail(formData.email)) {
@@ -815,16 +819,6 @@
         }
 
         if (!isValid) return;
-
-        // Upload Image
-        // document.getElementById('uploadStatus').style.display = 'block';
-        // try {
-        //   formData.image = await uploadToCloudinary(file);
-        //   document.getElementById('uploadStatus').style.display = 'none';
-        // } catch (error) {
-        //   alert(error.message);
-        //   return;
-        // }
 
         // Submit Form
         console.log('Form Data:', formData);

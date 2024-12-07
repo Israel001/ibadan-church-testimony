@@ -26,6 +26,7 @@ export class CreateTestimonyDto {
   anonymous: boolean;
 
   @IsString()
+  @IsOptional()
   image: string;
 
   @IsString()

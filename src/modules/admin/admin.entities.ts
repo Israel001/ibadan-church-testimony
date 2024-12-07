@@ -1,5 +1,6 @@
 import { Entity, Filter, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { Timestamp } from '../../base/timestamp.entity';
+import { IsOptional } from 'class-validator';
 
 
 @Filter({
@@ -35,7 +36,7 @@ export class AdminUser extends Timestamp {
   @Property()
   password: string;
 
-  @Property()
+  @Property({nullable: true})
   phone: string;
 
   @ManyToOne(() => AdminRoles, {

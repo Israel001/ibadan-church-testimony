@@ -1,5 +1,6 @@
-import { Entity, Filter, PrimaryKey, Property } from '@mikro-orm/core';
+import { Collection, Entity, Filter, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { Timestamp } from '../../base/timestamp.entity';
+import { Testimony } from '../testimony/testimony.entity';
 
 @Filter({
   name: 'notDeleted',
@@ -13,4 +14,7 @@ export class Category extends Timestamp {
 
   @Property()
   name: string;
+
 }
+
+

@@ -225,6 +225,7 @@ export class AdminController {
         limit: intLimit,
       },
       query?.status,
+      query?.category,
     );
     return {
       testimonies: response.data,
