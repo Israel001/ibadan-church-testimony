@@ -19,6 +19,11 @@ export default class NotificationTemplatesSeed implements ISeeder {
       code: 'testimony_rejected',
       body: this.readTemplate('testimony_rejected.html'),
     },
+    {
+      uuid: v4(),
+      code: 'new_testimony_notification',
+      body: this.readTemplate('new_testimony.html'),
+    },
   ];
 
   constructor(private readonly em: EntityManager) {}

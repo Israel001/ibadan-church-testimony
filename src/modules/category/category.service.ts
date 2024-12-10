@@ -14,7 +14,6 @@ export class CategoryService {
   ) {}
 
   fetchCategories(){
-    console.log('fetching categories');
     return this.categoryRepository.findAll();
   }
 

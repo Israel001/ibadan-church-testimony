@@ -12,7 +12,6 @@ export class CategoryController {
   async fetchCategories() {
     try {
       const categories = await this.categoryService.fetchCategories();
-      console.log(categories, 'categories');
       return { categories };
     } catch (err) {
       console.log('Error fetching categories:', err);

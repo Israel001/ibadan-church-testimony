@@ -10,6 +10,8 @@ import { PaginationInput } from 'src/base/dto';
 import { buildResponseDataWithPagination } from 'src/utils';
 import { CommentService } from '../comment/comment.service';
 import { TestimonyStatus } from 'src/types';
+import { AdminUser } from '../admin/admin.entities';
+import { SharedService } from '../shared/shared.service';
 
 @Injectable()
 export class TestimonyService {
@@ -20,8 +22,11 @@ export class TestimonyService {
     private readonly usersRepository: EntityRepository<Users>,
     @InjectRepository(Category)
     private readonly categoryRepository: EntityRepository<Category>,
+    @InjectRepository(AdminUser)
+    private readonly adminUserRepository: EntityRepository<AdminUser>,
     private readonly commentService: CommentService,
     private readonly em: EntityManager,
+    private readonly sharedService: SharedService,
   ) {}
 
   async createTestimony(
@@ -52,6 +57,25 @@ export class TestimonyService {
     });
 
     await this.em.persistAndFlush(testimonyModel);
+    const adminUsers = await this.adminUserRepository.findAll();
+
+    // Send email to each admin
+    const emailPromises = adminUsers.map((admin) =>
+      this.sharedService.sendEmail({
+        templateCode: 'new_testimony_notification',
+        to: admin.email,
+        subject: 'New Testimony Created',
+        data: {
+          adminName: admin.fullName,
+          testimonyAuthor: `${testimonyDto.firstname} ${testimonyDto.lastname}`,
+          testimonyContent: testimonyDto.testimony,
+          testimonyLink: `${process.env.FRONTEND_URL}/admin/testimony/${testimonyModel.uuid}`,
+        },
+      }),
+    );
+
+    // Wait for all emails to be sent
+    await Promise.all(emailPromises);
     return testimonyModel;
   }
 
@@ -192,14 +216,11 @@ export class TestimonyService {
   async getTestimoniesGroupedByCategory(): Promise<{
     [category: string]: Testimony[];
   }> {
-    console.log('getTestimoniesGroupedByCategory');
     // Fetch all testimonies
-    const testimonies: Testimony[] = await this.testimonyRepository.find(
-      {
-        status: TestimonyStatus.APPROVED,
-        category: { $ne: null }, // `$ne` checks for "not equal to null"
-      },
-    );
+    const testimonies: Testimony[] = await this.testimonyRepository.find({
+      status: TestimonyStatus.APPROVED,
+      category: { $ne: null }, // `$ne` checks for "not equal to null"
+    });
 
     // Group testimonies by category
     const groupedTestimonies = testimonies.reduce(
@@ -215,8 +236,6 @@ export class TestimonyService {
       },
       {} as { [category: string]: Testimony[] },
     );
-
-    console.log('groupedTestimonies', groupedTestimonies);
 
     return groupedTestimonies;
   }

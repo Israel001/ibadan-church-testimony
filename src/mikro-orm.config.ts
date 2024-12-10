@@ -21,6 +21,5 @@ const config: Options = {
   debug: ['query'],
 };
 
-console.log('config', config);
 
 export default defineConfig(config);

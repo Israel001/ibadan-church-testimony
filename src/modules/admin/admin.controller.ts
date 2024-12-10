@@ -85,7 +85,6 @@ export class AdminController {
   @AdminRole({ roles: ['Super Admin'] })
   async viewModerator(@Session() session: any) {
     const moderators = await this.adminService.fetchModerators();
-    console.log('moderators', moderators);
     return { moderators, session };
   }
 

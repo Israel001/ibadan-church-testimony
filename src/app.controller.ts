@@ -23,8 +23,6 @@ export class AppController {
       limit: intLimit,
     });
     const categories = await this.categoryService.fetchCategories();
-    console.log('categories', categories);
-    console.log('response', response.data);
     const loggedIn = !!session.userId;
     return {
       testimonies: response.data,
@@ -40,7 +38,6 @@ export class AppController {
   @Get('create-testimony')
   @Render('create-testimony')
   createTestimony(@Session() session: any) {
-    console.log(session);
     return { session };
   }
 
@@ -50,7 +47,6 @@ export class AppController {
     const loggedIn = !!session.userId;
     const testimonies =
       await this.testimonyService.fetchTestimonyWithSurrounding(uuid);
-    console.log('testimonies', testimonies.comments);
     return { loggedIn, testimonies, session };
   }
 }

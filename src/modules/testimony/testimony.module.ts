@@ -8,11 +8,20 @@ import { Category } from '../category/category.entity';
 import { Comment } from '../comment/comment.entity';
 import { UsersModule } from '../users/users.module';
 import { CommentModule } from '../comment/comment.module';
+import { AdminUser } from '../admin/admin.entities';
+import { SharedModule } from '../shared/shared.module';
 
 @Module({
-  imports: [MikroOrmModule.forFeature({ entities: [Testimony, Users, Category, Comment] }), UsersModule, CommentModule],
+  imports: [
+    MikroOrmModule.forFeature({
+      entities: [Testimony, Users, Category, Comment, AdminUser],
+    }),
+    UsersModule,
+    CommentModule,
+    SharedModule,
+  ],
   controllers: [TestimonyController],
   providers: [TestimonyService],
-  exports: [TestimonyService,],
+  exports: [TestimonyService],
 })
 export class TestimonyModule {}

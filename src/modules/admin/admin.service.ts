@@ -92,7 +92,7 @@ export class AdminService {
         ? this.categoryRepository.getReference(testimonyDto.categoryUuid)
         : null,
       anonymous: testimonyDto.anonymous,
-      isFeatured: false,
+      isFeatured: testimonyDto.isFeatured,
       status: TestimonyStatus.APPROVED,
       image: testimonyDto.image
         ? testimonyDto.image
@@ -101,6 +101,28 @@ export class AdminService {
     });
 
     await this.em.persistAndFlush(testimonyModel);
+
+    // Fetch all admin users
+    const adminUsers = await this.adminUserRepository.findAll();
+
+    // Send email to each admin
+    const emailPromises = adminUsers.map(admin => 
+      this.sharedService.sendEmail({
+        templateCode: 'new_testimony_notification',
+        to: admin.email,
+        subject: 'New Testimony Created',
+        data: {
+          adminName: admin.fullName,
+          testimonyAuthor: `${testimonyDto.firstname} ${testimonyDto.lastname}`,
+          testimonyContent: testimonyDto.testimony,
+          testimonyLink: `${process.env.FRONTEND_URL}/admin/testimony/${testimonyModel.uuid}`,
+        },
+      })
+    );
+
+    // Wait for all emails to be sent
+    await Promise.all(emailPromises);
+
     return testimonyModel;
   }
 
@@ -160,7 +182,6 @@ export class AdminService {
     GROUP BY c.uuid
   `);
 
-    console.log('result', result);
 
     // Map the result to format the data correctly
     return result.map((row: any) => ({

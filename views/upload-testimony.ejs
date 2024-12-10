@@ -939,7 +939,7 @@
             console.log(postResponse);
 
             if (postResponse.ok) {
-              alert('Form submitted successfully!');
+              alert('Testimony created successfully!')
               const form = document.getElementById('testimonyForm');
               form.reset();
             } else {
@@ -948,8 +948,7 @@
           } catch (error) {
             console.error('Form submission failed:', error);
             alert('Failed to submit form.');
-          }
-        alert('Testimony submitted successfully!');
+          };
       });
 
       async function fetchCountries() {
@@ -978,14 +977,12 @@
         try {
           const response = await fetch('/admin/allcategories');
           let allCategories = await response.json();
-          console.log("allCategories", allCategories);
           allCategories = allCategories.categories;
 
           const categorySelect = document.getElementById('category');
 
           if (allCategories.length > 0) {
             allCategories.forEach((category) => {
-              console.log("category", category);
               const option = document.createElement('option');
               option.value = category.uuid;
               option.text = category.name;

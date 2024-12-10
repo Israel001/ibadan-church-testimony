@@ -183,7 +183,7 @@
                     <select id="categoryFilter" class="form-control w-auto d-inline">
                         <option value="all">All Categories</option>
                         <% categories.forEach((category) => { %>
-                            <option value="<%= category.uuid %>"><%= category.name %></option>
+                            <option value="<%= category.uuid %>"><%=category.anonymous ? 'Anonymous' : category.name %></option>
                         <% }) %>
                     </select>
                 </div>
@@ -195,7 +195,7 @@
                             <div class="album-gl album-gl2">
                                 <img src="<%= testimony.image %>" alt="Testimony Image">
                                 <h3 class="fs-25 f-700 mb-10 mt-20">
-                                    <%= testimony.firstname %> <%= testimony.lastname %>
+                                    <%= testimony.anonymous ? 'Anonymous' : testimony.firstname %> <%= testimony.anonymous ? '' : testimony.lastname %>
                                     <% if (testimony.isFeatured) { %> 
                                         <p class="badge badge-success ml-2">Featured</p>
                                     <% } %>

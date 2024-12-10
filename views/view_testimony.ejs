@@ -1069,7 +1069,7 @@
               <div
                 class="d-flex flex-wrap pb-7 border-bottom border-translucent"
               >
-                <span class="badge badge-tag me-2 mb-2"><%= result.testimony.category.name %></span>
+                <span class="badge badge-tag me-2 mb-2"><%= result.testimony?.category?.name || 'No category' %></span>
               </div>
               <div
                 class="row g-0 py-3 border-bottom border-dashed align-items-end justify-content-between"
