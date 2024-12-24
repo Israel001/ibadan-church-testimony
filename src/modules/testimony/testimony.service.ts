@@ -59,6 +59,10 @@ export class TestimonyService {
     await this.em.persistAndFlush(testimonyModel);
     const adminUsers = await this.adminUserRepository.findAll();
 
+    const pendingTestimonies = await this.testimonyRepository.find({
+      status: TestimonyStatus.PENDING,
+    });
+
     // Send email to each admin
     const emailPromises = adminUsers.map((admin) =>
       this.sharedService.sendEmail({
@@ -69,7 +73,8 @@ export class TestimonyService {
           adminName: admin.fullName,
           testimonyAuthor: `${testimonyDto.firstname} ${testimonyDto.lastname}`,
           testimonyContent: testimonyDto.testimony,
-          testimonyLink: `${process.env.FRONTEND_URL}/admin/testimony/${testimonyModel.uuid}`,
+          testimonyLink: `${process.env.FRONTEND_URL}/admin/testimonies?status=PENDING`,
+          pendingtestimonyCount: pendingTestimonies.length,
         },
       }),
     );

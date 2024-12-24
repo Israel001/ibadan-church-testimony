@@ -305,31 +305,31 @@
        * Image Preview Handler
        * Displays a preview of the selected image file.
        */
-      if(document.getElementById('formFile')){
-      document
-        .getElementById('formFile')
-        .addEventListener('change', function (event) {
-          const fileInput = event.target;
-          const file = fileInput.files[0];
-          const imagePreview = document.getElementById('imagePreview');
+      if (document.getElementById('formFile')) {
+        document
+          .getElementById('formFile')
+          .addEventListener('change', function (event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const imagePreview = document.getElementById('imagePreview');
 
-          // Validate if the file is an image
-          if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
+            // Validate if the file is an image
+            if (file && file.type.startsWith('image/')) {
+              const reader = new FileReader();
 
-            // Load the image and display it in the preview element
-            reader.onload = function (e) {
-              imagePreview.src = e.target.result;
-              imagePreview.style.display = 'block'; // Show the image preview
-            };
+              // Load the image and display it in the preview element
+              reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block'; // Show the image preview
+              };
 
-            reader.readAsDataURL(file);
-          } else {
-            // Clear the preview if it's not an image
-            imagePreview.src = '#';
-            imagePreview.style.display = 'none';
-          }
-        });
+              reader.readAsDataURL(file);
+            } else {
+              // Clear the preview if it's not an image
+              imagePreview.src = '#';
+              imagePreview.style.display = 'none';
+            }
+          });
       }
 
       /**
@@ -424,10 +424,10 @@
 
           // Validate File Input
           const file = document.getElementById('formFile').files[0];
-          console.log("file", file);
+          console.log('file', file);
 
-         if (file) {
-            console.log("Entered here")
+          if (file) {
+            console.log('Entered here');
             // Validate file type (only images allowed: JPEG, PNG)
             const allowedTypes = ['image/jpeg', 'image/png'];
             if (!allowedTypes.includes(file.type)) {
@@ -450,30 +450,30 @@
           // Show upload status
           document.getElementById('uploadStatus').style.display = 'block';
 
-          if(file){
-          // Upload Image to Cloudinary
-          const formData = new FormData();
-          formData.append('file', file); // The file from the input
-          formData.append('upload_preset', UPLOAD_PRESET); // Your Cloudinary preset
-
           let imageUrl = '';
-          try {
-            const response = await fetch(CLOUDINARY_URL, {
-              method: 'POST',
-              body: formData,
-            });
+          if (file) {
+            // Upload Image to Cloudinary
+            const formData = new FormData();
+            formData.append('file', file); // The file from the input
+            formData.append('upload_preset', UPLOAD_PRESET); // Your Cloudinary preset
 
-            const data = await response.json();
+            try {
+              const response = await fetch(CLOUDINARY_URL, {
+                method: 'POST',
+                body: formData,
+              });
 
-            document.getElementById('uploadStatus').style.display = 'none';
+              const data = await response.json();
 
-            imageUrl = data.secure_url;
-          } catch (error) {
-            console.error('Cloudinary upload failed:', error);
-            alert('Failed to upload image');
-            return;
+              document.getElementById('uploadStatus').style.display = 'none';
+
+              imageUrl = data.secure_url;
+            } catch (error) {
+              console.error('Cloudinary upload failed:', error);
+              alert('Failed to upload image');
+              return;
+            }
           }
-        }
 
           const formDataJson = {
             firstname: document.getElementById('firstName').value,
@@ -488,7 +488,6 @@
           };
 
           if (file) {
-            console.log('Entered here')
             formDataJson.image = imageUrl;
           }
 
@@ -503,7 +502,7 @@
             console.log(postResponse);
 
             if (postResponse.ok) {
-              alert('Testimony created successfully!');
+              alert('Thanks for sharing your testimony, Our team will review it and send an email to you once your testimony is made public.');
               window.location.href = '/';
             } else {
               alert('Error submitting form.');

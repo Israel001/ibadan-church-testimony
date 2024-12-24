@@ -342,7 +342,7 @@
                 <h4 class="f-700 mb-20">More Testimonies</h4>
                 <div class="popular-posts mb-10">
                     <% testimonies.moreTestimonies.forEach(testimony => { %>
-                    <a href="#" class="popular-post d-flex align-items-center">
+                    <a href="/testimony/<%= testimony.uuid %>" class="popular-post d-flex align-items-center">
                         <div class="popular-post-img mr-20">
                         <img src="<%= testimony.image %>" alt="" />
                         <div class="full-cover bg-yellow-op-8 transition-4">
