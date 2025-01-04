@@ -338,7 +338,7 @@
                       <div class="avatar avatar-xl ">
                         <img class="rounded-circle " src="../img/team/72x72/57-1.webp" alt="">
                       </div>
-                      <h6 class="mt-2 text-body-emphasis">Jerry Seinfield</h6>
+                      <h6 class="mt-2 text-body-emphasis"><%= session.user.name %></h6>
                     </div>
                     <div class="mb-3 mx-3"><input class="form-control form-control-sm" id="statusUpdateInput" type="text" placeholder="Update your status"></div>
                   </div>
@@ -354,7 +354,7 @@
                   </div>
                   <div class="card-footer p-0 border-top border-translucent">
                     <hr>
-                    <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!"> <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
+                    <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="/admin/logout"> <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
                     <div class="my-2 text-center fw-bold fs-10 text-body-quaternary"><a class="text-body-quaternary me-1" href="#!">Privacy policy</a>&bull;<a class="text-body-quaternary mx-1" href="#!">Terms</a>&bull;<a class="text-body-quaternary ms-1" href="#!">Cookies</a></div>
                   </div>
                 </div>
@@ -4969,7 +4969,7 @@
                         </div>
                         <p class="text-primary mt-2 fs-6 fw-bold mb-0 mb-sm-4"><%= dashboardData.pendingTestimonies %> <span class="fs-8 text-body lh-lg">Pending Testimonies</span></p>
                       </div>
-                      <div class="d-flex flex-column justify-content-center flex-between-end d-sm-block text-end text-sm-start"><span class="badge badge-phoenix badge-phoenix-success fs-10 mb-2">View</span>
+                      <div class="d-flex flex-column justify-content-center flex-between-end d-sm-block text-end text-sm-start"><a href="/admin/testimonies?status=PENDING" class="badge badge-phoenix badge-phoenix-success fs-10 mb-2" >View</a>
                         <!-- <p class="mb-0 fs-9 text-body-tertiary">Than Yesterday</p> -->
                       </div>
                     </div>
@@ -4987,7 +4987,7 @@
                         </div>
                         <p class="text-info mt-2 fs-6 fw-bold mb-0 mb-sm-4"><%= dashboardData.activeTestimonies %> <span class="fs-8 text-body lh-lg">Active Testimonies</span></p>
                       </div>
-                      <div class="d-flex flex-column justify-content-center flex-between-end d-sm-block text-end text-sm-start"><span class="badge badge-phoenix badge-phoenix-warning fs-10 mb-2">View</span>
+                      <div class="d-flex flex-column justify-content-center flex-between-end d-sm-block text-end text-sm-start"><a href="/admin/testimonies?status=APPROVED" class="badge badge-phoenix badge-phoenix-warning fs-10 mb-2">View</a>
                         <!-- <p class="mb-0 fs-9 text-body-tertiary">Than last week</p> -->
                       </div>
                     </div>
@@ -5006,7 +5006,7 @@
                         </div>
                         <p class="text-info mt-2 fs-6 fw-bold mb-0 mb-sm-4"><%= dashboardData.rejectedTestimonies %> <span class="fs-8 text-body lh-lg">Rejected Testimonies</span></p>
                       </div>
-                      <div class="d-flex flex-column justify-content-center flex-between-end d-sm-block text-end text-sm-start"><span class="badge badge-phoenix badge-phoenix-secondary fs-10 mb-2">View</span>
+                      <div class="d-flex flex-column justify-content-center flex-between-end d-sm-block text-end text-sm-start"><a href="/admin/testimonies?status=REJECTED" class="badge badge-phoenix badge-phoenix-secondary fs-10 mb-2">View</A>
                         <!-- <p class="mb-0 fs-9 text-body-tertiary">Than last week</p> -->
                       </div>
                     </div>

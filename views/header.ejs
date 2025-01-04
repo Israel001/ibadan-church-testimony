@@ -22,6 +22,9 @@
                         <li class="nav-link"><a href="https://www.christbridetabernacle.com/wmb">William Branham</a></li>
                         <li class="nav-link"><a href="https://www.christbridetabernacle.com/vgr">Voice Of God Recordings</a></li>
                         <li class="nav-link"><a href="/">Testimones</a></li>
+                        <% if(session.userId){ %>
+                        <li class="nav-link"><a href="/auth/logout">Sign Out</a></li>
+                        <% } %>
                         <!-- mega menu page-->
                     </ui>
                 </div>

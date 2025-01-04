@@ -403,11 +403,7 @@
           const phoneNumber = document
             .getElementById('phoneNumber')
             .value.trim();
-          if (phoneNumber === '') {
-            document.getElementById('phoneNumberError').innerText =
-              'Phone Number is required.';
-            isValid = false;
-          } else if (isNaN(phoneNumber)) {
+           if (isNaN(phoneNumber)) {
             document.getElementById('phoneNumberError').innerText =
               'Phone Number must be a number.';
             isValid = false;

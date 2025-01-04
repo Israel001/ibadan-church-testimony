@@ -24,6 +24,7 @@ export class AppController {
     });
     const categories = await this.categoryService.fetchCategories();
     const loggedIn = !!session.userId;
+    console.log('session', session);
     return {
       testimonies: response.data,
       pagination: {
@@ -32,6 +33,7 @@ export class AppController {
       },
       categories,
       loggedIn,
+      session,
     };
   }
 

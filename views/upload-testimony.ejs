@@ -709,14 +709,14 @@
                         <div class="col-md-6">
                           <label for="firstName" class="form-label">First Name</label>
                           <input class="form-control" id="firstName" type="text" placeholder="Enter first name">
-                          <span class="text-danger" id="firstNameError"></span>
+                          <span class="text-danger" id="firstnameError"></span>
                         </div>
 
                         <!-- Last Name -->
                         <div class="col-md-6">
                           <label for="lastName" class="form-label">Last Name</label>
                           <input class="form-control" id="lastName" type="text" placeholder="Enter last name">
-                          <span class="text-danger" id="lastNameError"></span>
+                          <span class="text-danger" id="lastnameError"></span>
                         </div>
 
                         <!-- Email -->
@@ -755,7 +755,7 @@
                           <select class="form-select" id="category">
                             <option selected>Choose...</option>
                           </select>
-                          <span class="text-danger" id="categoryError"></span>
+                          <span class="text-danger" id="categoryUuidError"></span>
                         </div>
 
                         <!-- Image Upload -->
@@ -793,7 +793,24 @@
                     </div>
                 </div>
               </div>
-                
+
+        <div id="confirmationModal" class="modal" tabindex="-1" role="dialog" style="display:none;">
+          <div class="modal-dialog" role="document" style="background-color: rgb(198, 195, 195);">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirm Testimony Submission</h5>
+                <button type="button" class="btn-close" aria-label="Close" onclick="closeModal()"></button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to submit this testimony?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="closeModal()">No</button>
+                <button type="button" class="btn btn-primary" id="confirmSubmit">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>  
 
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
           <div class="toast align-items-center text-white bg-dark border-0" id="icon-copied-toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -855,101 +872,117 @@
       };
 
       // Form Submission Handler
-      document.getElementById('testimonyForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        tinymce.triggerSave();
+     // Global variable to store form data temporarily
+let formData = null;
+let file = null;
 
-        let isValid = true;
-        const errors = {
-          firstName: 'First name is required.',
-          lastName: 'Last name is required.',
-          email: 'Email is required.',
-          address: 'Address is required.',
-          country: 'Country is required.',
-          category: 'Category is required.',
-          phoneNumber: 'Phone number is required.',
-          file: 'Image file is required.',
-          testimony: 'Testimony is required.',
-        };
+// Function to show the modal
+function showModal() {
+  document.getElementById('confirmationModal').style.display = 'block';
+}
 
-        // Clear Previous Errors
-        document.querySelectorAll('.text-danger').forEach((error) => (error.innerText = ''));
+// Function to close the modal
+function closeModal() {
+  document.getElementById('confirmationModal').style.display = 'none';
+}
 
+// Form Submission Handler
+document.getElementById('testimonyForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  tinymce.triggerSave();
 
-        // Collect Inputs
-        const formData = {
-          firstname: document.getElementById('firstName').value.trim(),
-          lastname: document.getElementById('lastName').value.trim(),
-          email: document.getElementById('email').value.trim(),
-          address: document.getElementById('address').value.trim(),
-          country: document.getElementById('country').value.trim(),
-          categoryUuid: document.getElementById('category').value.trim(),
-          phoneNumber: document.getElementById('phoneNumber').value.trim(),
-          anonymous: document.getElementById('anonymous').checked || false,
-          isFeatured: document.getElementById('isFeatured').checked || false,
-          testimony: document.getElementById('message').value.trim(),
-          status: "PENDING"
-        };
+  let isValid = true;
+  const errors = {
+    firstname: 'First name is required.',
+    lastname: 'Last name is required.',
+    email: 'Email is required.',
+    address: 'Address is required.',
+    country: 'Country is required.',
+    categoryUuid: 'Category is required.',
+    file: 'Image file is required.',
+    testimony: 'Testimony is required.',
+  };
 
-        const file = document.getElementById('formFile').files[0];
+  // Clear Previous Errors
+  document.querySelectorAll('.text-danger').forEach((error) => (error.innerText = ''));
 
-        // Validate Inputs
-      
-        for (const [key, value] of Object.entries(formData)) {
-          if (key !== 'anonymous' && key !== 'isFeatured') {
-            console.log("key", key);
-            const errorElement = document.getElementById(`${key}Error`);
-            if (!value) {
-              document.getElementById(`${key}Error`).innerText = errors[key];
-              isValid = false;
-            }            
-         }
-        }
+  // Collect Inputs
+  formData = {
+    firstname: document.getElementById('firstName').value.trim(),
+    lastname: document.getElementById('lastName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    address: document.getElementById('address').value.trim(),
+    country: document.getElementById('country').value.trim(),
+    categoryUuid: document.getElementById('category').value.trim(),
+    phoneNumber: document.getElementById('phoneNumber').value.trim(),
+    anonymous: document.getElementById('anonymous').checked || false,
+    isFeatured: document.getElementById('isFeatured').checked || false,
+    testimony: document.getElementById('message').value.trim(),
+    status: 'PENDING',
+  };
 
+  file = document.getElementById('formFile').files[0];
 
-        if (!validateEmail(formData.email)) {
-          document.getElementById('emailError').innerText = 'Invalid email format.';
-          isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // Upload Image
-        if(file){
-        document.getElementById('uploadStatus').style.display = 'block';
-        try {
-          formData.image = await uploadToCloudinary(file);
-          document.getElementById('uploadStatus').style.display = 'none';
-        } catch (error) {
-          alert(error.message);
-          return;
-        }
+  // Validate Inputs
+  for (const [key, value] of Object.entries(formData)) {
+    if (key !== 'anonymous' && key !== 'isFeatured' && key !== 'phoneNumber') {
+      const errorElement = document.getElementById(`${key}Error`);
+      if (!value) {
+        errorElement.innerText = errors[key];
+        isValid = false;
       }
+    }
+  }
 
-        // Submit Form
-        console.log('Form Data:', formData);
-          try {
-            const postResponse = await fetch('/admin/create-testimony', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(formData),
-            });
-            console.log(postResponse);
+  if (!validateEmail(formData.email)) {
+    document.getElementById('emailError').innerText = 'Invalid email format.';
+    isValid = false;
+  }
 
-            if (postResponse.ok) {
-              alert('Testimony created successfully!')
-              const form = document.getElementById('testimonyForm');
-              form.reset();
-            } else {
-              alert('Error submitting form.');
-            }
-          } catch (error) {
-            console.error('Form submission failed:', error);
-            alert('Failed to submit form.');
-          };
-      });
+  if (!isValid) return;
+
+  // Show confirmation modal
+  showModal();
+});
+
+// Handle confirmation modal "Yes" button
+document.getElementById('confirmSubmit').addEventListener('click', async () => {
+  // Close the modal
+  closeModal();
+
+  // Upload Image
+  if (file) {
+    document.getElementById('uploadStatus').style.display = 'block';
+    try {
+      formData.image = await uploadToCloudinary(file);
+      document.getElementById('uploadStatus').style.display = 'none';
+    } catch (error) {
+      alert(error.message);
+      return;
+    }
+  }
+
+  // Submit Form
+  try {
+    const postResponse = await fetch('/admin/create-testimony', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (postResponse.ok) {
+      alert('Testimony created successfully!');
+      document.getElementById('testimonyForm').reset();
+    } else {
+      alert('Error submitting form.');
+    }
+  } catch (error) {
+    console.error('Form submission failed:', error);
+    alert('Failed to submit form.');
+  }
+});
 
       async function fetchCountries() {
         try {
