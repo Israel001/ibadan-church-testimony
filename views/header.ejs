@@ -12,7 +12,7 @@
                     <span class="toggle-category">
                         <i class="fas fa-chevron-down"></i>
                       </span>
-                    <ul class="nav nav-links1 list-type1 justify-content-center">
+                    <ul class="nav nav-links1 list-type1 justify-content-center d-none d-lg-flex">
                         <li class="mg-nav-item mg-nav-item-has-children nav-link">
                             <a href="https://www.christbridetabernacle.com/index">HOME</a>
                             
@@ -21,12 +21,12 @@
                         <li class="nav-link"><a href="https://www.christbridetabernacle.com/sermons">SERMONS</a></li>
                         <li class="nav-link"><a href="https://www.christbridetabernacle.com/wmb">William Branham</a></li>
                         <li class="nav-link"><a href="https://www.christbridetabernacle.com/vgr">Voice Of God Recordings</a></li>
-                        <li class="nav-link"><a href="/">Testimones</a></li>
+                        <li class="nav-link"><a href="/">Testimonies</a></li>
                         <% if(session.userId){ %>
                         <li class="nav-link"><a href="/auth/logout">Sign Out</a></li>
                         <% } %>
                         <!-- mega menu page-->
-                    </ui>
+                    </ul>
                 </div>
                 <!-- <div class="col-md-2 col-4 text-center">
                     <a href="#" class="search-icon mr-150 mr-md-75 mr-xs-55" data-toggle="modal" data-target="#searchModal"> <i class="fas fa-search fs-18 white mt-5"></i>
@@ -60,30 +60,39 @@
                     <a href="contact.php" class="btn btn-black mt-30 mb-35 mb-xs-20">CONTACT US</a>
                     <div class="fx-menu-content mb-15">
                         <ul class="fx-menu-links rbt-slab">
-                            <li> <a href="index">Home</a>
+                            <li> <a href="https://www.christbridetabernacle.com/index" >Home</a>
                             </li>
                         </ul>
                         <br>
                         <ul class="fx-menu-links rbt-slab">
-                            <li> <a href="our_assembly">Our Assembly</a>
+                            <li> <a href="https://www.christbridetabernacle.com/our_assembly">Our Assembly</a>
                             </li>
                         </ul>
                         <br>
                         <ul class="fx-menu-links rbt-slab">
-                            <li> <a href="sermons">Sermon</a>
+                            <li> <a href="https://www.christbridetabernacle.com/sermons">Sermon</a>
                             </li>
                         </ul>
                         <br>
-                        
-                        
                         <ul class="fx-menu-links rbt-slab"> 
-                            <li> <a href="wmb">William Branham</a></li>
+                            <li> <a href="https://www.christbridetabernacle.com/wmb">William Branham</a></li>
                         </ul>
                         <br>
                         <ul class="fx-menu-links rbt-slab">
-                            <li> <a href="vgr">Voice Of God Recordings</a></li>
+                            <li> <a href="https://www.christbridetabernacle.com/vgr">Voice Of God Recordings</a></li>
                         </ul>
                         <br>
+
+                        <ul class="fx-menu-links rbt-slab">
+                        <li><a href="/">Testimonies</a></li>
+                        </ul>
+                        <br>
+
+                        <% if(session.userId){ %>
+                            <ul class="fx-menu-links rbt-slab">
+                                <li><a href="/auth/logout">Sign Out</a></li>
+                            </ul>                        
+                        <% } %>
                         
                         
                     </div>
@@ -127,8 +136,17 @@
         <section class="relative">
         <div class="owl-carousel owl-theme main-slider">
         <div class="item">
-                <div class="each-slider-2 flex-center" style="background-image: url('/images/Banner/testimony-banner.png');">
-                </div>
+                <div 
+                    class="each-slider-2 flex-center" 
+                    style="
+                        background-image: url('/images/Banner/testimony-banner.png');
+                        background-size: cover;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        width: 100%;
+                        height: 300px;
+                    ">
+                </div>        
                 <div class="banner-text">
                     <div class="container">
                         <div class="row">
@@ -145,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
 
         </div>
     </section>
