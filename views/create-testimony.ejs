@@ -197,24 +197,22 @@
                   <!-- Anonymous Checkbox -->
                   <div class="col-lg-6">
                     <div class="form-group relative mb-30 mb-sm-20">
-                      <div class="input-group">
-                        <div class="input-group-text w-30 h-30">
-                          <input
-                            class="form-control"
-                            type="checkbox"
-                            id="anonymous"
-                            name="anonymous"
-                            aria-label="anonymous"
-                          />
-                        </div>
+                      <div
+                        style="display: flex; align-items: center; gap: 20px; border: 1px solid #ccc; padding: 10px 30px;"
+                      >
                         <input
-                          class="form-control"
-                          type="text"
-                          value="Do you want to be anonymous"
-                          aria-label="anonymous"
-                          disabled
-                          readonly
+                          type="checkbox"
+                          id="anonymous"
+                          name="anonymous"
+                          class="form-check-input"
+                          style="width: 20px; height: 20px; accent-color: #000; "
                         />
+                        <label
+                          for="anonymous"
+                          style="font-size: 16px; color: #333; margin: 0"
+                        >
+                          Do you want to be anonymous
+                        </label>
                       </div>
                       <span id="anonymousError" class="text-danger"></span>
                     </div>
@@ -403,7 +401,7 @@
           const phoneNumber = document
             .getElementById('phoneNumber')
             .value.trim();
-           if (isNaN(phoneNumber)) {
+          if (isNaN(phoneNumber)) {
             document.getElementById('phoneNumberError').innerText =
               'Phone Number must be a number.';
             isValid = false;
@@ -498,7 +496,9 @@
             console.log(postResponse);
 
             if (postResponse.ok) {
-              alert('Thanks for sharing your testimony, Our team will review it and send an email to you once your testimony is made public.');
+              alert(
+                'Thanks for sharing your testimony, Our team will review it and send an email to you once your testimony is made public.',
+              );
               window.location.href = '/';
             } else {
               alert('Error submitting form.');
