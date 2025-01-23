@@ -21,7 +21,7 @@
                         <li class="nav-link"><a href="https://www.christbridetabernacle.com/sermons">SERMONS</a></li>
                         <li class="nav-link"><a href="https://www.christbridetabernacle.com/wmb">William Branham</a></li>
                         <li class="nav-link"><a href="https://www.christbridetabernacle.com/vgr">Voice Of God Recordings</a></li>
-                        <li class="nav-link"><a href="/">Testimones</a></li>
+                        <li class="nav-link"><a href="/">Testimonies</a></li>
                         <% if(session.userId){ %>
                         <li class="nav-link"><a href="/auth/logout">Sign Out</a></li>
                         <% } %>
@@ -60,30 +60,39 @@
                     <a href="contact.php" class="btn btn-black mt-30 mb-35 mb-xs-20">CONTACT US</a>
                     <div class="fx-menu-content mb-15">
                         <ul class="fx-menu-links rbt-slab">
-                            <li> <a href="index">Home</a>
+                            <li> <a href="https://www.christbridetabernacle.com/index" >Home</a>
                             </li>
                         </ul>
                         <br>
                         <ul class="fx-menu-links rbt-slab">
-                            <li> <a href="our_assembly">Our Assembly</a>
+                            <li> <a href="https://www.christbridetabernacle.com/our_assembly">Our Assembly</a>
                             </li>
                         </ul>
                         <br>
                         <ul class="fx-menu-links rbt-slab">
-                            <li> <a href="sermons">Sermon</a>
+                            <li> <a href="https://www.christbridetabernacle.com/sermons">Sermon</a>
                             </li>
                         </ul>
                         <br>
-                        
-                        
                         <ul class="fx-menu-links rbt-slab"> 
-                            <li> <a href="wmb">William Branham</a></li>
+                            <li> <a href="https://www.christbridetabernacle.com/wmb">William Branham</a></li>
                         </ul>
                         <br>
                         <ul class="fx-menu-links rbt-slab">
-                            <li> <a href="vgr">Voice Of God Recordings</a></li>
+                            <li> <a href="https://www.christbridetabernacle.com/vgr">Voice Of God Recordings</a></li>
                         </ul>
                         <br>
+
+                        <ul class="fx-menu-links rbt-slab">
+                        <li><a href="/">Testimonies</a></li>
+                        </ul>
+                        <br>
+
+                        <% if(session.userId){ %>
+                            <ul class="fx-menu-links rbt-slab">
+                                <li><a href="/auth/logout">Sign Out</a></li>
+                            </ul>                        
+                        <% } %>
                         
                         
                     </div>
