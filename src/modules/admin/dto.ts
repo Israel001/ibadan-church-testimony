@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsString,
   ValidateNested,
+  ValidateIf
 } from 'class-validator';
 import { PaginationInput } from 'src/base/dto';
 import { IsValidDate } from 'src/tools/date-validator';
@@ -70,6 +71,7 @@ export class UpdateTestimonyDto {
 
   @IsEmail()
   @IsOptional()
+  @ValidateIf(t => t.email?.length)
   email: string;
 
   @IsString()
@@ -121,6 +123,7 @@ export class CreateAdminTestimonyDto {
   lastname: string;
 
   @IsEmail()
+  @IsOptional()
   email: string;
 
   @IsString()

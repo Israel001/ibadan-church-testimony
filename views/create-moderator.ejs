@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Phoenix</title>
+    <title>Christ Bride Tabernacle</title>
 
     <!-- ===============================================-->
     <!--    Favicons-->
@@ -199,10 +199,10 @@
         <div class="collapse navbar-collapse justify-content-between">
           <div class="navbar-logo">
             <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-            <a class="navbar-brand me-1 me-sm-3" href="index.html">
+            <a class="navbar-brand me-1 me-sm-3" href="/admin/dashboard">
               <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center"><img src="../img/icons/logo-1.png" alt="phoenix" width="27">
-                  <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5>
+                  <h5 class="logo-text ms-2 d-none d-sm-block">Christ Bride Tabernacle</h5>
                 </div>
               </div>
             </a>
@@ -737,7 +737,7 @@
         <footer class="footer position-absolute">
           <div class="row g-0 justify-content-between align-items-center h-100">
             <div class="col-12 col-sm-auto text-center">
-              <p class="mb-0 mt-2 mt-sm-0 text-body">Thank you for creating with Phoenix<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none">2024 &copy;<a class="mx-1" href="https://themewagon.com">Themewagon</a></p>
+              <p class="mb-0 mt-2 mt-sm-0 text-body">Thank you for creating with Christ Bride Tabernacle<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none">2024 &copy;<a class="mx-1" href="https://themewagon.com">Themewagon</a></p>
             </div>
             <div class="col-12 col-sm-auto text-center">
               <p class="mb-0 text-body-tertiary text-opacity-85">v1.19.0</p>
@@ -823,11 +823,12 @@
         // Submit Form
         console.log('Form Data:', formData);
           try {
-            const postResponse = await fetch('/admin/create-moderator', {
+            const postResponse = await fetch('/admin/moderator', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
+              credentials: 'include',
               body: JSON.stringify(formData),
             });
             console.log(postResponse);

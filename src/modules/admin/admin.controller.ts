@@ -95,7 +95,7 @@ export class AdminController {
     return { session };
   }
 
-  @Post('create-moderator')
+  @Post('moderator')
   @AdminRole({ roles: ['Super Admin'] })
   createModerator(@Body() body: dtos.CreateModeratorDto) {
     return this.adminService.createModerator(body);

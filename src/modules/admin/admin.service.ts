@@ -84,7 +84,7 @@ export class AdminService {
       uuid: v4(),
       firstname: testimonyDto.firstname,
       lastname: testimonyDto.lastname,
-      email: testimonyDto.email,
+      email: testimonyDto.email || "",
       address: testimonyDto.address,
       country: testimonyDto.country,
       phoneNumber: testimonyDto.phoneNumber,
